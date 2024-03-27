@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="4885f304-d671-4170-81fb-118e64034b60" name="Changes" comment="Påbörjat kodskelett för GUI">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Controller.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +44,7 @@
     "Application.Main.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Andre-branch",
+    "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/kurser/da336a/repo/G15-Clicklogs/Clicklogs",
@@ -82,6 +81,9 @@
       <list>
         <item itemvalue="Application.Main" />
         <item itemvalue="Application.Main" />
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
@@ -101,7 +103,7 @@
       <option name="presentableId" value="Default" />
       <updated>1711115040635</updated>
       <workItem from="1711377149692" duration="669000" />
-      <workItem from="1711528490910" duration="12197000" />
+      <workItem from="1711528490910" duration="12539000" />
     </task>
     <task id="LOCAL−00001" summary="Påbörjat kodskelett för GUI">
       <option name="closed" value="true" />

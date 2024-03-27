@@ -144,3 +144,5 @@ $RECYCLE.BIN/
 */Clicklogs/idea/.idea/misc.xml
 */Clicklogs/.idea
 *.xml
+/Clicklogs/.idea
+Clicklogs/.idea/workspace.xml
