@@ -142,3 +142,4 @@ $RECYCLE.BIN/
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,java,intellij+iml
 Clicklogs/idea/.idea/misc.xml
+/Clicklogs/.idea
