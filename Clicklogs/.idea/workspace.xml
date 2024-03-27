@@ -4,20 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4885f304-d671-4170-81fb-118e64034b60" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Controller/Controller.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/View/ButtonPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/View/ButtonType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/View/DecisionPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/View/MainFrame.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/View/MainPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/View/OutputPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="4885f304-d671-4170-81fb-118e64034b60" name="Changes" comment="Påbörjat kodskelett för GUI">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ClicklogsGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/ClicklogsGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RobClass.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hhhh.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Controller.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,6 +22,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="Andre-branch" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -51,7 +45,7 @@
     "Application.Main.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "Andre-branch",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/kurser/da336a/repo/G15-Clicklogs/Clicklogs",
@@ -87,6 +81,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
+        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
@@ -106,11 +101,23 @@
       <option name="presentableId" value="Default" />
       <updated>1711115040635</updated>
       <workItem from="1711377149692" duration="669000" />
-      <workItem from="1711528490910" duration="10814000" />
+      <workItem from="1711528490910" duration="12197000" />
     </task>
+    <task id="LOCAL−00001" summary="Påbörjat kodskelett för GUI">
+      <option name="closed" value="true" />
+      <created>1711540572716</created>
+      <option name="number" value="LOCAL−00001" />
+      <option name="presentableId" value="LOCAL−00001" />
+      <updated>1711540572717</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Påbörjat kodskelett för GUI" />
+    <option name="LAST_COMMIT_MESSAGE" value="Påbörjat kodskelett för GUI" />
   </component>
 </project>

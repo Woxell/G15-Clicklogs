@@ -7,7 +7,7 @@ public class Controller {
 
     public Controller(){
         new MainFrame(this, 900,700);
-        System.out.println("New mainframe created");
+        System.out.println("Dis new mainframe");
     }
 
     public void buttonPressed(ButtonType pressedButton) {
