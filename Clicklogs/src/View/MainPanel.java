@@ -16,7 +16,7 @@ public class MainPanel extends JPanel {
 
         // Initialize sub-panels
         decisionPanel = new DecisionPanel(this, controller);
-        outputPanel = new OutputPanel(this);
+        outputPanel = new OutputPanel(this, controller);
         buttonPanel = new ButtonPanel(this); // HAS THE SAME DIMENSIONS REGARDLESS OF MAINPANEL SIZE
 
         // Add sub-panels to the main panel

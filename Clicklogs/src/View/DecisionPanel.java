@@ -34,7 +34,8 @@ public class DecisionPanel extends JPanel {
             JButton altButton = new JButton();
             altButton.setText("Alternative " + i);
             altButton.setBackground(Color.WHITE);
-            altButton.addActionListener(listener -> buttonPressed());
+            int buttonNumber = altList.size();
+            altButton.addActionListener(listener -> buttonPressed(buttonNumber));
             altList.add(altButton);
             add(altList.getLast());
         }
@@ -52,6 +53,7 @@ public class DecisionPanel extends JPanel {
             }
         });
 
+
         setVisible(true);
     }
 
@@ -60,17 +62,20 @@ public class DecisionPanel extends JPanel {
         JButton altButton = new JButton();
         altButton.setText(altText + " " + (altList.size()+1));
         altButton.setBackground(Color.WHITE);
-        altButton.addActionListener(listener -> buttonPressed());
+        int buttonNumber = altList.size();
+        altButton.addActionListener(listener -> buttonPressed(buttonNumber));
         altList.add(altButton);
         add(altList.getLast());
         revalidate();
     }
-    private void buttonPressed(){
+    private void buttonPressed(int altNumber){
         controller.buttonPressed(ButtonType.ADD);
+        altList.get(altNumber).setBackground(Color.GREEN);
+        altList.get(altNumber).setEnabled(false);
 
     }
 
-    private JLabel createNicelabel(String text, boolean isOpaque) {
+    /*private JLabel createNicelabel(String text, boolean isOpaque) {
         JLabel label = new JLabel(text);
         label.setAlignmentX(Component.CENTER_ALIGNMENT);
         label.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -85,7 +90,7 @@ public class DecisionPanel extends JPanel {
             label.setFont(biggerFont);
         }
         return label;
-    }
+    }*/
 
     public ArrayList<JButton> getAltList() {
         return altList;

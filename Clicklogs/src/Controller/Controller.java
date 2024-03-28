@@ -3,10 +3,15 @@ package Controller;
 import View.ButtonType;
 import View.DecisionPanel;
 import View.MainFrame;
+import View.OutputPanel;
+
+import javax.swing.*;
+import java.util.ArrayList;
 
 public class Controller {
 
     private DecisionPanel decisionPanel;
+    private OutputPanel outputPanel;
 
     public Controller(){
         new MainFrame(this, 900,700);
@@ -18,6 +23,7 @@ public class Controller {
             case ADD:
                 System.out.println("Add button pressed");
                 decisionPanel.addAltButton("Alternative");
+                updateOutputPanel();
                 break;
             case COPY:
                 System.out.println("Copy button pressed");
@@ -34,5 +40,12 @@ public class Controller {
     }
     public void addDecisionPanelInstance(DecisionPanel decisionPanel){
         this.decisionPanel = decisionPanel;
+    }
+    public void addOutputPanelInstance(OutputPanel outputPanel){
+        this.outputPanel = outputPanel;
+    }
+    public void updateOutputPanel(){
+        ArrayList<JButton> altList = decisionPanel.getAltList();
+        outputPanel.updateGeneratedText(altList);
     }
 }
