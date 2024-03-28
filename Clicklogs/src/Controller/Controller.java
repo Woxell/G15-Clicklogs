@@ -22,8 +22,11 @@ public class Controller {
         switch(pressedButton){
             case ADD:
                 System.out.println("Add button pressed");
+
+                //DEMO
                 decisionPanel.addAltButton("Alternative");
                 updateOutputPanel();
+
                 break;
             case COPY:
                 System.out.println("Copy button pressed");

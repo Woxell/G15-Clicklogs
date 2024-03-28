@@ -26,7 +26,7 @@ public class DecisionPanel extends JPanel {
         setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
         controller.addDecisionPanelInstance(this);
 
-        //Test buttons
+        //DEMO
         for (int i = 1; i <= 2; i++) {
             if (i > 1) {
                 add(new JLabel("->"));
@@ -68,6 +68,8 @@ public class DecisionPanel extends JPanel {
         add(altList.getLast());
         revalidate();
     }
+
+    //DEMO
     private void buttonPressed(int altNumber){
         controller.buttonPressed(ButtonType.ADD);
         altList.get(altNumber).setBackground(Color.GREEN);
