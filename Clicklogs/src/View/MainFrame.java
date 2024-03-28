@@ -18,7 +18,7 @@ public class MainFrame extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("Clicklogs");
         setResizable(true); // se kravdokument
-        mainPanel = new MainPanel(this, width, height);
+        mainPanel = new MainPanel(this, controller, width, height);
         add(mainPanel);
 
         setVisible(true);

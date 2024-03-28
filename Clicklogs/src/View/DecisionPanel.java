@@ -4,25 +4,43 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.util.ArrayList;
+
+import Controller.Controller;
 
 
 public class DecisionPanel extends JPanel {
-    private int width;
-    private int height;
-    private JLabel jlabel = null;
+    private JLabel jLabel;
     private MainPanel mainPanel;
+    private Controller controller;
+    private ArrayList<JButton> altList = new ArrayList<>();
 
 
-    public DecisionPanel(MainPanel mainPanel, int width, int totalHeight) {
-        this.width = 900;
-        this.height = (int) (mainPanel.getHeight() * 5 / 7);
+    public DecisionPanel(MainPanel mainPanel, Controller controller) {
+        int height = (int) (mainPanel.getHeight() * 0.7);
         this.mainPanel = mainPanel;
-        this.jlabel = createNicelabel("DecisionPanel", true);
-        setLayout(new BorderLayout());
+        this.controller = controller;
+        setLayout(new FlowLayout());
         setBackground(Color.GRAY);
-        setPreferredSize(new Dimension(width, height));
-        setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
-        add(jlabel);
+        setPreferredSize(new Dimension(1, height));
+        setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        controller.addDecisionPanelInstance(this);
+
+        //Test buttons
+        for (int i = 1; i <= 2; i++) {
+            if (i > 1) {
+                add(new JLabel("->"));
+            }
+            JButton altButton = new JButton();
+            altButton.setText("Alternative " + i);
+            altButton.setBackground(Color.WHITE);
+            altButton.addActionListener(listener -> buttonPressed());
+            altList.add(altButton);
+            add(altList.getLast());
+        }
+
+        /*jLabel = createNicelabel("DecisionPanel", true);
+        add(jLabel);*/
 
         // Handle resize event to make size of this panel dynamic
         addComponentListener(new ComponentAdapter() {
@@ -35,6 +53,21 @@ public class DecisionPanel extends JPanel {
         });
 
         setVisible(true);
+    }
+
+    public void addAltButton(String altText) {
+        add(new JLabel("->"));
+        JButton altButton = new JButton();
+        altButton.setText(altText + " " + (altList.size()+1));
+        altButton.setBackground(Color.WHITE);
+        altButton.addActionListener(listener -> buttonPressed());
+        altList.add(altButton);
+        add(altList.getLast());
+        revalidate();
+    }
+    private void buttonPressed(){
+        controller.buttonPressed(ButtonType.ADD);
+
     }
 
     private JLabel createNicelabel(String text, boolean isOpaque) {
@@ -54,5 +87,7 @@ public class DecisionPanel extends JPanel {
         return label;
     }
 
-
+    public ArrayList<JButton> getAltList() {
+        return altList;
+    }
 }

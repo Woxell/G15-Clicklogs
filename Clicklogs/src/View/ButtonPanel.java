@@ -15,7 +15,7 @@ public class ButtonPanel extends JPanel {
 
     public ButtonPanel(MainPanel mainPanel) {
         this.mainPanel = mainPanel;
-        this.setLayout(new FlowLayout());
+        setLayout(new FlowLayout());
         setPreferredSize(new Dimension(width, height));
         setUp();
         setVisible(true);
@@ -25,39 +25,36 @@ public class ButtonPanel extends JPanel {
         southPanelList = new JList<>();
         // southPanelList.setLocation(0, 50);
         southPanelList.setSize(width, height - 100);
-        this.add(southPanelList);
-
+        add(southPanelList);
 
         copy = new JButton("COPY");
         copy.setEnabled(true);
         copy.setSize(width / 3, 20);
         copy.setLocation(0, height - 50);
         // copy.addActionListener(mainFrame.buttonPressed(ButtonType.COPY));
-        this.add(copy);
-
 
         undo = new JButton("UNDO");
         undo.setEnabled(true);
         undo.setSize(width / 3, 30);
         undo.setLocation(width / 3, height - 50);
         // undo.addActionListener(mainFrame.buttonPressed(ButtonType.UNDO));
-        this.add(undo);
-
 
         reset = new JButton("RESET");
         reset.setEnabled(true);
         reset.setSize(width / 3, 30);
         reset.setLocation((width / 3) * 2, height - 50);
         //reset.addActionListener(mainFrame.buttonPressed(ButtonType.RESET));
-        this.add(reset);
-
 
         addAlt = new JButton("ADD");
         addAlt.setEnabled(true);
         addAlt.setSize(width / 3, 30);
         addAlt.setLocation(width - 50, (height / 3) * 3);
         // addAlt.addActionListener(mainFrame.buttonPressed(ButtonType.ADD));
-        this.add(addAlt);
+
+        add(copy);
+        add(undo);
+        add(reset);
+        add(addAlt);
     }
 
     protected JList<Object> getRightPanelList() {
