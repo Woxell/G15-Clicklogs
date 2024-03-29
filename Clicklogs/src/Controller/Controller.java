@@ -1,9 +1,6 @@
 package Controller;
 
-import View.ButtonType;
-import View.DecisionPanel;
-import View.MainFrame;
-import View.OutputPanel;
+import View.*;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -12,14 +9,14 @@ public class Controller {
 
     private DecisionPanel decisionPanel;
     private OutputPanel outputPanel;
+    private ButtonPanel buttonPanel;
 
-    public Controller(){
-        new MainFrame(this, 900,700);
-        System.out.println("Dis new mainframe");
+    public Controller() {
+        new MainFrame(this, 900, 700);
     }
 
     public void buttonPressed(ButtonType pressedButton) {
-        switch(pressedButton){
+        switch (pressedButton) {
             case ADD:
                 System.out.println("Add button pressed");
 
@@ -41,14 +38,14 @@ public class Controller {
                 System.out.println("Error in buttonPressed method");
         }
     }
-    public void addDecisionPanelInstance(DecisionPanel decisionPanel){
-        this.decisionPanel = decisionPanel;
+
+    public void addPanelInstances(DecisionPanel dp, OutputPanel op, ButtonPanel bp) {
+        decisionPanel = dp;
+        outputPanel = op;
+        buttonPanel = bp;
     }
-    public void addOutputPanelInstance(OutputPanel outputPanel){
-        this.outputPanel = outputPanel;
-    }
-    public void updateOutputPanel(){
-        ArrayList<JButton> altList = decisionPanel.getAltList();
-        outputPanel.updateGeneratedText(altList);
+
+    public void updateOutputPanel() {
+        outputPanel.updateGeneratedText(decisionPanel.getAltList());
     }
 }

@@ -2,10 +2,11 @@ package Model;
 
 import java.util.List;
 
-public class ClicklogsGenerator  {
-    public ClicklogsGenerator(){
+public class LogGenerator {
+    public LogGenerator(){
 
     }
+
     public String generateLogText(List<String> selectedOptions){
         return null;
     }

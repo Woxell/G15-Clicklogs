@@ -6,7 +6,6 @@ import java.awt.*;
 public class ButtonPanel extends JPanel {
     private JButton undo, copy, reset, addAlt;
     private JList<Object> southPanelList;
-    private MainFrame mainFrame;
     private MainPanel mainPanel;
 
     // private JLabel titleLeftPanel;
@@ -57,7 +56,7 @@ public class ButtonPanel extends JPanel {
         add(addAlt);
     }
 
-    protected JList<Object> getRightPanelList() {
+    protected JList<Object> getSouthPanelList() {
         return southPanelList;
     }
 

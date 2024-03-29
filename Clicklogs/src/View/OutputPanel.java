@@ -2,14 +2,8 @@ package View;
 
 import Controller.Controller;
 
-import javax.naming.ldap.Control;
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
-import javax.swing.border.StrokeBorder;
-import javax.swing.plaf.basic.BasicBorders;
-import javax.swing.plaf.metal.MetalBorders;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -21,7 +15,6 @@ public class OutputPanel extends JPanel {
     public OutputPanel(MainPanel mainPanel, Controller controller) {
         this.mainPanel = mainPanel;
         this.controller = controller;
-        controller.addOutputPanelInstance(this);
         setLayout(new BorderLayout());
         setBackground(Color.PINK);
         add(new JLabel("Texten nedan genereras baserat på dina klickade alternativ ovan"), BorderLayout.NORTH);

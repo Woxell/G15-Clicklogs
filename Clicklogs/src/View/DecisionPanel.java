@@ -24,7 +24,6 @@ public class DecisionPanel extends JPanel {
         setBackground(Color.GRAY);
         setPreferredSize(new Dimension(1, height));
         setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
-        controller.addDecisionPanelInstance(this);
 
         //DEMO
         for (int i = 1; i <= 2; i++) {
@@ -52,7 +51,6 @@ public class DecisionPanel extends JPanel {
                 revalidate(); // Revalidate the layout to reflect the changes
             }
         });
-
 
         setVisible(true);
     }
