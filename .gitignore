@@ -147,3 +147,4 @@ $RECYCLE.BIN/
 /Clicklogs/.idea
 Clicklogs/.idea/workspace.xml
 *.bak_000f
+*.lck
