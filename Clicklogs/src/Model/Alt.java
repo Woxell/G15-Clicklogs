@@ -98,12 +98,19 @@ public class Alt implements Serializable {
     public void addParent(Alt parent){
         parents.add(parent);
     }
+
+
     public Alt getParent() {
         for (Alt parent : parents) {
             if (parent.isChosen()) {
+                System.out.println("PARENT WAS RETURNED AS: " + parent.getAltLabelText());
                 return parent;
             }
         }
+        System.out.println("NULL WAS RETURNED");
         return null; // probably root Alt. Make sure it cannot be undone.
+    }
+    public List<Alt> getParents() {
+        return parents;
     }
 }

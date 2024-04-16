@@ -5,15 +5,17 @@ import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
+import java.util.List;
 
 import Controller.Controller;
+import Model.Alt; //VIOLATES MVC, ONLY FOR TEST DAY
 
 
 public class DecisionPanel extends JPanel {
     private JLabel jLabel;
     private MainPanel mainPanel;
     private Controller controller;
-    private ArrayList<JButton> altList = new ArrayList<>();
+    private ArrayList<JButton> buttonList = new ArrayList<>();
 
 
     public DecisionPanel(MainPanel mainPanel, Controller controller) {
@@ -24,23 +26,6 @@ public class DecisionPanel extends JPanel {
         setBackground(Color.GRAY);
         setPreferredSize(new Dimension(1, height));
         setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
-
-        //DEMO
-        for (int i = 1; i <= 2; i++) {
-            if (i > 1) {
-                add(new JLabel("->"));
-            }
-            JButton altButton = new JButton();
-            altButton.setText("Alternative " + i);
-            altButton.setBackground(Color.WHITE);
-            int buttonNumber = altList.size();
-            altButton.addActionListener(listener -> buttonPressed(buttonNumber));
-            altList.add(altButton);
-            add(altList.getLast());
-        }
-
-        /*jLabel = createNicelabel("DecisionPanel", true);
-        add(jLabel);*/
 
         // Handle resize event to make size of this panel dynamic
         addComponentListener(new ComponentAdapter() {
@@ -55,44 +40,41 @@ public class DecisionPanel extends JPanel {
         setVisible(true);
     }
 
-    public void addAltButton(String altText) {
-        add(new JLabel("->"));
-        JButton altButton = new JButton();
-        altButton.setText(altText + " " + (altList.size()+1));
-        altButton.setBackground(Color.WHITE);
-        int buttonNumber = altList.size();
-        altButton.addActionListener(listener -> buttonPressed(buttonNumber));
-        altList.add(altButton);
-        add(altList.getLast());
+    public void refreshDisplayedAlts(List<Alt> displayedAlts) {
+        for(JButton b : buttonList){ //removes all existing buttons from panel
+            remove(b);
+        }
+        buttonList.clear();
+        for(Alt alt : displayedAlts) { //adds all relevant buttons to panel
+            JButton altButton = new JButton();
+            altButton.setText(alt.getAltLabelText() + " ");
+            altButton.setBackground(Color.WHITE);
+            if(!(alt.isChosen())){
+                altButton.setEnabled(true);
+                altButton.addActionListener(listener -> altPressed(alt)); //if alt has not been chosen before
+            }else{
+                altButton.setEnabled(false); //if alt has been chosen before
+            }
+            buttonList.add(altButton);
+            add(buttonList.getLast());
+        }
         revalidate();
+    }
+
+    private void altPressed(Alt alt){
+        alt.becomesChosen();
+        controller.altPressed(alt);
     }
 
     //DEMO
     private void buttonPressed(int altNumber){
         controller.buttonPressed(ButtonType.ADD);
-        altList.get(altNumber).setBackground(Color.GREEN);
-        altList.get(altNumber).setEnabled(false);
+        buttonList.get(altNumber).setBackground(Color.GREEN);
+        buttonList.get(altNumber).setEnabled(false);
 
     }
 
-    /*private JLabel createNicelabel(String text, boolean isOpaque) {
-        JLabel label = new JLabel(text);
-        label.setAlignmentX(Component.CENTER_ALIGNMENT);
-        label.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-        if (isOpaque) {// Set rounded border and shaded background
-            label.setBackground(new Color(220, 220, 220));
-            label.setOpaque(true);  // Ensure the background color is visible
-            label.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK, 1),
-                    BorderFactory.createEmptyBorder(10, 10, 10, 10)));
-
-            Font biggerFont = label.getFont().deriveFont(Font.PLAIN, 20);
-            label.setFont(biggerFont);
-        }
-        return label;
-    }*/
-
-    public ArrayList<JButton> getAltList() {
-        return altList;
+    public ArrayList<JButton> getButtonList() {
+        return buttonList;
     }
 }

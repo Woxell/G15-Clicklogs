@@ -7,7 +7,7 @@ import java.util.*;
 
 public class AltTree implements Serializable {
     private int maxLevels;
-    private int currentLevel = 0;
+    private int currentLevel = 0; // move to controller
     private Map<Integer, List<Alt>> altTree;
 
     public AltTree(int maxLevels) {
@@ -32,6 +32,10 @@ public class AltTree implements Serializable {
 
     public List<Alt> getAltsAtLevel(Integer level) {
         return altTree.get(level);
+    }
+
+    public int getMaxLevels(){
+        return this.maxLevels;
     }
 
 
