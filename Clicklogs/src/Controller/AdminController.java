@@ -25,10 +25,11 @@ public class AdminController {
     public void firstPrompt() {
         boolean stillChoosing = true;
         while (stillChoosing) {
-            int choice = ui.askUserInt("Load existing file or create new?\n" +
-                    "1: Load existing file\n" +
-                    "2: Create new file\n" +
-                    "");
+            int choice = ui.askUserInt("""
+                    Load existing file or create new?
+                    1: Load existing file
+                    2: Create new file
+                    """);
             switch (choice) {
                 case 1:
                     //TODO: method to load existing file
@@ -55,19 +56,21 @@ public class AdminController {
             String outputText = ui.askUserString("What text will this alternative write in output?");
             Alt newAlt = new Alt(labelText, outputText);
 
-            if (level > 0) {
-                List<Alt> potentialParents = altTree.getAltsAtLevel(level - 1);
-                ui.printAltList(potentialParents);
-                String parents = ui.askUserString("Which of these will be its parents? List them separated by comma (e.g. \"1,4,5\")");
-                String[] splitParents = parents.split(",");
-                try {
+            try {
+                if (level > 0) {
+                    List<Alt> potentialParents = altTree.getAltsAtLevel(level - 1);
+                    ui.printAltList(potentialParents);
+                    String parents = ui.askUserString("Which of these will be its parents? List them separated by comma (e.g. \"1,4,5\")");
+                    String[] splitParents = parents.split(",");
+
                     for (String index : splitParents) {
                         newAlt.addParent(potentialParents.get(Integer.parseInt(index)));
                     }
-                } catch (NumberFormatException e) {
-                    ui.invalidInput();
-                    continue;
+
                 }
+            } catch (Exception e) {
+                ui.print("Something went wrong, please retry creating last alternative...");
+                continue;
             }
 
             altTree.addAlt(level, newAlt);
@@ -82,12 +85,20 @@ public class AdminController {
         }
         saveAltTreeToFile(altTree);
     }
-    public void saveAltTreeToFile(AltTree altTree)  {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))){
-            oos.writeObject(altTree);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+
+    public void saveAltTreeToFile(AltTree altTree) {
+        boolean saveFailed = true;
+        do {
+            try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
+                oos.writeObject(altTree);
+                saveFailed = false;
+            } catch (IOException e) {
+                System.out.println("Error saving to " + filePath);
+                System.err.println(e);
+                ui.askUserString("Enter anything to try again...");
+            }
+        } while (saveFailed);
+        System.out.println("File saved successfully to " + filePath);
     }
 
     public static class AdminMain {

@@ -1,11 +1,12 @@
 package View;
 
 import Controller.Controller;
+import Model.Alt;
 
 import javax.swing.*;
 import javax.swing.border.MatteBorder;
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.List;
 
 public class OutputPanel extends JPanel {
     private MainPanel mainPanel;
@@ -30,10 +31,10 @@ public class OutputPanel extends JPanel {
     }
 
     //DEMO
-    public void updateGeneratedText(ArrayList<JButton> altList) {
+    public void refreshOutputText(List<Alt> altList) {
         StringBuilder generatedText = new StringBuilder();
-        for (JButton alt : altList) {
-            generatedText.append(alt.getText()).append(" ");
+        for (Alt alt : altList) {
+            generatedText.append(alt.getOutputText()).append(" ");
         }
         textArea.setText(String.valueOf(generatedText));
     }
