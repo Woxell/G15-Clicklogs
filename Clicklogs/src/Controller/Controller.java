@@ -23,14 +23,25 @@ public class Controller {
 
     public Controller() {
         new MainFrame(this, 900, 700);
-        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))){
+        /*try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))){
             altTree = (AltTree) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 
+         */
+        readAltTree();
+
         chosenAlts = new ArrayList<>();
         decisionPanel.refreshDisplayedAlts(new ArrayList<>(altTree.getAltsAtLevel(0))); //feeds GUI with alt:s in level 0
+    }
+
+    private void readAltTree() {
+        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))){
+            altTree = (AltTree) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void buttonPressed(ButtonType pressedButton) {
@@ -40,17 +51,45 @@ public class Controller {
 
                 break;
             case COPY:
+                //new stuff
+                copyPressed();
                 System.out.println("Copy button pressed");
                 break;
             case UNDO:
+                undoPressed();
                 System.out.println("Undo button pressed");
                 break;
             case RESET:
+                //new stuff
+                resetPressed();
                 System.out.println("Reset button pressed");
                 break;
             default:
                 System.out.println("Error in buttonPressed method");
         }
+    }
+
+    private void undoPressed() {
+        //TODO Add this feature
+    }
+
+    private void copyPressed() {
+        outputPanel.copyToClipboard();
+    }
+
+    private void resetPressed() {
+        chosenAlts = new ArrayList<>();
+        currentLevel = 0;
+        /*try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))){
+            altTree = (AltTree) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+         */
+        readAltTree();
+        decisionPanel.refreshDisplayedAlts(new ArrayList<>(altTree.getAltsAtLevel(0)));
+        outputPanel.refreshOutputText(chosenAlts);
     }
 
     public void altPressed(Alt alt){

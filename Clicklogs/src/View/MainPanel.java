@@ -2,6 +2,8 @@ package View;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
+
 import Controller.Controller;
 
 public class MainPanel extends JPanel {
@@ -39,5 +41,9 @@ public class MainPanel extends JPanel {
     }
     public int getHeight(){
         return mainFrame.getHeight();
+    }
+
+    public void buttonPressed(ButtonType buttonType) {
+        mainFrame.buttonPressed(buttonType);
     }
 }

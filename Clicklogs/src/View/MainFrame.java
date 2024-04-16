@@ -27,8 +27,9 @@ public class MainFrame extends JFrame {
     public MainPanel getMainPanel() {
         return mainPanel;
     }
-  /*  public void buttonPressed(ButtonType pressedButton){
+
+    public void buttonPressed(ButtonType pressedButton){
         controller.buttonPressed(pressedButton);
-    }*/
+    }
 
 }
