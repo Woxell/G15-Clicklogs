@@ -37,7 +37,7 @@ public class Controller {
     }
 
     private void readAltTree() {
-        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))){
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
             altTree = (AltTree) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -70,7 +70,38 @@ public class Controller {
     }
 
     private void undoPressed() {
-        //TODO Add this feature
+        if (!chosenAlts.isEmpty()) {
+            //TODO Make becomesChosen() method in class Alt accept parameter (boolean isChosen) and do the required updates, then just uncomment the following row.
+            //chosenAlts.getLast().becomesChosen(false);
+            chosenAlts.remove(chosenAlts.size() - 1);
+            outputPanel.refreshOutputText(chosenAlts);
+        }
+        if (currentLevel > 0) {  // cus it is not possible to undo when current level is 0.
+            List<Alt> altsToDisplay = new ArrayList<>(chosenAlts); //Start with chosen alts
+            List<Alt> newLevelAlts = altTree.getAltsAtLevel(currentLevel - 1); //Get all possible alts in previous level
+
+            for (Alt a : newLevelAlts) {
+                if (currentLevel > 1) {
+                    List<Alt> parents = a.getParents(); //For each candidate, get all parents
+                    for (Alt p : parents) { //... traverse parents
+                        if (p.isChosen()) {
+                            altsToDisplay.add(a); //... and only add candidate if one of its parents was chosen.
+                        }
+                    }
+                } else {  // Add all candidates cus those on level 0 have no parents.
+                    altsToDisplay.add(a);
+                }
+            }
+
+            //Final steps, decrement to previous level and update GUI.
+            currentLevel--;
+            outputPanel.refreshOutputText(chosenAlts);
+            decisionPanel.refreshDisplayedAlts(altsToDisplay);
+        } else {
+            System.out.println("No alternative has been chosen yet!");
+        }
+
+
     }
 
     private void copyPressed() {
@@ -92,7 +123,7 @@ public class Controller {
         outputPanel.refreshOutputText(chosenAlts);
     }
 
-    public void altPressed(Alt alt){
+    public void altPressed(Alt alt) {
         //Add alt to history of chosen alts
         chosenAlts.add(alt);
         /*for (int i = 0; i < chosenAlts.size(); i++){
@@ -102,7 +133,7 @@ public class Controller {
         }*/
 
         //Guard against end of decision tree
-        if (currentLevel+1 == altTree.getMaxLevels()) {
+        if (currentLevel + 1 == altTree.getMaxLevels()) {
             outputPanel.refreshOutputText(chosenAlts);
             System.out.println("Reached end of decision tree!");
             return;
@@ -110,11 +141,11 @@ public class Controller {
 
         //Build list for display in GUI. Should be chosen alts + alts in next level
         List<Alt> altsToDisplay = new ArrayList<>(chosenAlts); //Start with chosen alts
-        List<Alt> newLevelAlts = altTree.getAltsAtLevel(currentLevel+1); //Get all possible alts in next level
-        for(Alt a : newLevelAlts){
+        List<Alt> newLevelAlts = altTree.getAltsAtLevel(currentLevel + 1); //Get all possible alts in next level
+        for (Alt a : newLevelAlts) {
             List<Alt> parents = a.getParents(); //For each candidate, get all parents
-            for(Alt p : parents){ //... traverse parents
-                if(p.isChosen() && p.equals(alt)){
+            for (Alt p : parents) { //... traverse parents
+                if (p.isChosen() && p.equals(alt)) {
                     altsToDisplay.add(a); //... and only add candidate if one of its parents was chosen.
                 }
             }
@@ -125,6 +156,7 @@ public class Controller {
         outputPanel.refreshOutputText(chosenAlts);
         decisionPanel.refreshDisplayedAlts(altsToDisplay);
     }
+
 
     public void addPanelInstances(DecisionPanel dp, OutputPanel op, ButtonPanel bp) {
         decisionPanel = dp;

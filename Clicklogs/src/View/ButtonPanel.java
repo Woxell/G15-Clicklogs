@@ -34,7 +34,7 @@ public class ButtonPanel extends JPanel {
 
         undo = new JButton("UNDO");
         //undo.setEnabled(true);
-        undo.setEnabled(false); //UNTIL THIS FUNCTIONALITY HAS BEEN ADDED
+        undo.setEnabled(true); //UNTIL THIS FUNCTIONALITY HAS BEEN ADDED
         undo.setSize(width / 3, 30);
         undo.setLocation(width / 3, height - 50);
         undo.addActionListener(listener -> buttonPressed(ButtonType.UNDO));
