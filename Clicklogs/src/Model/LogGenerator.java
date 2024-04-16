@@ -2,6 +2,8 @@ package Model;
 
 import java.util.List;
 
+//Maybe for Machine Learning implementation?
+
 public class LogGenerator {
     public LogGenerator(){
 
