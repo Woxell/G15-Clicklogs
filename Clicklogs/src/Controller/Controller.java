@@ -23,17 +23,11 @@ public class Controller {
 
     public Controller() {
         new MainFrame(this, 900, 700);
-        /*try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))){
-            altTree = (AltTree) ois.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
 
-         */
         readAltTree();
 
         chosenAlts = new ArrayList<>();
-        decisionPanel.refreshDisplayedAlts(new ArrayList<>(altTree.getAltsAtLevel(0))); //feeds GUI with alt:s in level 0
+        decisionPanel.refreshDisplayedAlts(new ArrayList<>(altTree.getAltsAtLevel(0))); //feeds GUI with alts in level 0
     }
 
     private void readAltTree() {
@@ -50,7 +44,6 @@ public class Controller {
                 System.out.println("Add button pressed");
                 break;
             case COPY:
-                //new stuff
                 copyPressed();
                 System.out.println("Copy button pressed");
                 break;
@@ -59,7 +52,6 @@ public class Controller {
                 System.out.println("Undo button pressed");
                 break;
             case RESET:
-                //new stuff
                 resetPressed();
                 System.out.println("Reset button pressed");
                 break;
@@ -79,13 +71,7 @@ public class Controller {
     private void resetPressed() {
         chosenAlts = new ArrayList<>();
         currentLevel = 0;
-        /*try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))){
-            altTree = (AltTree) ois.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
 
-         */
         readAltTree();
         decisionPanel.refreshDisplayedAlts(new ArrayList<>(altTree.getAltsAtLevel(0)));
         outputPanel.refreshOutputText(chosenAlts);
