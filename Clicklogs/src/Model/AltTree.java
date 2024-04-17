@@ -1,8 +1,8 @@
 package Model;
 
 
-import java.io.Serial;
-import java.io.Serializable;
+import javax.swing.*;
+import java.io.*;
 import java.util.*;
 
 public class AltTree implements Serializable {
@@ -38,6 +38,21 @@ public class AltTree implements Serializable {
         return this.maxLevels;
     }
 
+    public static AltTree readAltTree(String filePath){
+        boolean readFailed = true;
+        AltTree tree = null;
+        do {
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
+                tree = (AltTree) ois.readObject();
+                readFailed = false;
+            } catch (IOException | ClassNotFoundException e) {
+                JOptionPane.showMessageDialog(null, "Error reading from " + filePath + "\nTry again?");
+                System.err.println(e);
+            }
+        } while (readFailed);
+
+        return tree;
+    }
 
     //Admin tools................
 

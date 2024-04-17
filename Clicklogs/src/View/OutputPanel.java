@@ -41,13 +41,8 @@ public class OutputPanel extends JPanel {
         textArea.setText(String.valueOf(generatedText));
     }
 
-    public void copyToClipboard(){
-        String output = textArea.getText();
-        if (!(output.isEmpty())){ //If output is not empty output is copied to clipboard
-            StringSelection selection = new StringSelection(output);
-            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-            clipboard.setContents(selection, null);
-        }
+    public String getText(){
+        return textArea.getText();
     }
 }
 
