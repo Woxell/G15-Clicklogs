@@ -50,8 +50,8 @@ public class Alt implements Serializable {
         return chosen;
     }
 
-    public void becomesChosen(){
-        chosen = true;
+    public void setChosen(boolean b){
+        chosen = b;
     }
 
     @Override

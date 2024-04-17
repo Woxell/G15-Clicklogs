@@ -91,7 +91,7 @@ public class DecisionPanel extends JPanel {
     }
 
     private void altPressed(Alt alt){
-        alt.becomesChosen();
+        alt.setChosen(true);
         controller.altPressed(alt);
     }
 
