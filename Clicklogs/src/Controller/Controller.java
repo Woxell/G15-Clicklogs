@@ -37,7 +37,6 @@ public class Controller {
         switch (pressedButton) {
             case ADD:
                 System.out.println("Add button pressed");
-
                 break;
             case COPY:
                 System.out.println("Copy button pressed");
@@ -56,27 +55,17 @@ public class Controller {
     public void altPressed(Alt alt){
         //Add alt to history of chosen alts
         chosenAlts.add(alt);
-        /*for (int i = 0; i < chosenAlts.size(); i++){
-            if(!(chosenAlts.get(i).isChosen())){
-                chosenAlts.remove(i);
-            }
-        }*/
-
-        //Guard against end of decision tree
-        if (currentLevel+1 == altTree.getMaxLevels()) {
-            outputPanel.refreshOutputText(chosenAlts);
-            System.out.println("Reached end of decision tree!");
-            return;
-        }
 
         //Build list for display in GUI. Should be chosen alts + alts in next level
         List<Alt> altsToDisplay = new ArrayList<>(chosenAlts); //Start with chosen alts
-        List<Alt> newLevelAlts = altTree.getAltsAtLevel(currentLevel+1); //Get all possible alts in next level
-        for(Alt a : newLevelAlts){
-            List<Alt> parents = a.getParents(); //For each candidate, get all parents
-            for(Alt p : parents){ //... traverse parents
-                if(p.isChosen() && p.equals(alt)){
-                    altsToDisplay.add(a); //... and only add candidate if one of its parents was chosen.
+        if (currentLevel+1 < altTree.getMaxLevels()) {
+            List<Alt> newLevelAlts = altTree.getAltsAtLevel(currentLevel+1); //Get all possible alts in next level
+            for(Alt a : newLevelAlts){
+                List<Alt> parents = a.getParents(); //For each candidate, get all parents
+                for(Alt p : parents){ //... traverse parents
+                    if(p.isChosen() && p.equals(alt)){
+                        altsToDisplay.add(a); //... and only add candidate if one of its parents was chosen.
+                    }
                 }
             }
         }
@@ -92,7 +81,6 @@ public class Controller {
         outputPanel = op;
         buttonPanel = bp;
     }
-
 
     public static class Main {
         public static void main(String[] args) {
