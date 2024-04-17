@@ -4,21 +4,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.util.ArrayList;
 import java.util.List;
 
 import Controller.Controller;
-import Model.Alt; //VIOLATES MVC, ONLY FOR TEST DAY
+import Model.Alt; //VIOLATES MVC
 
 
 public class DecisionPanel extends JPanel {
-    private MainPanel mainPanel;
     private Controller controller;
-
 
     public DecisionPanel(MainPanel mainPanel, Controller controller) {
         int height = (int) (mainPanel.getHeight() * 0.7);
-        this.mainPanel = mainPanel;
         this.controller = controller;
         setLayout(new FlowLayout());
         setBackground(Color.GRAY);
@@ -38,21 +34,16 @@ public class DecisionPanel extends JPanel {
         setVisible(true);
     }
 
-    public void refreshDisplayedAlts(List<Alt> displayedAlts) {
+    public void refreshDisplayedAlts(List<Alt> altsToDisplay) {
         removeAll();
-
-        for(Alt alt : displayedAlts) { //adds all relevant buttons to panel
-            JButton altButton = new JButton();
-            altButton.setText(alt.getAltLabelText() + " ");
+        for (Alt alt : altsToDisplay) {
+            JButton altButton = new JButton(alt.getAltLabelText());
             altButton.setBackground(Color.WHITE);
-            if(alt.isChosen()){
-                altButton.setEnabled(false); //if alt has been chosen before
-            }else{
-                altButton.setEnabled(true);
-                altButton.addActionListener(listener -> controller.altPressed(alt)); //if alt has not been chosen before
-            }
+            altButton.setEnabled(!alt.isChosen()); // Disables button if Alt has been chosen
+            altButton.addActionListener(listener -> controller.altPressed(alt));
             add(altButton);
         }
         revalidate();
+        repaint(); //fixes glitch for some reason
     }
 }
