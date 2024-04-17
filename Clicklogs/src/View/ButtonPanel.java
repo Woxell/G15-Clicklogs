@@ -30,25 +30,27 @@ public class ButtonPanel extends JPanel {
         copy.setEnabled(true);
         copy.setSize(width / 3, 20);
         copy.setLocation(0, height - 50);
-        // copy.addActionListener(mainFrame.buttonPressed(ButtonType.COPY));
+        copy.addActionListener(listener -> buttonPressed(ButtonType.COPY));
 
         undo = new JButton("UNDO");
-        undo.setEnabled(true);
+        //undo.setEnabled(true);
+        undo.setEnabled(false); //UNTIL THIS FUNCTIONALITY HAS BEEN ADDED
         undo.setSize(width / 3, 30);
         undo.setLocation(width / 3, height - 50);
-        // undo.addActionListener(mainFrame.buttonPressed(ButtonType.UNDO));
+        undo.addActionListener(listener -> buttonPressed(ButtonType.UNDO));
 
         reset = new JButton("RESET");
         reset.setEnabled(true);
         reset.setSize(width / 3, 30);
         reset.setLocation((width / 3) * 2, height - 50);
-        //reset.addActionListener(mainFrame.buttonPressed(ButtonType.RESET));
+        reset.addActionListener(listener -> buttonPressed(ButtonType.RESET));
 
         addAlt = new JButton("ADD");
-        addAlt.setEnabled(true);
+        //addAlt.setEnabled(true);
+        addAlt.setEnabled(false); //UNTIL THIS FUNCTIONALITY HAS BEEN ADDED
         addAlt.setSize(width / 3, 30);
         addAlt.setLocation(width - 50, (height / 3) * 3);
-        // addAlt.addActionListener(mainFrame.buttonPressed(ButtonType.ADD));
+        addAlt.addActionListener(listener -> buttonPressed(ButtonType.ADD));
 
         add(copy);
         add(undo);
@@ -56,6 +58,9 @@ public class ButtonPanel extends JPanel {
         add(addAlt);
     }
 
+    private void buttonPressed(ButtonType button){
+        mainPanel.buttonPressed(button);
+    }
     protected JList<Object> getSouthPanelList() {
         return southPanelList;
     }

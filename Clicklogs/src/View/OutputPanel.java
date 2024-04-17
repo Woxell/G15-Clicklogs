@@ -6,6 +6,8 @@ import Model.Alt;
 import javax.swing.*;
 import javax.swing.border.MatteBorder;
 import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.util.List;
 
 public class OutputPanel extends JPanel {
@@ -37,6 +39,15 @@ public class OutputPanel extends JPanel {
             generatedText.append(alt.getOutputText()).append(" ");
         }
         textArea.setText(String.valueOf(generatedText));
+    }
+
+    public void copyToClipboard(){
+        String output = textArea.getText();
+        if (!(output.isEmpty())){ //If output is not empty output is copied to clipboard
+            StringSelection selection = new StringSelection(output);
+            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+            clipboard.setContents(selection, null);
+        }
     }
 }
 

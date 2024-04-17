@@ -19,9 +19,33 @@ public class DecisionPanel extends JPanel {
 
 
     public DecisionPanel(MainPanel mainPanel, Controller controller) {
-        int height = (int) (mainPanel.getHeight() * 0.7);
+        //int height = (int) (mainPanel.getHeight() * 0.7);
         this.mainPanel = mainPanel;
         this.controller = controller;
+        /*setLayout(new FlowLayout());
+        setBackground(Color.GRAY);
+        setPreferredSize(new Dimension(1, height));
+        setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+
+        // Handle resize event to make size of this panel dynamic
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                int height = (int) (mainPanel.getHeight() * 0.7); // Calculate the new height
+                setPreferredSize(new Dimension(1, height));
+                revalidate(); // Revalidate the layout to reflect the changes
+            }
+        });
+
+        setVisible(true);
+
+         */
+        setUp();
+    }
+
+    //MAJOR TEST MIGHT REMOVE LATER
+    private void setUp(){
+        int height = (int) (mainPanel.getHeight() * 0.7);
         setLayout(new FlowLayout());
         setBackground(Color.GRAY);
         setPreferredSize(new Dimension(1, height));
@@ -41,9 +65,13 @@ public class DecisionPanel extends JPanel {
     }
 
     public void refreshDisplayedAlts(List<Alt> displayedAlts) {
-        for(JButton b : buttonList){ //removes all existing buttons from panel
+        /*for(JButton b : buttonList){ //removes all existing buttons from panel
             remove(b);
         }
+
+         */
+        removeAll();
+        setUp();
         buttonList.clear();
         for(Alt alt : displayedAlts) { //adds all relevant buttons to panel
             JButton altButton = new JButton();
@@ -56,7 +84,8 @@ public class DecisionPanel extends JPanel {
                 altButton.setEnabled(false); //if alt has been chosen before
             }
             buttonList.add(altButton);
-            add(buttonList.getLast());
+            //add(buttonList.getLast());
+            add(altButton);
         }
         revalidate();
     }
