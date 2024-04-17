@@ -76,43 +76,43 @@ public class Controller {
     private void resetPressed() {
         int choice = JOptionPane.showConfirmDialog(null, "Are you sure?", "Reset", JOptionPane.YES_NO_OPTION);
         if (choice == JOptionPane.YES_OPTION) {
-            chosenAlts = new ArrayList<>();
             currentLevel = 0;
             altTree = AltTree.readAltTree(filePath);
             decisionPanel.refreshDisplayedAlts(new ArrayList<>(altTree.getAltsAtLevel(0)));
-            outputPanel.refreshOutputText(chosenAlts);
+            outputPanel.refreshOutputText(chosenAlts = new ArrayList<>());
         }
     }
 
     public void altPressed(Alt alt) {
-        //Add alt to history of chosen alts
+        alt.setChosen(true);
         chosenAlts.add(alt);
-
+        currentLevel++;
         refreshListToDisplay();
     }
 
     private void refreshListToDisplay() {
         //Build list for display in GUI. Should be chosen alts + alts in next level
         List<Alt> altsToDisplay = new ArrayList<>(chosenAlts); //Start with chosen alts
-        List<Alt> newLevelAlts = altTree.getAltsAtLevel(currentLevel - 1); //Get all possible alts in previous level
+        if (currentLevel < altTree.getMaxLevels()) { //Guard against end of decision tree
+            List<Alt> newLevelAlts = altTree.getAltsAtLevel(currentLevel); //Get all possible alts in next level
 
-        for (Alt a : newLevelAlts) {
-            if (currentLevel > 1) {
-                List<Alt> parents = a.getParents(); //For each candidate, get all parents
-                for (Alt p : parents) { //... traverse parents
-                    if (p.isChosen()) {
-                        altsToDisplay.add(a); //... and only add candidate if one of its parents was chosen.
+            for (Alt alt : newLevelAlts) {
+                if (currentLevel > 0) {
+                    List<Alt> parents = alt.getParents(); //For each candidate, get all parents
+                    for (Alt p : parents) { //... traverse parents
+                        if (p.isChosen() && p.equals(alt)) {
+                            altsToDisplay.add(alt); //... and only add candidate if one of its parents was chosen.
+                        }
                     }
+                } else {  // Add all candidates cus those on level 0 have no parents.
+                    altsToDisplay.add(alt);
                 }
-            } else {  // Add all candidates cus those on level 0 have no parents.
-                altsToDisplay.add(a);
             }
         }
 
-        //Final steps, decrement to previous level and update GUI.
-        currentLevel--;
-        outputPanel.refreshOutputText(chosenAlts);
+        //Final steps, refresh GUI with new lists
         decisionPanel.refreshDisplayedAlts(altsToDisplay);
+        outputPanel.refreshOutputText(chosenAlts);
     }
 
     public void addPanelInstances(DecisionPanel dp, OutputPanel op, ButtonPanel bp) {
