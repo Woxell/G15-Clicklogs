@@ -21,31 +21,29 @@ public class AdminUI {
     }
 
     public void printAltList(List<Alt> list) {
-        int n = 0;
         for (Alt a : list) {
-            print(n++ + ": " + a.getAltLabelText());
+            print(list.indexOf(a) + ": " + a.getAltLabelText());
         }
     }
 
     public void printStringList(List<String> list) {
-        int n = 0;
         for (String s : list) {
-            print(n++ + ": " + s);
+            print(list.indexOf(s) + ": " + s);
         }
     }
 
     public String askUserString(String text) {
         print(text);
-        String answer = scanner.nextLine();
-        return answer;
+        return scanner.nextLine();
     }
 
     public int askUserInt(String text) {
         boolean invalidInput = true;
         int answer = 0;
         while (invalidInput) {
+            String input = askUserString(text);
             try {
-                answer = Integer.parseInt(askUserString(text));
+                answer = Integer.parseInt(input);
                 invalidInput = false;
             } catch (NumberFormatException e) {
                 invalidInput();
@@ -56,7 +54,7 @@ public class AdminUI {
 
     public boolean askUserBoolean(String text) {
         String answer = askUserString(text);
-        return answer.equalsIgnoreCase("yes") || answer.equalsIgnoreCase("y");
+        return answer.equalsIgnoreCase("y") || answer.equalsIgnoreCase("yes");
     }
 
     public void closeScanner() {

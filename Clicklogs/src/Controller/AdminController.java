@@ -17,6 +17,7 @@ public class AdminController {
 
     public AdminController() {
         ui = new AdminUI();
+
         firstPrompt();
 
         ui.closeScanner();
@@ -27,12 +28,12 @@ public class AdminController {
         while (stillChoosing) {
             int choice = ui.askUserInt("""
                     Load existing file or create new?
-                    1: Load existing file
+                    1: Edit existing file
                     2: Create new file
                     """);
             switch (choice) {
                 case 1:
-                    //TODO: method to load existing file
+                    //TODO: method to edit existing file
                     stillChoosing = false;
                     break;
                 case 2:
@@ -83,23 +84,10 @@ public class AdminController {
                 level = ui.askUserBoolean("Continue to next level? (y/n): ") ? level + 1 : level;
             }
         }
-        saveAltTreeToFile(altTree);
+        altTree.saveAltTreeToFile(filePath);
     }
 
-    public void saveAltTreeToFile(AltTree altTree) {
-        boolean saveFailed = true;
-        do {
-            try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
-                oos.writeObject(altTree);
-                saveFailed = false;
-            } catch (IOException e) {
-                System.out.println("Error saving to " + filePath);
-                System.err.println(e);
-                ui.askUserString("Enter anything to try again...");
-            }
-        } while (saveFailed);
-        System.out.println("File saved successfully to " + filePath);
-    }
+
 
     public static class AdminMain {
         public static void main(String[] args) {

@@ -12,9 +12,10 @@ import Model.Alt; //VIOLATES MVC
 
 public class DecisionPanel extends JPanel {
     private Controller controller;
+    private double ratio = 0.5;
 
     public DecisionPanel(MainPanel mainPanel, Controller controller) {
-        int height = (int) (mainPanel.getHeight() * 0.7);
+        int height = (int) (mainPanel.getHeight() * ratio);
         this.controller = controller;
         setLayout(new FlowLayout());
         setBackground(Color.GRAY);
@@ -25,7 +26,7 @@ public class DecisionPanel extends JPanel {
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                int height = (int) (mainPanel.getHeight() * 0.7); // Calculate the new height
+                int height = (int) (mainPanel.getHeight() * ratio); // Calculate the new height
                 setPreferredSize(new Dimension(1, height));
                 revalidate(); // Revalidate the layout to reflect the changes
             }

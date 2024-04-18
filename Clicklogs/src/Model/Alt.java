@@ -77,40 +77,20 @@ public class Alt implements Serializable {
         return children.size();
     }
 
-    /**
-     * Returns the index of <code>node</code> in the receivers children.
-     * If the receiver does not contain <code>node</code>, -1 will be
-     * returned.
-     *
-     * @param node node to be looked for
-     * @return index of specified node
-     */
-    public int getIndexOfChild(Alt node) { //Probably won't be used
-        for (Alt child : children) {
-            if (child == node) {
-                return children.indexOf(node);
-            }
-        }
-        return -1;
-    }
-
     //Parent methods.............
     public void addParent(Alt parent){
         parents.add(parent);
     }
 
-
     public Alt getParent() {
         for (Alt parent : parents) {
             if (parent.isChosen()) {
-                System.out.println("PARENT WAS RETURNED AS: " + parent.getAltLabelText());
                 return parent;
             }
         }
-        System.out.println("NULL WAS RETURNED");
         return null; // probably root Alt. Make sure it cannot be undone.
     }
-    public List<Alt> getParents() {
+    public List<Alt> getAllParents() {
         return parents;
     }
 }

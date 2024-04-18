@@ -21,6 +21,7 @@ public class OutputPanel extends JPanel {
         textArea.setBackground(Color.WHITE);
         textArea.setLineWrap(true); // Make sure text area uses line breaks
         textArea.setWrapStyleWord(true); // Make the line breaks at spaces to not break up words
+        textArea.setFont(new Font("TAHOMA", Font.PLAIN,20));
         add(textArea, BorderLayout.CENTER);
         /*JScrollPane scrollPane = new JScrollPane(textArea);
         add(scrollPane, BorderLayout.CENTER);*/
