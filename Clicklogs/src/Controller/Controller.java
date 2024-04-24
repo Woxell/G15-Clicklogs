@@ -16,6 +16,7 @@ public class Controller {
     private DecisionPanel decisionPanel;
     private OutputPanel outputPanel;
     private ButtonPanel buttonPanel;
+    private MainFrame mainFrame; //parent component for JOptionPanes
     private AltTree altTree;
     private final String filePath = "./src/Data/AltTree.dat"; //Make sure WORKING DIRECTORY is set to "...\G15-Clicklogs\Clicklogs\"
     private int currentLevel = 0;
@@ -26,7 +27,7 @@ public class Controller {
      * Initializes the main frame and sets up the initial state.
      */
     public Controller() {
-        new MainFrame(this, 700, 500);
+        mainFrame = new MainFrame(this, 700, 500);
         initialState();
     }
 
@@ -136,7 +137,7 @@ public class Controller {
                 refreshListToDisplay();
             }
         } else {
-            JOptionPane.showMessageDialog(null, "No alternative has been chosen yet!", "Wtf?", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(mainFrame, "No alternative has been chosen yet!", "Wtf?", JOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -144,7 +145,7 @@ public class Controller {
      * Resets the decision tree.
      */
     private void resetTree() {
-        int choice = JOptionPane.showConfirmDialog(null, "Are you sure?", "Reset", JOptionPane.YES_NO_OPTION);
+        int choice = JOptionPane.showConfirmDialog(mainFrame, "Are you sure?", "Reset", JOptionPane.YES_NO_OPTION);
         if (choice == JOptionPane.YES_OPTION) {
             initialState();
         }
