@@ -9,7 +9,7 @@ import Controller.Controller;
  * and button panel.
  *
  * @author Andre
- * @author
+ * @author Mohammad
  */
 public class MainPanel extends JPanel {
     /**
