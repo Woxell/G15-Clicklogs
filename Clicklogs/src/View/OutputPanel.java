@@ -23,8 +23,6 @@ public class OutputPanel extends JPanel {
         textArea.setWrapStyleWord(true); // Make the line breaks at spaces to not break up words
         textArea.setFont(new Font("TAHOMA", Font.PLAIN,20));
         add(textArea, BorderLayout.CENTER);
-        /*JScrollPane scrollPane = new JScrollPane(textArea);
-        add(scrollPane, BorderLayout.CENTER);*/
     }
 
     public void refreshOutputText(List<Alt> altList) {
