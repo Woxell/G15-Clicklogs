@@ -5,15 +5,25 @@ import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.List;
-
 import Controller.Controller;
 import Model.Alt; //VIOLATES MVC
 
-
+/**
+ * This class represents a panel for displaying decision alternatives.
+ *
+ * @author <Author Name>
+ */
 public class DecisionPanel extends JPanel {
     private Controller controller;
     private double ratio = 0.5;
 
+    /**
+     * Constructor to create a DecisionPanel object.
+     *
+     * @param mainPanel  The main panel.
+     * @param controller The controller.
+     * @author <Author/s Name>
+     */
     public DecisionPanel(MainPanel mainPanel, Controller controller) {
         int height = (int) (mainPanel.getHeight() * ratio);
         this.controller = controller;
@@ -35,6 +45,12 @@ public class DecisionPanel extends JPanel {
         setVisible(true);
     }
 
+    /**
+     * Refreshes the displayed alternatives on the panel.
+     *
+     * @param altsToDisplay The list of alternatives to display.
+     * @author <Author/s Name>
+     */
     public void refreshDisplayedAlts(List<Alt> altsToDisplay) {
         removeAll();
         for (Alt alt : altsToDisplay) {
@@ -45,6 +61,6 @@ public class DecisionPanel extends JPanel {
             add(altButton);
         }
         revalidate();
-        repaint(); //fixes glitch for some reason
+        repaint(); // fixes glitch for some reason
     }
 }
