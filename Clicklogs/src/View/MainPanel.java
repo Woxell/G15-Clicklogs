@@ -12,7 +12,7 @@ public class MainPanel extends JPanel {
     private ButtonPanel buttonPanel;
     private Controller controller;
 
-    public MainPanel(MainFrame mainFrame, Controller controller, int width, int height) {
+    public MainPanel(MainFrame mainFrame, Controller controller) {
         this.mainFrame = mainFrame;
         this.controller = controller;
         setLayout(new BorderLayout());
@@ -30,15 +30,6 @@ public class MainPanel extends JPanel {
         add(buttonPanel, BorderLayout.SOUTH);
     }
 
-    protected DecisionPanel getDecisionPanel(){
-        return decisionPanel;
-    }
-    protected ButtonPanel getButtonPanel(){
-        return buttonPanel;
-    }
-    protected OutputPanel getOutputPanel(){
-        return outputPanel;
-    }
     public int getHeight(){
         return mainFrame.getHeight();
     }
