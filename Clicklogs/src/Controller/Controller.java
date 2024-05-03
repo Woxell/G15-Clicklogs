@@ -111,6 +111,14 @@ public class Controller {
     private void addNewAlt() {
         System.out.println("Add button pressed");
         //TODO: implement functionality for adding custom Alt
+        String labelText = JOptionPane.showInputDialog(mainFrame, "Enter label text for the new alternative");
+        String outputText = JOptionPane.showInputDialog(mainFrame, "Enter output text for the new alternative");
+
+        Alt newAlt = new Alt(labelText, outputText);
+        altTree.addAlt(currentLevel, newAlt);
+        refreshListToDisplay();
+        JOptionPane.showMessageDialog(null, "Alternative added successfully");
+
     }
 
     /**
