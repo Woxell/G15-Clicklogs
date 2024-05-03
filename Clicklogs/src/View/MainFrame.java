@@ -1,14 +1,20 @@
 package View;
 
 import javax.swing.*;
+import java.awt.*;
 import Controller.Controller;
 
-import java.awt.*;
-
-
+/**
+ * @author André Woxell
+ */
 public class MainFrame extends JFrame {
 
-    public MainFrame(Controller controller, int width, int height){
+    /**
+     * Constructor.
+     * @author André Woxell
+     */
+    public MainFrame(Controller controller, int width, int height) {
+
         setSize(width, height);
         setMinimumSize(new Dimension(width, height));
         setLocationRelativeTo(null);
@@ -17,7 +23,6 @@ public class MainFrame extends JFrame {
         setResizable(true);
         MainPanel mainPanel = new MainPanel(this, controller, width, height);
         add(mainPanel);
-
         setVisible(true);
     }
 }
