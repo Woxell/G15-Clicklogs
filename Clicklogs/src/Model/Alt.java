@@ -67,7 +67,7 @@ public class Alt implements Serializable {
      * Sets the label text of this alternative.
      *
      * @author <Author/s Name>
-     * @param Label text.
+     * @param text Label text of alternative.
      */
     public void setAltLabelText(String text) {
         altLabelText = text;

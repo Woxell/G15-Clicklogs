@@ -1,7 +1,7 @@
-
 package View;
 
 import Model.Alt;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -12,13 +12,12 @@ import java.util.Scanner;
  */
 public class AdminUI {
 
-    /**
-     * The scanner used to read user input.
-     */
     private Scanner scanner;
 
     /**
      * Constructs a new AdminUI object with a new Scanner.
+     *
+     * @author Andre
      */
     public AdminUI() {
         scanner = new Scanner(System.in);
@@ -28,6 +27,7 @@ public class AdminUI {
      * Prints the given text to the console.
      *
      * @param text The text to print.
+     * @author Andre
      */
     public void print(String text) {
         System.out.println(text);
@@ -35,8 +35,9 @@ public class AdminUI {
 
     /**
      * Prints an error message indicating invalid input.
+     *
+     * @author Andre
      */
-
     public void invalidInput() {
         print("Invalid input, try again.");
     }
@@ -45,6 +46,7 @@ public class AdminUI {
      * Prints a list of alternatives to the console.
      *
      * @param list The list of alternatives to print.
+     * @author Andre
      */
     public void printAltList(List<Alt> list) {
         for (Alt a : list) {
@@ -57,6 +59,7 @@ public class AdminUI {
      *
      * @param text The text to display before the user inputs a string.
      * @return The string input by the user.
+     * @author Andre
      */
     public String askUserString(String text) {
         print(text);
@@ -68,8 +71,8 @@ public class AdminUI {
      *
      * @param text The text to display before the user inputs an integer.
      * @return The integer input by the user.
+     * @author Andre
      */
-
     public int askUserInt(String text) {
         boolean invalidInput = true;
         int answer = 0;
@@ -90,6 +93,7 @@ public class AdminUI {
      *
      * @param text The text to display before the user inputs a boolean.
      * @return The boolean input by the user.
+     * @author Andre
      */
     public boolean askUserBoolean(String text) {
         String answer = askUserString(text);
@@ -98,6 +102,8 @@ public class AdminUI {
 
     /**
      * Closes the scanner.
+     *
+     * @author Andre
      */
     public void closeScanner() {
         scanner.close();

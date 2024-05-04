@@ -1,6 +1,5 @@
 package Model;
 
-
 import javax.swing.*;
 import java.io.*;
 import java.util.*;
@@ -8,11 +7,12 @@ import java.util.*;
 /**
  * Represents an alternate tree structure to store alternatives at different levels.
  * Each level can contain a list of alternative objects.
+ *
  * @author Andre
  */
 public class AltTree implements Serializable {
-    private int maxLevels; //MAximal anatal nivåer tillåtna i trädet.
-    private Map<Integer, List<Alt>> altTree; // kartläggning av nivåer till listor med alternativ
+    private int maxLevels;
+    private Map<Integer, List<Alt>> altTree;
 
     /**
      * Constructs an AltTree with the specified maximum levels.
@@ -64,14 +64,12 @@ public class AltTree implements Serializable {
                 readFailed = false;
             } catch (IOException | ClassNotFoundException e) {
                 System.err.println(e);
-                int choice = JOptionPane.showConfirmDialog(null,
-                        "Error reading from " + filePath + "\nTry again?", "Error", JOptionPane.YES_NO_OPTION);
+                int choice = JOptionPane.showConfirmDialog(null, "Error reading from " + filePath + "\nTry again?", "Error", JOptionPane.YES_NO_OPTION);
                 if (choice == JOptionPane.NO_OPTION) {
                     System.exit(0);
                 }
             }
         } while (readFailed);
-
         return tree;
     }
 
@@ -89,8 +87,7 @@ public class AltTree implements Serializable {
                 saveFailed = false;
             } catch (IOException e) {
                 System.err.println(e);
-                int choice = JOptionPane.showConfirmDialog(null,
-                        "Error saving to " + filePath + "\nTry again?", "Error", JOptionPane.YES_NO_OPTION);
+                int choice = JOptionPane.showConfirmDialog(null, "Error saving to " + filePath + "\nTry again?", "Error", JOptionPane.YES_NO_OPTION);
                 if (choice == JOptionPane.NO_OPTION) {
                     System.exit(0);
                 }
@@ -99,8 +96,7 @@ public class AltTree implements Serializable {
         System.out.println("File saved successfully to " + filePath);
     }
 
-    //Admin tools................
-
+    //Admin tools
     /**
      * Adds an alternative object to the specified level in the AltTree.
      *
@@ -112,4 +108,3 @@ public class AltTree implements Serializable {
         altTree.get(level).add(alt);
     }
 }
-

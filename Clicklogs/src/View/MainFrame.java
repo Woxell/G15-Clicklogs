@@ -14,7 +14,6 @@ public class MainFrame extends JFrame {
      * @author André Woxell
      */
     public MainFrame(Controller controller, int width, int height) {
-
         setSize(width, height);
         setMinimumSize(new Dimension(width, height));
         setLocationRelativeTo(null);
