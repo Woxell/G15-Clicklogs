@@ -6,6 +6,7 @@ import java.awt.*;
 /**
  * Adds panel with buttons to MainPanel
  * Button functionalities include: Add, Copy, Reset and Undo
+
  *
  * @author Andre, Robert and Mohamad
  */
@@ -95,7 +96,7 @@ public class ButtonPanel extends JPanel {
      * @param button Which button was pressed
      * @author Robert
      */
-    private void buttonPressed(ButtonType button) {
+    private void buttonPressed(ButtonType button){
         mainPanel.buttonPressed(button);
     }
 }
