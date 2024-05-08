@@ -4,10 +4,9 @@ import Controller.Controller;
 import Controller.LoginControll;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
+
 
 public class LoginView extends JFrame{
     private JFrame frame;
