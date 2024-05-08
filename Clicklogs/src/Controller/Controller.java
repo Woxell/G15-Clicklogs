@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import Model.Alt;
@@ -25,18 +26,24 @@ public class Controller {
     private int currentLevel = 0;
     private List<Alt> chosenAlts;
 
+
     /**
      * Constructor for the Controller class.
      * Initializes the main frame and sets up the initial state.
+     *
      * @author Andre
      */
     public Controller() {
+
         mainFrame = new MainFrame(this, 700, 500);
+
         initialState();
     }
 
+
     /**
      * (Re)sets variables. Also updates gui to a clear output field and level 0 alts
+     *
      * @author Andre, Robert
      */
     private void initialState() {
@@ -51,6 +58,7 @@ public class Controller {
      * Refreshes the list of alternatives to display in the GUI.
      * Builds the list based on chosen alternatives and the next level alternatives.
      * Also updates the output text based on the chosen alternatives.
+     *
      * @author Andre
      */
     private void refreshListToDisplay() {
@@ -114,6 +122,7 @@ public class Controller {
 
     /**
      * Adds a new alternative.
+     *
      * @author Zahra
      */
     private void addNewAlt() {
@@ -133,6 +142,7 @@ public class Controller {
 
     /**
      * Copies the output text to the clipboard.
+     *
      * @author Andre, Robert
      */
     private void copyToClipboard() {
@@ -146,6 +156,7 @@ public class Controller {
 
     /**
      * Undoes the last choice made by the user.
+     *
      * @author Andre, Mohamad
      */
     private void undoLastChoice() {
@@ -164,6 +175,7 @@ public class Controller {
 
     /**
      * Resets the decision tree.
+     *
      * @author Andre
      */
     private void resetTree() {
@@ -188,9 +200,11 @@ public class Controller {
         buttonPanel = bPanel;
     }
 
+
     public static class Main {
         public static void main(String[] args) {
             new Controller();
         }
     }
 }
+
