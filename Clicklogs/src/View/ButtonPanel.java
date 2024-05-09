@@ -2,6 +2,12 @@ package View;
 
 import javax.swing.*;
 import java.awt.*;
+/**
+ * The ButtonPanel class represents a panel containing buttons for various actions.
+ * It is used within the main user interface to provide functionality such as copying, undoing,
+ * resetting, and adding new alternatives
+ * @author Zahraa alqassab
+ * */
 
 /**
  * Adds panel with buttons to MainPanel

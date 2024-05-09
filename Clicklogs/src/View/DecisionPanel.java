@@ -5,15 +5,19 @@ import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.List;
-
 import Controller.Controller;
 import Model.Alt; //VIOLATES MVC
 
+<<<<<<< Updated upstream
 /**
  * This class represents a panel for displaying decision alternatives.
  *
  * @author Andre, Robert and Mohamad
  */
+=======
+
+
+>>>>>>> Stashed changes
 public class DecisionPanel extends JPanel {
     private Controller controller;
     private double ratio = 0.5;
