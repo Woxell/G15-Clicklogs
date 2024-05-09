@@ -40,7 +40,7 @@ public class DecisionPanel extends JPanel {
         for (Alt alt : altsToDisplay) {
             JButton altButton = new JButton(alt.getAltLabelText());
             altButton.setBackground(Color.WHITE);
-            altButton.setEnabled(!alt.isChosen()); // Disables button if Alt has been chosen
+            //altButton.setEnabled(!alt.isChosen()); // Disables button if Alt has been chosen
             altButton.addActionListener(listener -> controller.altPressed(alt));
             add(altButton);
         }

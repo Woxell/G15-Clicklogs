@@ -48,23 +48,26 @@ public class Controller {
      * Also updates the output text based on the chosen alternatives.
      */
     private void refreshListToDisplay() {
-        //Build list for display in GUI. Should be chosen alts + alts in next level
-        List<Alt> altsToDisplay = new ArrayList<>(chosenAlts); //Start with chosen alts
-        if (currentLevel < altTree.getMaxLevels()) { //Guard against end of decision tree
-            List<Alt> nextLevelAlts = altTree.getAltsAtLevel(currentLevel); //Get all alt candidates in next level
+        // Build list for display in GUI. Should be chosen alts + alts in next level
+        List<Alt> altsToDisplay = new ArrayList<>(chosenAlts); // Start with chosen alts
+        if (currentLevel < altTree.getMaxLevels()) { // Guard against end of decision tree
+            List<Alt> nextLevelAlts = altTree.getAltsAtLevel(currentLevel); // Get all alt candidates in next level
 
             for (Alt nextLevelAlt : nextLevelAlts) {
-                if (currentLevel > 0) { //Avoids parent-lookup for level 0
-                    List<Alt> parents = nextLevelAlt.getAllParents(); //For each candidate, get all parents
+                if (currentLevel == 0) { // För nivå 0, lägg till direkt
+                    altsToDisplay.add(nextLevelAlt);
+                } else {
+                    List<Alt> parents = nextLevelAlt.getAllParents(); // För alla andra nivåer, kontrollera föräldrar
                     for (Alt p : parents) { //... traverse parents
                         if (p.isChosen()) {
                             altsToDisplay.add(nextLevelAlt); //... and only add candidate if one of its parents was chosen.
+                            break; // Ingen anledning att fortsätta efter att ett valt förälder har hittats
                         }
                     }
                 }
             }
         }
-        //Refresh GUI with new lists
+        // Refresh GUI with new lists
         decisionPanel.refreshDisplayedAlts(altsToDisplay);
         outputPanel.refreshOutputText(chosenAlts);
     }
@@ -110,7 +113,52 @@ public class Controller {
      */
     private void addNewAlt() {
         System.out.println("Add button pressed");
-        //TODO: implement functionality for adding custom Alt
+
+      /*  // Använda JOptionPane för att få indata för det nya alternativet
+        String labelText = JOptionPane.showInputDialog(mainFrame, "Enter label text for the new alternative");
+        if (labelText == null || labelText == null) {
+            System.out.println("Operation cancelled by user");
+            return; // Avbryt operationen om användaren tryckte på "Avbryt" för någon av inmatningarna
+        }
+
+        String outputText = JOptionPane.showInputDialog(mainFrame, "Enter output text for the new alternative");
+
+        // Kontrollera om användaren har tryckt på "Avbryt" för etiketttexten eller utmatningstexten
+
+
+        // Skapa det nya alternativet
+        Alt newAlt = new Alt(labelText, outputText);
+
+        // Hämta alla alternativ från den nuvarande nivån i trädet
+        List<Alt> currentLevelAlts = altTree.getAltsAtLevel(currentLevel);
+
+        // Kontrollera om det finns några befintliga alternativ på den nuvarande nivån
+        if (!currentLevelAlts.isEmpty()) {
+            // Välj det första befintliga alternativet som mall för föräldrar och barn
+            Alt templateAlt = currentLevelAlts.get(1);
+
+            // Kopiera föräldrar från mallalternativet till det nya alternativet
+            for (Alt parent : templateAlt.getAllParents()) {
+                newAlt.addParent(parent);
+            }
+
+            // Kopiera barn från mallalternativet till det nya alternativet
+            for (Alt child : templateAlt.getAllChildren()) {
+                newAlt.addChild(child);
+            }
+        }
+
+        // Lägg till det nya alternativet i AltTree
+        altTree.addAlt(currentLevel, newAlt);
+
+        // Uppdatera gränssnittet
+        refreshListToDisplay();
+
+        // Spara det uppdaterade trädet till filen
+        altTree.saveAltTreeToFile(filePath);
+
+        // Visa meddelande om att det nya alternativet har lagts till
+        JOptionPane.showMessageDialog(null, "Alternative added successfully");*/
     }
 
     /**

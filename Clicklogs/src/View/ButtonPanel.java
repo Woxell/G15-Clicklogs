@@ -2,6 +2,9 @@ package View;
 
 import javax.swing.*;
 import java.awt.*;
+/**
+ *@author Zahraa
+  */
 
 public class ButtonPanel extends JPanel {
     private MainPanel mainPanel;
@@ -34,7 +37,7 @@ public class ButtonPanel extends JPanel {
         reset.setLocation((width / 3) * 2, height - 50);
         reset.addActionListener(listener -> buttonPressed(ButtonType.RESET));
 
-        JButton addAlt = new JButton("ADD");
+        JButton addAlt = new JButton("ADD NEW Alternative");
         addAlt.setEnabled(true);
         addAlt.setSize(width / 3, 30);
         addAlt.setLocation(width - 50, (height / 3) * 3);
