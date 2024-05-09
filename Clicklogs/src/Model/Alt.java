@@ -133,7 +133,6 @@ public class Alt implements Serializable {
     }
      */
 
-<<<<<<< Updated upstream
     //Parent methods
     /**
      * Adds a parent alternative to this alternative.
@@ -141,12 +140,11 @@ public class Alt implements Serializable {
      * @author <Author/s Name>
      * @param parent The parent alternative to add.
      */
-    public void addParent(Alt parent) {
-        parents.add(parent);
-=======
+
+
     //Parent methods.............
     public void addParent(Alt parent) { parents.add(parent);
->>>>>>> Stashed changes
+
     }
 
     //might be needed in later implementation!

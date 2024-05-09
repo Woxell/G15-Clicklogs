@@ -1,6 +1,7 @@
 package View;
 
 import javax.swing.*;
+import javax.swing.border.MatteBorder;
 import java.awt.*;
 import java.util.List;
 
@@ -23,9 +24,9 @@ public class OutputPanel extends JPanel {
      * @author Andre
      */
     public OutputPanel() {
-<<<<<<< Updated upstream
+
         setUp();
-=======
+
         setLayout(new BorderLayout());
         setBackground(Color.PINK);
         add(new JLabel("Texten nedan genereras baserat på dina klickade alternativ ovan"), BorderLayout.NORTH);
@@ -37,7 +38,7 @@ public class OutputPanel extends JPanel {
         textArea.setWrapStyleWord(true); // Make the line breaks at spaces to not break up words
         textArea.setFont(new Font("TAHOMA", Font.PLAIN,20));
         add(textArea, BorderLayout.CENTER);
->>>>>>> Stashed changes
+
     }
 
     /**

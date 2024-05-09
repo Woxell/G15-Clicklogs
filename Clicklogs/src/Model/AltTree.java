@@ -20,21 +20,21 @@ public class AltTree implements Serializable {
     private int maxLevels; //MAximal anatal nivåer tillåtna i trädet.
     private Map<Integer, List<Alt>> altTree; // kartläggning av nivåer till listor med alternativ
 
-<<<<<<< Updated upstream
+
     /**
      * Constructs an AltTree with the specified maximum levels.
      *
      * @param maxLevels The maximum levels allowed in the AltTree.
      * @author Andre
      */
-=======
+
 /**
  * Konstruktur för klassen  AltTree med det angivna maximala antalet nivåer.
  *
  * @param maxLevels Det maximala antalet nivåer tillåtna i AltTree.
  * @author Andre
  */
->>>>>>> Stashed changes
+
     public AltTree(int maxLevels) {
         this.maxLevels = maxLevels;
         altTree = new HashMap<>();
@@ -137,7 +137,7 @@ public class AltTree implements Serializable {
         } while (saveFailed);
         System.out.println("File saved successfully to " + filePath);
     }
-<<<<<<< Updated upstream
+
 
     //Admin tools
     /**

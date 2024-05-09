@@ -9,13 +9,13 @@ import View.DecisionPanel;
 import View.MainFrame;
 import View.OutputPanel;
 
-<<<<<<< Updated upstream
+
 /**
  * This class handles the admin-tasks for creating and editing decision tree files.
  *
  * @author André Woxell
  */
-=======
+
 import javax.swing.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -23,7 +23,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
->>>>>>> Stashed changes
+
 public class AdminController {
 
     private AltTree altTree;
@@ -113,15 +113,14 @@ public class AdminController {
         }
         altTree.saveAltTreeToFile(filePath);
     }
-<<<<<<< Updated upstream
+
 
     /**
      * Main method for running AdminController class.
      *
      * @author André Woxell
      */
-=======
->>>>>>> Stashed changes
+
     public static class AdminMain {
         public static void main(String[] args) {
             new AdminController();
