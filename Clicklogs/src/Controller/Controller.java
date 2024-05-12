@@ -113,8 +113,13 @@ public class Controller {
      */
     private void addNewAlt() {
         System.out.println("Add button pressed");
+<<<<<<< Updated upstream
 
         // Använda JOptionPane för att få indata för det nya alternativet
+=======
+        //TODO: implement functionality for adding custom Alt
+
+>>>>>>> Stashed changes
         String labelText = JOptionPane.showInputDialog(mainFrame, "Enter label text for the new alternative");
         if (labelText == null || labelText == null) {
             System.out.println("Operation cancelled by user");
@@ -154,11 +159,14 @@ public class Controller {
         // Uppdatera gränssnittet
         refreshListToDisplay();
 
+<<<<<<< Updated upstream
         // Spara det uppdaterade trädet till filen
         altTree.saveAltTreeToFile(filePath);
 
         // Visa meddelande om att det nya alternativet har lagts till
         JOptionPane.showMessageDialog(null, "Alternative added successfully");
+=======
+>>>>>>> Stashed changes
     }
 
     /**

@@ -8,7 +8,10 @@ import java.util.List;
 import Controller.Controller;
 import Model.Alt; //VIOLATES MVC
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 /**
  * This class represents a panel for displaying decision alternatives.
  *
@@ -16,12 +19,15 @@ import Model.Alt; //VIOLATES MVC
  */
 
 
+<<<<<<< Updated upstream
 
 
 public class DecisionPanel extends JPanel {
     private Controller controller;
     private double ratio = 0.5;
 
+=======
+>>>>>>> Stashed changes
     /**
      * Constructor to create a DecisionPanel object.
      *
@@ -89,6 +95,7 @@ public class DecisionPanel extends JPanel {
         button.setContentAreaFilled(false);
         button.setOpaque(true);
 
+
         // Set Hover-highlighting
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -98,6 +105,6 @@ public class DecisionPanel extends JPanel {
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 button.setBackground(Color.decode("#191919"));
             }
-        });
-    }
+
+    } });
 }
