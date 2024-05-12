@@ -114,7 +114,7 @@ public class Alt implements Serializable {
         chosen = b;
     }
 
-    /*
+
     // Child methods, might be needed in later implementation!
     public void addChild(Alt child){
         children.add(child);
@@ -131,7 +131,7 @@ public class Alt implements Serializable {
     public int getChildCount() {
         return children.size();
     }
-     */
+
 
     //Parent methods
     /**
