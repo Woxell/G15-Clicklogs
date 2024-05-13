@@ -10,7 +10,7 @@ import Model.Alt; //VIOLATES MVC
 /**
  * Adds a panel for displaying output text.
  *
- * @author Andre and Mohamad
+ * @author Andre ,Mohamad and Isra
  */
 public class OutputPanel extends JPanel {
 

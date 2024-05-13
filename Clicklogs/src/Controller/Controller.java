@@ -9,6 +9,8 @@ import java.util.List;
 
 import Model.Alt;
 import Model.AltTree;
+import Model.User;
+import Model.UserManager;
 import View.*;
 
 public class Controller {
@@ -221,6 +223,8 @@ public class Controller {
 
     public static class Main {
         public static void main(String[] args) {
+
+
             new Controller();
         }
     }

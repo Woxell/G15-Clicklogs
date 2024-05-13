@@ -14,7 +14,7 @@ import java.awt.*;
  * Button functionalities include: Add, Copy, Reset and Undo
 
  *
- * @author Andre, Robert and Mohamad
+ * @author Zahraa, Andre, Robert and Mohamad
  */
 public class ButtonPanel extends JPanel {
     private MainPanel mainPanel;
@@ -25,7 +25,7 @@ public class ButtonPanel extends JPanel {
      * Constructor for ButtonPanel class
      *
      * @param mainPanel MainPanel
-     * @author Andre
+     * @author Zahraa
      */
     public ButtonPanel(MainPanel mainPanel) {
         this.mainPanel = mainPanel;
@@ -39,7 +39,7 @@ public class ButtonPanel extends JPanel {
     /**
      * Initialises Add, Undo, Reset and Copy buttons and adds them to ButtonPanel
      *
-     * @author Andre, Robert and Mohamad
+     * @author Zahraa
      */
     private void setUp() {
         JButton copy = new JButton("COPY");
@@ -100,7 +100,7 @@ public class ButtonPanel extends JPanel {
      * Function is called when actionListeners for Add, Undo, Reset or Copy are triggered
      *
      * @param button Which button was pressed
-     * @author Robert
+     * @author Zahraa
      */
     private void buttonPressed(ButtonType button){
         mainPanel.buttonPressed(button);

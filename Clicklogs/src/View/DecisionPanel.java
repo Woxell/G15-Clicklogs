@@ -12,7 +12,7 @@ import Model.Alt; //VIOLATES MVC
 /**
  * This class represents a panel for displaying decision alternatives.
  *
- * @author Andre, Robert and Mohamad
+ * @author Andre, Robert, Mohamad, and Zahraa
  */
 public class DecisionPanel extends JPanel {
     private Controller controller;
