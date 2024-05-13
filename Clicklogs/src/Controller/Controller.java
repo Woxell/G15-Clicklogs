@@ -9,8 +9,7 @@ import java.util.List;
 
 import Model.Alt;
 import Model.AltTree;
-import Model.User;
-import Model.UserManager;
+
 import View.*;
 
 public class Controller {
