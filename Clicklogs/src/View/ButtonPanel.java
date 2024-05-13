@@ -9,13 +9,6 @@ import java.awt.*;
  * @author Zahraa alqassab
  * */
 
-/**
- * Adds panel with buttons to MainPanel
- * Button functionalities include: Add, Copy, Reset and Undo
-
- *
- * @author Zahraa, Andre, Robert and Mohamad
- */
 public class ButtonPanel extends JPanel {
     private MainPanel mainPanel;
     private int width = 500; // minimum width?
