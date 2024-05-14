@@ -3,6 +3,7 @@ package Model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * This class represents an alternative option in a decision tree.
@@ -17,6 +18,7 @@ public class Alt implements Serializable {
     private List<Alt> children = new ArrayList<>();
     private String altLabelText, outputText;
     private boolean chosen = false;
+    private AtomicInteger counter = new AtomicInteger(0);
 
 
     // Default constructor, might be needed in later implementation!
@@ -168,5 +170,22 @@ public class Alt implements Serializable {
      */
     public List<Alt> getAllParents() {
         return parents;
+    }
+
+    /**
+     * Safely increases counter by 1 in case of Multithreading
+     * @author Robert
+     */
+    public void increaseCounter(){
+        counter.incrementAndGet();
+    }
+
+    /**
+     * Get the current value of counter
+     * @return Counter, amount of times this alt has been chosen
+     * @author Robert
+     */
+    public int getCounter(){
+        return counter.get();
     }
 }

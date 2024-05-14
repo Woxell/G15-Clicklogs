@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import Model.Alt;
@@ -20,11 +19,12 @@ public class Controller {
     private DecisionPanel decisionPanel;
     private OutputPanel outputPanel;
     private ButtonPanel buttonPanel;
-    private MainFrame mainFrame; // parent component for JOptionPanes
+    private final MainFrame mainFrame; // parent component for JOptionPanes
     private AltTree altTree;
     private final String filePath = "./src/Data/AltTree.dat";// Make sure WORKING DIRECTORY is set to "...\G15-Clicklogs\Clicklogs\"
     private int currentLevel = 0;
     private List<Alt> chosenAlts;
+    private boolean smartSorting = false;
 
 
     /**
@@ -36,7 +36,6 @@ public class Controller {
     public Controller() {
 
         mainFrame = new MainFrame(this, 700, 500);
-
         initialState();
     }
 
@@ -44,13 +43,21 @@ public class Controller {
     /**
      * (Re)sets variables. Also updates gui to a clear output field and level 0 alts
      *
-     * @author Andre, Robert
+     * @author Andre
+     * @author Robert
      */
     private void initialState() {
         currentLevel = 0;
         chosenAlts = new ArrayList<>();
         altTree = AltTree.readAltTree(filePath);
-        decisionPanel.refreshDisplayedAlts(altTree.getAltsAtLevel(0));
+        List<Alt> levelZeroAlts = altTree.getAltsAtLevel(0);
+
+        // If user has enabled smart sorting level 0 Alts will be sorted
+        if (smartSorting){
+            displaySort(levelZeroAlts);
+        }
+
+        decisionPanel.refreshDisplayedAlts(levelZeroAlts);
         outputPanel.refreshOutputText(chosenAlts);
     }
 
@@ -64,6 +71,7 @@ public class Controller {
     private void refreshListToDisplay() {
         // Build list for display in GUI. Should be chosen alts + alts in next level
         List<Alt> altsToDisplay = new ArrayList<>(chosenAlts); // Start with chosen alts
+        List<Alt> altChildren = new ArrayList<>(); // Start with chosen alts
         if (currentLevel < altTree.getMaxLevels()) { // Guard against end of decision tree
             List<Alt> nextLevelAlts = altTree.getAltsAtLevel(currentLevel); // Get all alt candidates in next level
             for (Alt nextLevelAlt : nextLevelAlts) {
@@ -71,15 +79,47 @@ public class Controller {
                     List<Alt> parents = nextLevelAlt.getAllParents(); // For each candidate, get all parents
                     for (Alt p : parents) { // ... traverse parents
                         if (p.isChosen()) {
-                            altsToDisplay.add(nextLevelAlt); // ... and only add candidate if one of its parents was chosen.
+                            altChildren.add(nextLevelAlt); // ... and only add candidate if one of its parents was chosen.
                         }
                     }
                 }
             }
         }
+        if (smartSorting){ // If user has chosen smart sorting
+            altChildren = displaySort(altChildren);
+        }
+        altsToDisplay.addAll(altChildren);// Adds relevant children Alts at the end of altsToDisplay arraylist
+
         // Refresh GUI with new lists
         decisionPanel.refreshDisplayedAlts(altsToDisplay);
         outputPanel.refreshOutputText(chosenAlts);
+    }
+
+    /**
+     * Bubblesort algorithm that sorts Alts in descending order based on their counter values
+     * Higher values places at lower indexes in childrenAlts list
+     * @param childrenAlts List of all children alts relevant for DecisionPanel
+     * @return Sorted list
+     * @author Robert
+     */
+    private List<Alt> displaySort(List<Alt> childrenAlts) {
+        int n = childrenAlts.size();
+        boolean swapped;
+
+        do{
+            swapped = false;
+            for (int i = 0; i < n -1; i++){
+                if (childrenAlts.get(i).getCounter() < childrenAlts.get(i + 1).getCounter()){
+                    Alt temp = childrenAlts.get(i);
+                    childrenAlts.set(i, childrenAlts.get(i + 1));
+                    childrenAlts.set(i + 1, temp);
+                    swapped = true;
+                }
+            }
+            n--;
+        }while(swapped);
+
+        return childrenAlts;
     }
 
     /**
@@ -100,6 +140,7 @@ public class Controller {
      *
      * @param pressedButton The type of button pressed.
      * @author Andre
+     * @author Robert
      */
     public void buttonPressed(ButtonType pressedButton) {
         switch (pressedButton) {
@@ -115,9 +156,20 @@ public class Controller {
             case RESET:
                 resetTree();
                 break;
+            case SETTINGS:
+                settingsMenu();
+                break;
+            case SMART:
+                smartSorting = !smartSorting; // Flips boolean
+                System.out.println("Boolean is now: " + smartSorting);
+                break;
             default:
                 System.out.println("Error in buttonPressed method");
         }
+    }
+
+    private void settingsMenu() {
+        new SettingsFrame(this, smartSorting);
     }
 
     /**
@@ -143,7 +195,8 @@ public class Controller {
     /**
      * Copies the output text to the clipboard.
      *
-     * @author Andre, Robert
+     * @author Andre
+     * @author Robert
      */
     private void copyToClipboard() {
         String output = outputPanel.getText(); // TODO: remove last space
@@ -177,12 +230,32 @@ public class Controller {
      * Resets the decision tree.
      *
      * @author Andre
+     * @author Robert
      */
     private void resetTree() {
         int choice = JOptionPane.showConfirmDialog(mainFrame, "Are you sure?",
                 "Reset", JOptionPane.YES_NO_OPTION);
         if (choice == JOptionPane.YES_OPTION) {
+            updateAltTree();
             initialState();
+        }
+    }
+
+    /**
+     * If the user has chosen an Alt before Resetting, this method sets the boolean "chosen" to false for that Alt
+     * and increases the counter of that Alt.
+     * Additionally, this method saves the AltTree to filepath to preserve the updated counters in the Alt class
+     * @author Robert
+     */
+    private void updateAltTree() {
+        if (!chosenAlts.isEmpty()){ // if an Alt has been chosen all Alts chosen will be set to false
+            for (Alt alt : chosenAlts){
+                alt.setChosen(false);
+                alt.increaseCounter();
+                System.out.println("Alt: " + alt.getAltLabelText() + " Has counter: " + alt.getCounter());
+            }
+
+            altTree.saveAltTreeToFile(filePath); // Saves updated AltTree to filepath
         }
     }
 

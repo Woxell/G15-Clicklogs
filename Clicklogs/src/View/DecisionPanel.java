@@ -50,7 +50,8 @@ public class DecisionPanel extends JPanel {
      * Refreshes the displayed alternatives on the panel.
      *
      * @param altsToDisplay The list of alternatives to display.
-     * @author Andre and Robert
+     * @author Andre
+     * @author Robert
      */
     public void refreshDisplayedAlts(List<Alt> altsToDisplay) {
         removeAll();
