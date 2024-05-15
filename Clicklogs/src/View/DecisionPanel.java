@@ -57,7 +57,7 @@ public class DecisionPanel extends JPanel {
         removeAll();
         for (Alt alt : altsToDisplay) {
             JButton altButton = new JButton(alt.getAltLabelText());
-            setUpButtonStyle(altButton);
+            setUpButtonStyle(altButton, alt);
             altButton.setToolTipText(alt.getOutputText());
             if (alt.isChosen()) {
                 altButton.setBackground(Color.BLACK);
@@ -77,7 +77,7 @@ public class DecisionPanel extends JPanel {
      * @param button The button to set up the style for
      * @author Mohamad
      */
-    public void setUpButtonStyle(JButton button) {
+    public void setUpButtonStyle(JButton button, Alt alt) {
         button.setFont(new Font("Arial", Font.BOLD, 16)); // Set font
         button.setForeground(Color.WHITE); // Set font color
         button.setBackground(new Color(0xFF181818, true));
@@ -88,13 +88,36 @@ public class DecisionPanel extends JPanel {
 
         // Set Hover-highlighting
         button.addMouseListener(new java.awt.event.MouseAdapter() {
+            private JWindow previewWindow;
+
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 button.setBackground(Color.decode("#4d4d4d"));
+
+                // Set preview window for alt output text
+                previewWindow = new JWindow();
+                previewWindow.setLayout(new FlowLayout());
+                previewWindow.add(new JLabel(alt.getOutputText()));
+                previewWindow.pack();
+
+                // Positioning previewWindow slightly below cursors right corner
+                Point location = evt.getLocationOnScreen();
+                previewWindow.setLocation(location.x + 15, location.y + 15);
+                previewWindow.setVisible(true);
             }
 
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 button.setBackground(Color.decode("#191919"));
+
+                // Disposes previewWindow
+                if (previewWindow != null){
+                    previewWindow.setVisible(false);
+                    previewWindow.dispose();
+                }
             }
         });
+    }
+
+    private void addPreviewFrame(Alt alt) {
+
     }
 }

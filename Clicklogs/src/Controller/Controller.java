@@ -100,6 +100,7 @@ public class Controller {
      * Higher values places at lower indexes in childrenAlts list
      * @param childrenAlts List of all children alts relevant for DecisionPanel
      * @return Sorted list
+     *
      * @author Robert
      */
     private List<Alt> displaySort(List<Alt> childrenAlts) {

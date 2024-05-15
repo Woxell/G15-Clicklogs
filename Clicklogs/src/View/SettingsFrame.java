@@ -24,10 +24,12 @@ public class SettingsFrame {
         settingsFrame.setDefaultCloseOperation(settingsFrame.EXIT_ON_CLOSE);
         settingsFrame.setSize(250, 300);
         settingsFrame.setLayout(new BorderLayout());
+        //settingsFrame.setUndecorated(true); // Removes close, min and max buttons in top right corner of frame
+        settingsFrame.setLocationRelativeTo(null);
 
         // Creating panel for Frame
         JPanel settingsPanel = new JPanel();
-        settingsPanel.setLayout(new GridLayout (0, 1));
+        settingsPanel.setLayout(new GridLayout (3, 1));
 
         // Creating checkbox for User to choose "smart" sorting of alts
         JCheckBox smartSorting = new JCheckBox("Enable Smart Sorting");
@@ -47,7 +49,7 @@ public class SettingsFrame {
         closeButton.addActionListener(e -> settingsFrame.dispose());
 
         settingsPanel.add(smartSorting);
-        settingsPanel.setBackground(Color.BLACK);
+        settingsPanel.setBackground(Color.DARK_GRAY);
 
         settingsFrame.add(settingsPanel, BorderLayout.CENTER);
         settingsFrame.add(closeButton, BorderLayout.SOUTH);
