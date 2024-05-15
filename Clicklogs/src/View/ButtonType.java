@@ -8,6 +8,7 @@ public enum ButtonType {
     SETTINGS,
     SMART,
     PREVIEW,
+    THEME,
     COPY;
 
 }

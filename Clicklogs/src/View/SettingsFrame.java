@@ -17,7 +17,7 @@ public class SettingsFrame {
      * Constructor
      * @author Robert
      */
-    public SettingsFrame(Controller controller, Boolean isSmart, Boolean isPreview){
+    public SettingsFrame(Controller controller, Boolean isSmart, Boolean preview, Boolean lightMode){
         // Creating the Settings Frame
         // TODO: Change colors to a darker mode
         JFrame settingsFrame = new JFrame("System Settings");
@@ -44,14 +44,14 @@ public class SettingsFrame {
         });
 
         JCheckBox previewWindow = new JCheckBox("Enable Preview Mode");
-        previewWindow.setSelected(isPreview); // If a user has already enabled smart sorting this will be shown in menu
+        previewWindow.setSelected(preview); // If a user has already enabled smart sorting this will be shown in menu
         previewWindow.setFont(new Font("Arial", Font.BOLD, 16)); // Set font
         previewWindow.setForeground(Color.WHITE); // Set font color
         previewWindow.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
 
-                if(!isPreview){ // Informs user of issues before buttonpressed is called
+                if(preview == false && previewWindow.isSelected()){ // Informs user of issues before buttonpressed is called
                     int choice = JOptionPane.showConfirmDialog(null, "Preview mode may cause performance issues," +
                             " are you sure you want to proceed?", "Preview mode", JOptionPane.YES_NO_OPTION);
 
@@ -65,6 +65,18 @@ public class SettingsFrame {
             }
         });
 
+        // Creating checkbox for user to change colortheme of UI
+        JCheckBox colorTheme = new JCheckBox("Enable Light mode");
+        colorTheme.setSelected(lightMode); // If a user has already enabled smart sorting this will be shown in menu
+        colorTheme.setFont(new Font("Arial", Font.BOLD, 16)); // Set font
+        colorTheme.setForeground(Color.WHITE); // Set font color
+        colorTheme.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                controller.buttonPressed(ButtonType.THEME);
+            }
+        });
+
         // Creating a close button for menu
         JButton closeButton = new JButton("Close Settings");
         setUpButtonStyle(closeButton);
@@ -72,12 +84,14 @@ public class SettingsFrame {
 
         settingsPanel.add(smartSorting);
         settingsPanel.add(previewWindow);
+        settingsPanel.add(colorTheme);
         settingsPanel.setBackground(Color.DARK_GRAY);
 
         settingsFrame.add(settingsPanel, BorderLayout.CENTER);
         settingsFrame.add(closeButton, BorderLayout.SOUTH);
         settingsFrame.setVisible(true);
     }
+
 
     /**
      * Sets up the style for buttons.

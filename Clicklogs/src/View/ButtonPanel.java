@@ -16,6 +16,12 @@ public class ButtonPanel extends JPanel {
     private MainPanel mainPanel;
     private int width = 500; // minimum width?
     private int height = 50; // always same height
+    private JButton copy;
+    private JButton undo;
+    private JButton addAlt;
+    private JButton reset;
+    private JButton settings;
+    private Boolean lightMode = false;
 
     /**
      * Constructor for ButtonPanel class
@@ -27,7 +33,7 @@ public class ButtonPanel extends JPanel {
         this.mainPanel = mainPanel;
         setLayout(new FlowLayout());
         setPreferredSize(new Dimension(width, height));
-        setBackground(Color.decode("#191919"));
+        //setBackground(Color.decode("#191919"));
         setUp();
         setVisible(true);
     }
@@ -40,30 +46,32 @@ public class ButtonPanel extends JPanel {
      * @author Mohamad
      */
     private void setUp() {
-        JButton copy = new JButton("COPY");
+        copy = new JButton("COPY");
         setUpButtonStyle(copy);
         copy.setLocation(0, height - 50);
         copy.addActionListener(listener -> buttonPressed(ButtonType.COPY));
 
-        JButton undo = new JButton("UNDO");
+        undo = new JButton("UNDO");
         setUpButtonStyle(undo);
         undo.setLocation(width / 3, height - 50);
         undo.addActionListener(listener -> buttonPressed(ButtonType.UNDO));
 
-        JButton reset = new JButton("RESET");
+        reset = new JButton("RESET");
         setUpButtonStyle(reset);
         reset.setLocation((width / 3) * 2, height - 50);
         reset.addActionListener(listener -> buttonPressed(ButtonType.RESET));
 
-        JButton addAlt = new JButton("ADD");
+        addAlt = new JButton("ADD");
         setUpButtonStyle(addAlt);
         addAlt.setLocation(width - 50, (height / 3) * 3);
         addAlt.addActionListener(listener -> buttonPressed(ButtonType.ADD));
 
-        JButton settings = new JButton(" ⚙ ");
+        settings = new JButton(" ⚙ ");
         setUpButtonStyle(settings);
         settings.setLocation(width - 50, (height / 3) * 3);
         settings.addActionListener(listener -> buttonPressed(ButtonType.SETTINGS));
+
+        setDarkMode(); // Darkmode initial theme
 
         add(copy);
         add(undo);
@@ -77,12 +85,13 @@ public class ButtonPanel extends JPanel {
      *
      * @param button The button to set up the style for
      * @author Mohamad
+     * @author Robert
      */
     public void setUpButtonStyle(JButton button) {
         button.setSize(width / 3, 30);
         button.setFont(new Font("Arial", Font.BOLD, 12)); // Set font
-        button.setForeground(Color.decode("#c5c5c5")); // Set font color
-        button.setBackground(Color.decode("#191919"));
+        //button.setForeground(Color.decode("#c5c5c5")); // Set font color
+        //button.setBackground(Color.decode("#191919"));
         button.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
         button.setFocusPainted(false);
         button.setContentAreaFilled(false);
@@ -91,22 +100,72 @@ public class ButtonPanel extends JPanel {
         // Set Hover-highlighting
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                button.setBackground(Color.decode("#553C45"));
+                // Switches to lightmode if true
+                if (lightMode){
+                    button.setBackground(Color.LIGHT_GRAY);
+                }else {
+                    button.setBackground(Color.decode("#553C45"));
+                }
             }
 
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                button.setBackground(Color.decode("#191919"));
+                // Switches to lightmode if true
+                if (lightMode){
+                    button.setBackground(Color.WHITE);
+                }else {
+                    button.setBackground(Color.decode("#191919"));
+                }
             }
         });
     }
 
     /**
-     * Function is called when actionListeners for Add, Undo, Reset or Copy are triggered
+     * Function is called when actionListeners for Add, Undo, Reset, Settings or Copy are triggered
      *
      * @param button Which button was pressed
      * @author Robert
      */
     private void buttonPressed(ButtonType button){
         mainPanel.buttonPressed(button);
+    }
+
+    /**
+     * Sets darkmode
+     * @author Robert
+     */
+    public void setDarkMode(){
+        lightMode = false;
+        setBackground(Color.decode("#191919"));
+        copy.setBackground(Color.decode("#191919"));
+        undo.setBackground(Color.decode("#191919"));
+        reset.setBackground(Color.decode("#191919"));
+        addAlt.setBackground(Color.decode("#191919"));
+        settings.setBackground(Color.decode("#191919"));
+
+        copy.setForeground(Color.decode("#c5c5c5"));
+        undo.setForeground(Color.decode("#c5c5c5"));
+        reset.setForeground(Color.decode("#c5c5c5"));
+        addAlt.setForeground(Color.decode("#c5c5c5"));
+        settings.setForeground(Color.decode("#c5c5c5"));
+    }
+
+    /**
+     * Sets lightmode
+     * @author Robert
+     */
+    public void setLightMode(){
+        lightMode = true;
+        setBackground(Color.WHITE);
+        copy.setBackground(Color.WHITE);
+        undo.setBackground(Color.WHITE);
+        reset.setBackground(Color.WHITE);
+        addAlt.setBackground(Color.WHITE);
+        settings.setBackground(Color.WHITE);
+
+        copy.setForeground(Color.BLACK);
+        undo.setForeground(Color.BLACK);
+        reset.setForeground(Color.BLACK);
+        addAlt.setForeground(Color.BLACK);
+        settings.setForeground(Color.BLACK);
     }
 }

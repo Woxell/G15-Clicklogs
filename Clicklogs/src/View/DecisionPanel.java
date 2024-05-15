@@ -12,12 +12,15 @@ import Model.Alt; //VIOLATES MVC
 /**
  * This class represents a panel for displaying decision alternatives.
  *
- * @author Andre, Robert and Mohamad
+ * @author Andre,
+ * @author Robert
+ * @author Mohamad
  */
 public class DecisionPanel extends JPanel {
     private Controller controller;
     private double ratio = 0.5;
     private boolean previewBoolean;
+    private boolean lightMode = false;
 
     /**
      * Constructor to create a DecisionPanel object.
@@ -30,7 +33,7 @@ public class DecisionPanel extends JPanel {
         int height = (int) (mainPanel.getHeight() * ratio);
         this.controller = controller;
         setLayout(new FlowLayout());
-        setBackground(Color.BLACK);
+        //setBackground(Color.BLACK);
         setPreferredSize(new Dimension(1, height));
         setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
@@ -44,6 +47,7 @@ public class DecisionPanel extends JPanel {
             }
         });
 
+        setDarkMode(); // Darkmode initial theme
         setVisible(true);
     }
 
@@ -61,7 +65,11 @@ public class DecisionPanel extends JPanel {
             setUpButtonStyle(altButton, alt);
             altButton.setToolTipText(alt.getOutputText());
             if (alt.isChosen()) {
-                altButton.setBackground(Color.BLACK);
+                if (lightMode){
+                    altButton.setBackground(Color.WHITE);
+                }else {
+                    altButton.setBackground(Color.BLACK);
+                }
                 altButton.removeMouseListener(altButton.getMouseListeners()[1]);
             }
             altButton.setEnabled(!alt.isChosen()); // Disables button if Alt has been chosen
@@ -77,39 +85,56 @@ public class DecisionPanel extends JPanel {
      *
      * @param button The button to set up the style for
      * @author Mohamad
+     * @author Robert
      */
     public void setUpButtonStyle(JButton button, Alt alt) {
         button.setFont(new Font("Arial", Font.BOLD, 16)); // Set font
-        button.setForeground(Color.WHITE); // Set font color
-        button.setBackground(new Color(0xFF181818, true));
         button.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
         button.setFocusPainted(false);
         button.setContentAreaFilled(false);
         button.setOpaque(true);
+        if (lightMode){
+            button.setForeground(Color.BLACK); // Set font color
+            button.setBackground(Color.WHITE);
+        }else {
+            button.setForeground(Color.WHITE); // Set font color
+            button.setBackground(new Color(0xFF181818, true));
+        }
 
         // Set Hover-highlighting
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             private JWindow previewWindow;
 
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                button.setBackground(Color.decode("#4d4d4d"));
+
+                // Switches highlight to lightmode if true
+                if (lightMode){
+                    button.setBackground(Color.LIGHT_GRAY);
+                }else {
+                    button.setBackground(Color.decode("#553C45"));
+                }
 
                 // Set preview window for alt output text if preview mode is enabled
                 if (previewBoolean){
-                previewWindow = new JWindow();
-                previewWindow.setLayout(new FlowLayout());
-                previewWindow.add(new JLabel(alt.getOutputText()));
-                previewWindow.pack();
+                    previewWindow = new JWindow();
+                    previewWindow.setLayout(new FlowLayout());
+                    previewWindow.add(new JLabel(alt.getOutputText()));
+                    previewWindow.pack();
 
-                // Positioning previewWindow slightly below cursors right corner
-                Point location = evt.getLocationOnScreen();
-                previewWindow.setLocation(location.x + 15, location.y + 15);
-                previewWindow.setVisible(true);
+                    // Positioning previewWindow slightly below cursors right corner
+                    Point location = evt.getLocationOnScreen();
+                    previewWindow.setLocation(location.x + 15, location.y + 15);
+                    previewWindow.setVisible(true);
                 }
             }
 
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                button.setBackground(Color.decode("#191919"));
+                // Switches to lightmode if true
+                if (lightMode){
+                    button.setBackground(Color.WHITE);
+                }else {
+                    button.setBackground(Color.decode("#191919"));
+                }
 
                 // Disposes previewWindow
                 if (previewWindow != null){
@@ -120,12 +145,29 @@ public class DecisionPanel extends JPanel {
         });
     }
 
-
     /**
      * Sets previewboolean
      * @author Robert
      */
     public void setPreview(boolean previewBoolean) {
         this.previewBoolean = previewBoolean;
+    }
+
+    /**
+     * Sets darkmode
+     * @author Robert
+     */
+    public void setDarkMode(){
+        lightMode = false;
+        setBackground(new Color(0xFF181818, true));
+    }
+
+    /**
+     * Sets lightmode
+     * @author Robert
+     */
+    public void setLightMode(){
+        lightMode = true;
+        setBackground(Color.WHITE);
     }
 }

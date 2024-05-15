@@ -26,6 +26,7 @@ public class Controller {
     private List<Alt> chosenAlts;
     private boolean smartBoolean = false;
     private boolean previewBoolean = false;
+    private boolean themeBoolean = false; // False = Dark theme, True = Light Theme
 
 
     /**
@@ -167,20 +168,69 @@ public class Controller {
                 settingsMenu();
                 break;
             case SMART:
-                smartBoolean = !smartBoolean; // Flips boolean
-                System.out.println("Boolean is now: " + smartBoolean);
+                setSmartSorting();
                 break;
             case PREVIEW:
-                previewBoolean = !previewBoolean;
-                decisionPanel.setPreview(previewBoolean);
+                setPreviewMode();
+                break;
+            case THEME:
+                setTheme();
                 break;
             default:
                 System.out.println("Error in buttonPressed method");
         }
     }
 
+    /**
+     * Toggles smartsorting on/off and refreshes DecisionPanel
+     */
+    private void setSmartSorting() {
+        smartBoolean = !smartBoolean; // Flips boolean
+
+        if (currentLevel > 0){ // Refreshes buttons to display if alts have already been chosen
+            refreshListToDisplay();
+        }else { // Reads level 0 alts if no alts have been chosen
+            initialState();
+        }
+    }
+
+    /**
+     * Switches color-theme between light and dark mode and refreshes DecisionPanel
+     * @author Robert
+     */
+    private void setTheme() {
+        themeBoolean = !themeBoolean; // Flips boolean
+
+        if (themeBoolean){
+            outputPanel.setLightMode();
+            buttonPanel.setLightMode();
+            decisionPanel.setLightMode();
+
+        }else {
+            outputPanel.setDarkMode();
+            buttonPanel.setDarkMode();
+            decisionPanel.setDarkMode();
+        }
+
+        if (currentLevel > 0){ // Refreshes buttons to display if alts have already been chosen
+            refreshListToDisplay();
+
+        }else { // Reads level 0 alts if no alts have been chosen
+            initialState();
+        }
+    }
+
+    /**
+     * Flips boolean and turns on preview mode in DecisionPanel
+     * @author Robert
+     */
+    private void setPreviewMode() {
+        previewBoolean = !previewBoolean;
+        decisionPanel.setPreview(previewBoolean);
+    }
+
     private void settingsMenu() {
-        new SettingsFrame(this, smartBoolean, previewBoolean);
+        new SettingsFrame(this, smartBoolean, previewBoolean, themeBoolean);
     }
 
     /**
@@ -259,14 +309,13 @@ public class Controller {
      * @author Robert
      */
     private void updateAltTree() {
-        if (!chosenAlts.isEmpty()){ // If an Alt has been chosen all Alts chosen will be set to false
+        if (!chosenAlts.isEmpty()){ // If an Alt has been chosen all chosen Alts chosen will be set to false
             for (Alt alt : chosenAlts){
                 alt.setChosen(false);
                 alt.increaseCounter(); // Increases alt counter by +1
-                System.out.println("Alt: " + alt.getAltLabelText() + " Has counter: " + alt.getCounter()); // Test remove later
             }
 
-            altTree.saveAltTreeToFile(filePath); // Saves updated AltTree to filepath
+            altTree.saveAltTreeToFile(filePath); // Saves updated Alt-counters in AltTree to filepath
         }
     }
 
