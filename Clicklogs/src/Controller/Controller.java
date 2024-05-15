@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import Model.Alt;
 import Model.AltTree;
+import Model.UserModel;
 import View.*;
 
 /**
@@ -25,6 +26,9 @@ public class Controller {
     private final String filePath = "./src/Data/AltTree.dat";// Make sure WORKING DIRECTORY is set to "...\G15-Clicklogs\Clicklogs\"
     private int currentLevel = 0;
     private List<Alt> chosenAlts;
+    private UserModel userModel;
+
+    private LoginV loginV;
 
 
     /**
@@ -33,11 +37,31 @@ public class Controller {
      *
      * @author Andre
      */
-    public Controller() {
+    public Controller(UserModel userModel, LoginV loginV) {
+        this.userModel = userModel;
+        this.loginV = loginV;
 
-        mainFrame = new MainFrame(this, 700, 500);
 
-        initialState();
+
+        //Visa inloggningsskärmen först
+        loginV.show();
+
+        // Lyssna på händelser för inloggning och visa MainFrame vid framgångsrik inloggning
+        loginV.setLoginButtonListener(e -> {
+            String username = loginV.getUsername();
+            String password = loginV.getPassword();
+            if (userModel.authenticate(username, password)) {
+               // loginV.showSuccess("Login successful!");
+                loginV.hide();
+
+                //Skapa en instans av MainFrame och visa den
+                MainFrame mainFrame = new MainFrame(this,300,400);
+                initialState();
+            } else {
+                loginV.showError("Invalid username or password.");
+            }
+        });
+
     }
 
 
@@ -203,8 +227,16 @@ public class Controller {
 
     public static class Main {
         public static void main(String[] args) {
-            new Controller();
+
+
+            SwingUtilities.invokeLater(() -> {
+                UserModel userModel = new UserModel();
+                LoginV loginView = new LoginV();
+                Controller controller = new Controller(userModel, loginView);
+
+
+
+            });
         }
     }
 }
-
