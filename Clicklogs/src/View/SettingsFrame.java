@@ -17,7 +17,7 @@ public class SettingsFrame {
      * Constructor
      * @author Robert
      */
-    public SettingsFrame(Controller controller, Boolean isSmart){
+    public SettingsFrame(Controller controller, Boolean isSmart, Boolean isPreview){
         // Creating the Settings Frame
         // TODO: Change colors to a darker mode
         JFrame settingsFrame = new JFrame("System Settings");
@@ -43,12 +43,35 @@ public class SettingsFrame {
             }
         });
 
+        JCheckBox previewWindow = new JCheckBox("Enable Preview Mode");
+        previewWindow.setSelected(isPreview); // If a user has already enabled smart sorting this will be shown in menu
+        previewWindow.setFont(new Font("Arial", Font.BOLD, 16)); // Set font
+        previewWindow.setForeground(Color.WHITE); // Set font color
+        previewWindow.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+
+                if(!isPreview){ // Informs user of issues before buttonpressed is called
+                    int choice = JOptionPane.showConfirmDialog(null, "Preview mode may cause performance issues," +
+                            " are you sure you want to proceed?", "Preview mode", JOptionPane.YES_NO_OPTION);
+
+                    if (choice == JOptionPane.YES_NO_OPTION){
+                        controller.buttonPressed(ButtonType.PREVIEW);
+                    }
+                }else {
+                    controller.buttonPressed(ButtonType.PREVIEW);
+                }
+
+            }
+        });
+
         // Creating a close button for menu
         JButton closeButton = new JButton("Close Settings");
         setUpButtonStyle(closeButton);
         closeButton.addActionListener(e -> settingsFrame.dispose());
 
         settingsPanel.add(smartSorting);
+        settingsPanel.add(previewWindow);
         settingsPanel.setBackground(Color.DARK_GRAY);
 
         settingsFrame.add(settingsPanel, BorderLayout.CENTER);

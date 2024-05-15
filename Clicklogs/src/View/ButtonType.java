@@ -7,6 +7,7 @@ public enum ButtonType {
     RESET,
     SETTINGS,
     SMART,
+    PREVIEW,
     COPY;
 
 }

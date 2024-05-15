@@ -24,7 +24,8 @@ public class Controller {
     private final String filePath = "./src/Data/AltTree.dat";// Make sure WORKING DIRECTORY is set to "...\G15-Clicklogs\Clicklogs\"
     private int currentLevel = 0;
     private List<Alt> chosenAlts;
-    private boolean smartSorting = false;
+    private boolean smartBoolean = false;
+    private boolean previewBoolean = false;
 
 
     /**
@@ -52,8 +53,13 @@ public class Controller {
         altTree = AltTree.readAltTree(filePath);
         List<Alt> levelZeroAlts = altTree.getAltsAtLevel(0);
 
+        //test
+        for (Alt alt : levelZeroAlts){
+            System.out.println("Alt: " + alt.getAltLabelText());
+        }
+
         // If user has enabled smart sorting level 0 Alts will be sorted
-        if (smartSorting){
+        if (smartBoolean){
             displaySort(levelZeroAlts);
         }
 
@@ -85,7 +91,7 @@ public class Controller {
                 }
             }
         }
-        if (smartSorting){ // If user has chosen smart sorting
+        if (smartBoolean){ // If user has chosen smart sorting
             altChildren = displaySort(altChildren);
         }
         altsToDisplay.addAll(altChildren);// Adds relevant children Alts at the end of altsToDisplay arraylist
@@ -161,8 +167,12 @@ public class Controller {
                 settingsMenu();
                 break;
             case SMART:
-                smartSorting = !smartSorting; // Flips boolean
-                System.out.println("Boolean is now: " + smartSorting);
+                smartBoolean = !smartBoolean; // Flips boolean
+                System.out.println("Boolean is now: " + smartBoolean);
+                break;
+            case PREVIEW:
+                previewBoolean = !previewBoolean;
+                decisionPanel.setPreview(previewBoolean);
                 break;
             default:
                 System.out.println("Error in buttonPressed method");
@@ -170,7 +180,7 @@ public class Controller {
     }
 
     private void settingsMenu() {
-        new SettingsFrame(this, smartSorting);
+        new SettingsFrame(this, smartBoolean, previewBoolean);
     }
 
     /**
@@ -249,11 +259,11 @@ public class Controller {
      * @author Robert
      */
     private void updateAltTree() {
-        if (!chosenAlts.isEmpty()){ // if an Alt has been chosen all Alts chosen will be set to false
+        if (!chosenAlts.isEmpty()){ // If an Alt has been chosen all Alts chosen will be set to false
             for (Alt alt : chosenAlts){
                 alt.setChosen(false);
-                alt.increaseCounter();
-                System.out.println("Alt: " + alt.getAltLabelText() + " Has counter: " + alt.getCounter());
+                alt.increaseCounter(); // Increases alt counter by +1
+                System.out.println("Alt: " + alt.getAltLabelText() + " Has counter: " + alt.getCounter()); // Test remove later
             }
 
             altTree.saveAltTreeToFile(filePath); // Saves updated AltTree to filepath

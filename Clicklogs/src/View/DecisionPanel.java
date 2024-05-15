@@ -17,6 +17,7 @@ import Model.Alt; //VIOLATES MVC
 public class DecisionPanel extends JPanel {
     private Controller controller;
     private double ratio = 0.5;
+    private boolean previewBoolean;
 
     /**
      * Constructor to create a DecisionPanel object.
@@ -93,7 +94,8 @@ public class DecisionPanel extends JPanel {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 button.setBackground(Color.decode("#4d4d4d"));
 
-                // Set preview window for alt output text
+                // Set preview window for alt output text if preview mode is enabled
+                if (previewBoolean){
                 previewWindow = new JWindow();
                 previewWindow.setLayout(new FlowLayout());
                 previewWindow.add(new JLabel(alt.getOutputText()));
@@ -103,6 +105,7 @@ public class DecisionPanel extends JPanel {
                 Point location = evt.getLocationOnScreen();
                 previewWindow.setLocation(location.x + 15, location.y + 15);
                 previewWindow.setVisible(true);
+                }
             }
 
             public void mouseExited(java.awt.event.MouseEvent evt) {
@@ -117,7 +120,12 @@ public class DecisionPanel extends JPanel {
         });
     }
 
-    private void addPreviewFrame(Alt alt) {
 
+    /**
+     * Sets previewboolean
+     * @author Robert
+     */
+    public void setPreview(boolean previewBoolean) {
+        this.previewBoolean = previewBoolean;
     }
 }
