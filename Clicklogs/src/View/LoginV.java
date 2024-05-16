@@ -13,7 +13,7 @@ public class LoginV {
     public LoginV() {
         frame = new JFrame("Login");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(300, 150);
+        frame.setSize(400, 200);
         frame.setLocationRelativeTo(null);
 
         JPanel panel = new JPanel(new GridLayout(3, 2));
@@ -59,7 +59,5 @@ public class LoginV {
         JOptionPane.showMessageDialog(frame, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
-    public void showSuccess(String message) {
-        JOptionPane.showMessageDialog(frame, message);
-    }
+
 }
