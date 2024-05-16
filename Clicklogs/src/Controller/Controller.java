@@ -19,6 +19,7 @@ public class Controller {
     private DecisionPanel decisionPanel;
     private OutputPanel outputPanel;
     private ButtonPanel buttonPanel;
+    private SettingsFrame settingsFrame;
     private final MainFrame mainFrame; // parent component for JOptionPanes
     private AltTree altTree;
     private final String filePath = "./src/Data/AltTree.dat";// Make sure WORKING DIRECTORY is set to "...\G15-Clicklogs\Clicklogs\"
@@ -27,7 +28,6 @@ public class Controller {
     private boolean smartBoolean = false;
     private boolean previewBoolean = false;
     private boolean themeBoolean = false; // False = Dark theme, True = Light Theme
-    private SettingsFrame settingsFrame;
 
 
     /**
@@ -62,11 +62,11 @@ public class Controller {
 
         // If user has enabled smart sorting level 0 Alts will be sorted
         if (smartBoolean){
-            displaySort(levelZeroAlts);
+            smartSort(levelZeroAlts);
         }
 
         decisionPanel.refreshDisplayedAlts(levelZeroAlts);
-        outputPanel.refreshOutputText(chosenAlts);
+        outputPanel.refreshOutputText(chosenAlts); // TODO INSPECT WHY PARAMETER IS NECESSARY FOR refreshOutputText
     }
 
     /**
@@ -75,6 +75,7 @@ public class Controller {
      * Also updates the output text based on the chosen alternatives.
      *
      * @author Andre
+     * @author Robert
      */
     private void refreshListToDisplay() {
         // Build list for display in GUI. Should be chosen alts + alts in next level
@@ -94,7 +95,7 @@ public class Controller {
             }
         }
         if (smartBoolean){ // If user has chosen smart sorting
-            altChildren = displaySort(altChildren);
+            altChildren = smartSort(altChildren);
         }
         altsToDisplay.addAll(altChildren);// Adds relevant children Alts at the end of altsToDisplay arraylist
 
@@ -111,7 +112,7 @@ public class Controller {
      *
      * @author Robert
      */
-    private List<Alt> displaySort(List<Alt> childrenAlts) {
+    private List<Alt> smartSort(List<Alt> childrenAlts) {
         int n = childrenAlts.size();
         boolean swapped;
 
@@ -184,6 +185,7 @@ public class Controller {
 
     /**
      * Toggles smartsorting on/off and refreshes DecisionPanel
+     * @author Robert
      */
     private void setSmartSorting() {
         smartBoolean = !smartBoolean; // Flips boolean
@@ -233,7 +235,7 @@ public class Controller {
     }
 
     private void settingsMenu() {
-        new SettingsFrame(this, smartBoolean, previewBoolean, themeBoolean);
+        settingsFrame = new SettingsFrame(this, smartBoolean, previewBoolean, themeBoolean);
     }
 
     /**
@@ -335,17 +337,7 @@ public class Controller {
         outputPanel = oPanel;
         buttonPanel = bPanel;
     }
-
-    /**
-     * Adds active SettingsFrame to controller
-     * @param sFrame instance of SettingsFrame
-     * @author Robert
-     */
-    public void addSettingsFrame(SettingsFrame sFrame){
-        settingsFrame = sFrame;
-    }
-
-
+    
     public static class Main {
         public static void main(String[] args) {
             new Controller();

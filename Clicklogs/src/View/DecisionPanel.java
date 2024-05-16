@@ -94,10 +94,10 @@ public class DecisionPanel extends JPanel {
         button.setContentAreaFilled(false);
         button.setOpaque(true);
         if (lightMode){
-            button.setForeground(Color.BLACK); // Set font color
+            button.setForeground(Color.BLACK); // Set font color to Light mode
             button.setBackground(Color.WHITE);
         }else {
-            button.setForeground(Color.WHITE); // Set font color
+            button.setForeground(Color.WHITE); // Set font color to Dark mode
             button.setBackground(new Color(0xFF181818, true));
         }
 
@@ -121,10 +121,11 @@ public class DecisionPanel extends JPanel {
                     previewWindow.add(new JLabel(alt.getOutputText()));
                     previewWindow.pack();
 
-                    // Positioning previewWindow slightly below cursors right corner
-                    Point location = evt.getLocationOnScreen();
-                    previewWindow.setLocation(location.x + 15, location.y + 15);
+                    // Positioning previewWindow slightly below right corner of button
+                    Point location = button.getLocationOnScreen();
+                    previewWindow.setLocation(location.x + 35, location.y + 35);
                     previewWindow.setVisible(true);
+                    button.setToolTipText(null);// Fixes bug where two previewWindows appear
                 }
             }
 

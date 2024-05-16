@@ -113,7 +113,6 @@ public class SettingsFrame {
         settingsFrame.setVisible(true);
 
         setDarkMode();
-        controller.addSettingsFrame(this);
     }
 
 
