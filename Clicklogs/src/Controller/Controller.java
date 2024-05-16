@@ -27,6 +27,7 @@ public class Controller {
     private boolean smartBoolean = false;
     private boolean previewBoolean = false;
     private boolean themeBoolean = false; // False = Dark theme, True = Light Theme
+    private SettingsFrame settingsFrame;
 
 
     /**
@@ -205,11 +206,13 @@ public class Controller {
             outputPanel.setLightMode();
             buttonPanel.setLightMode();
             decisionPanel.setLightMode();
+            settingsFrame.setLightMode();
 
         }else {
             outputPanel.setDarkMode();
             buttonPanel.setDarkMode();
             decisionPanel.setDarkMode();
+            settingsFrame.setDarkMode();
         }
 
         if (currentLevel > 0){ // Refreshes buttons to display if alts have already been chosen
@@ -331,6 +334,15 @@ public class Controller {
         decisionPanel = dPanel;
         outputPanel = oPanel;
         buttonPanel = bPanel;
+    }
+
+    /**
+     * Adds active SettingsFrame to controller
+     * @param sFrame instance of SettingsFrame
+     * @author Robert
+     */
+    public void addSettingsFrame(SettingsFrame sFrame){
+        settingsFrame = sFrame;
     }
 
 

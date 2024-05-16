@@ -13,11 +13,30 @@ import java.awt.event.ActionListener;
  */
 public class SettingsFrame {
 
+    private JPanel settingsPanel;
+    private JCheckBox smartCheckBox;
+    private JCheckBox previewCheckBox;
+    private JCheckBox themeCheckBox;
+    private JButton closeButton;
+    private Boolean lightMode = false;
+
     /**
      * Constructor
      * @author Robert
      */
     public SettingsFrame(Controller controller, Boolean isSmart, Boolean preview, Boolean lightMode){
+        setUp(controller, isSmart, preview, lightMode);
+    }
+
+    /**
+     * Sets up Settings frame
+     * @param controller
+     * @param isSmart vital for smartCheckBox
+     * @param preview vital for previewCheckBox
+     * @param lightMode vital for themeCheckBox
+     * @author Robert
+     */
+    private void setUp(Controller controller, Boolean isSmart, Boolean preview, Boolean lightMode){
         // Creating the Settings Frame
         // TODO: Change colors to a darker mode
         JFrame settingsFrame = new JFrame("System Settings");
@@ -28,35 +47,37 @@ public class SettingsFrame {
         settingsFrame.setLocationRelativeTo(null);
 
         // Creating panel for Frame
-        JPanel settingsPanel = new JPanel();
+        settingsPanel = new JPanel();
         settingsPanel.setLayout(new GridLayout (3, 1));
 
         // Creating checkbox for User to choose "smart" sorting of alts
-        JCheckBox smartSorting = new JCheckBox("Enable Smart Sorting");
-        smartSorting.setSelected(isSmart); // If a user has already enabled smart sorting this will be shown in menu
-        smartSorting.setFont(new Font("Arial", Font.BOLD, 16)); // Set font
-        smartSorting.setForeground(Color.WHITE); // Set font color
-        smartSorting.addActionListener(new ActionListener() {
+        smartCheckBox = new JCheckBox("Enable Smart Sorting");
+        smartCheckBox.setSelected(isSmart); // If a user has already enabled smart sorting this will be shown in menu
+        smartCheckBox.setFont(new Font("Arial", Font.BOLD, 16)); // Set font
+        //smartCheckBox.setForeground(Color.WHITE); // Set font color
+        smartCheckBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 controller.buttonPressed(ButtonType.SMART);
             }
         });
 
-        JCheckBox previewWindow = new JCheckBox("Enable Preview Mode");
-        previewWindow.setSelected(preview); // If a user has already enabled smart sorting this will be shown in menu
-        previewWindow.setFont(new Font("Arial", Font.BOLD, 16)); // Set font
-        previewWindow.setForeground(Color.WHITE); // Set font color
-        previewWindow.addActionListener(new ActionListener() {
+        previewCheckBox = new JCheckBox("Enable Preview Mode");
+        previewCheckBox.setSelected(preview); // If a user has already enabled smart sorting this will be shown in menu
+        previewCheckBox.setFont(new Font("Arial", Font.BOLD, 16)); // Set font
+        //previewCheckBox.setForeground(Color.WHITE); // Set font color
+        previewCheckBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
 
-                if(preview == false && previewWindow.isSelected()){ // Informs user of issues before buttonpressed is called
+                if(preview == false && previewCheckBox.isSelected()){ // Informs user of issues before buttonpressed is called
                     int choice = JOptionPane.showConfirmDialog(null, "Preview mode may cause performance issues," +
                             " are you sure you want to proceed?", "Preview mode", JOptionPane.YES_NO_OPTION);
 
                     if (choice == JOptionPane.YES_NO_OPTION){
                         controller.buttonPressed(ButtonType.PREVIEW);
+                    }else {
+                        previewCheckBox.setSelected(false);
                     }
                 }else {
                     controller.buttonPressed(ButtonType.PREVIEW);
@@ -66,11 +87,11 @@ public class SettingsFrame {
         });
 
         // Creating checkbox for user to change colortheme of UI
-        JCheckBox colorTheme = new JCheckBox("Enable Light mode");
-        colorTheme.setSelected(lightMode); // If a user has already enabled smart sorting this will be shown in menu
-        colorTheme.setFont(new Font("Arial", Font.BOLD, 16)); // Set font
-        colorTheme.setForeground(Color.WHITE); // Set font color
-        colorTheme.addActionListener(new ActionListener() {
+        themeCheckBox = new JCheckBox("Enable Light mode");
+        themeCheckBox.setSelected(lightMode); // If a user has already enabled smart sorting this will be shown in menu
+        themeCheckBox.setFont(new Font("Arial", Font.BOLD, 16)); // Set font
+        //themeCheckBox.setForeground(Color.WHITE); // Set font color
+        themeCheckBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 controller.buttonPressed(ButtonType.THEME);
@@ -78,18 +99,21 @@ public class SettingsFrame {
         });
 
         // Creating a close button for menu
-        JButton closeButton = new JButton("Close Settings");
+        closeButton = new JButton("Close Settings");
         setUpButtonStyle(closeButton);
         closeButton.addActionListener(e -> settingsFrame.dispose());
 
-        settingsPanel.add(smartSorting);
-        settingsPanel.add(previewWindow);
-        settingsPanel.add(colorTheme);
-        settingsPanel.setBackground(Color.DARK_GRAY);
+        settingsPanel.add(smartCheckBox);
+        settingsPanel.add(previewCheckBox);
+        settingsPanel.add(themeCheckBox);
+        //settingsPanel.setBackground(Color.DARK_GRAY);
 
         settingsFrame.add(settingsPanel, BorderLayout.CENTER);
         settingsFrame.add(closeButton, BorderLayout.SOUTH);
         settingsFrame.setVisible(true);
+
+        setDarkMode();
+        controller.addSettingsFrame(this);
     }
 
 
@@ -98,11 +122,12 @@ public class SettingsFrame {
      *
      * @param button The button to set up the style for
      * @author Mohamad
+     * @author Robert
      */
     public void setUpButtonStyle(JButton button) {
         button.setFont(new Font("Arial", Font.BOLD, 16)); // Set font
-        button.setForeground(Color.WHITE); // Set font color
-        button.setBackground(new Color(0xFF181818, true));
+        //button.setForeground(Color.WHITE); // Set font color
+        //button.setBackground(new Color(0xFF181818, true));
         button.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
         button.setFocusPainted(false);
         button.setContentAreaFilled(false);
@@ -111,13 +136,58 @@ public class SettingsFrame {
         // Set Hover-highlighting
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                button.setBackground(Color.decode("#4d4d4d"));
+                if (lightMode){
+                    button.setBackground(Color.LIGHT_GRAY);
+                }else {
+                    button.setBackground(Color.decode("#4d4d4d"));
+                }
             }
 
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                button.setBackground(Color.decode("#191919"));
+                if (lightMode){
+                    button.setBackground(Color.WHITE);
+
+                }else {
+                    button.setBackground(Color.decode("#191919"));
+                }
             }
         });
+    }
+
+    /**
+     * Sets darkmode
+     * @author Robert
+     */
+    public void setDarkMode(){
+        lightMode = false;
+
+        // Sets backgroundcolor
+        settingsPanel.setBackground(Color.DARK_GRAY);
+        closeButton.setBackground(new Color(0xFF181818, true));
+
+        // Sets font color
+        closeButton.setForeground(Color.WHITE);
+        smartCheckBox.setForeground(Color.WHITE);
+        previewCheckBox.setForeground(Color.WHITE);
+        themeCheckBox.setForeground(Color.WHITE);
+    }
+
+    /**
+     * Sets light
+     * @author Robert
+     */
+    public void setLightMode(){
+        lightMode = true;
+
+        // Sets backgroundcolor
+        settingsPanel.setBackground(Color.LIGHT_GRAY);
+        closeButton.setBackground(Color.WHITE);
+
+        // Sets font color
+        closeButton.setForeground(Color.BLACK);
+        smartCheckBox.setForeground(Color.BLACK);
+        previewCheckBox.setForeground(Color.BLACK);
+        themeCheckBox.setForeground(Color.BLACK);
     }
 }
 
