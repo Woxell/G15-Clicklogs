@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import Model.Alt;
