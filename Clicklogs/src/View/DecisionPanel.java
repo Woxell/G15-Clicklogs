@@ -5,18 +5,19 @@ import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.List;
-
 import Controller.Controller;
 import Model.Alt; //VIOLATES MVC
+
 
 /**
  * This class represents a panel for displaying decision alternatives.
  *
- * @author Andre, Robert and Mohamad
+ * @author Andre, Robert, Mohamad, and Zahraa
  */
 public class DecisionPanel extends JPanel {
     private Controller controller;
     private double ratio = 0.5;
+
 
     /**
      * Constructor to create a DecisionPanel object.
@@ -94,6 +95,7 @@ public class DecisionPanel extends JPanel {
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 button.setBackground(Color.decode("#191919"));
             }
+
         });
     }
 }

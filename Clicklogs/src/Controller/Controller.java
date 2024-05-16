@@ -6,36 +6,33 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.util.ArrayList;
 import java.util.List;
+
 import Model.Alt;
 import Model.AltTree;
+
 import Model.UserModel;
+
 import View.*;
 
-/**
- * Controller class, acts as intermediate between View and Model classes
- * @author Andre, Mohamad, Robert, Zahra, Isra
- */
 public class Controller {
 
     private DecisionPanel decisionPanel;
     private OutputPanel outputPanel;
     private ButtonPanel buttonPanel;
-    private MainFrame mainFrame; // parent component for JOptionPanes
+    private MainFrame mainFrame; //parent component for JOptionPanes
     private AltTree altTree;
-    private final String filePath = "./src/Data/AltTree.dat";// Make sure WORKING DIRECTORY is set to "...\G15-Clicklogs\Clicklogs\"
+    private final String filePath = "./src/Data/AltTree.dat"; //Make sure WORKING DIRECTORY is set to "...\G15-Clicklogs\Clicklogs\"
     private int currentLevel = 0;
     private List<Alt> chosenAlts;
     private UserModel userModel;
 
     private LoginV loginV;
 
-
     /**
      * Constructor for the Controller class.
      * Initializes the main frame and sets up the initial state.
-     *
-     * @author Andre
      */
+
     public Controller(UserModel userModel, LoginV loginV) {
         this.userModel = userModel;
         this.loginV = loginV;
@@ -61,13 +58,11 @@ public class Controller {
             }
         });
 
-    }
 
+    }
 
     /**
      * (Re)sets variables. Also updates gui to a clear output field and level 0 alts
-     *
-     * @author Andre, Robert
      */
     private void initialState() {
         currentLevel = 0;
@@ -81,20 +76,22 @@ public class Controller {
      * Refreshes the list of alternatives to display in the GUI.
      * Builds the list based on chosen alternatives and the next level alternatives.
      * Also updates the output text based on the chosen alternatives.
-     *
-     * @author Andre
      */
     private void refreshListToDisplay() {
         // Build list for display in GUI. Should be chosen alts + alts in next level
         List<Alt> altsToDisplay = new ArrayList<>(chosenAlts); // Start with chosen alts
         if (currentLevel < altTree.getMaxLevels()) { // Guard against end of decision tree
             List<Alt> nextLevelAlts = altTree.getAltsAtLevel(currentLevel); // Get all alt candidates in next level
+
             for (Alt nextLevelAlt : nextLevelAlts) {
-                if (currentLevel > 0) { // Avoids parent-lookup for level 0
-                    List<Alt> parents = nextLevelAlt.getAllParents(); // For each candidate, get all parents
-                    for (Alt p : parents) { // ... traverse parents
+                if (currentLevel == 0) { // För nivå 0, lägg till direkt
+                    altsToDisplay.add(nextLevelAlt);
+                } else {
+                    List<Alt> parents = nextLevelAlt.getAllParents(); // För alla andra nivåer, kontrollera föräldrar
+                    for (Alt p : parents) { //... traverse parents
                         if (p.isChosen()) {
-                            altsToDisplay.add(nextLevelAlt); // ... and only add candidate if one of its parents was chosen.
+                            altsToDisplay.add(nextLevelAlt); //... and only add candidate if one of its parents was chosen.
+                            break; // Ingen anledning att fortsätta efter att ett valt förälder har hittats
                         }
                     }
                 }
@@ -109,7 +106,6 @@ public class Controller {
      * Handles selection of an alt in the GUI.
      *
      * @param alt The alternative selected.
-     * @author Andre
      */
     public void altPressed(Alt alt) {
         currentLevel++;
@@ -122,7 +118,6 @@ public class Controller {
      * Handles button presses from the GUI.
      *
      * @param pressedButton The type of button pressed.
-     * @author Andre
      */
     public void buttonPressed(ButtonType pressedButton) {
         switch (pressedButton) {
@@ -145,32 +140,70 @@ public class Controller {
 
     /**
      * Adds a new alternative.
-     *
-     * @author Zahra
      */
     private void addNewAlt() {
         System.out.println("Add button pressed");
-        //TODO: implement functionality for adding custom Alt
-        String labelText = JOptionPane.showInputDialog(mainFrame,
-                "Enter label text for the new alternative");
-        String outputText = JOptionPane.showInputDialog(mainFrame,
-                "Enter output text for the new alternative");
 
+
+        // Använda JOptionPane för att få indata för det nya alternativet
+
+        //TODO: implement functionality for adding custom Alt
+
+
+        String labelText = JOptionPane.showInputDialog(mainFrame, "Enter label text for the new alternative");
+        if (labelText == null || labelText == null) {
+            System.out.println("Operation cancelled by user");
+            return; // Avbryt operationen om användaren tryckte på "Avbryt" för någon av inmatningarna
+        }
+
+        String outputText = JOptionPane.showInputDialog(mainFrame, "Enter output text for the new alternative");
+
+        // Kontrollera om användaren har tryckt på "Avbryt" för etiketttexten eller utmatningstexten
+
+
+        // Skapa det nya alternativet
         Alt newAlt = new Alt(labelText, outputText);
+
+        // Hämta alla alternativ från den nuvarande nivån i trädet
+        List<Alt> currentLevelAlts = altTree.getAltsAtLevel(currentLevel);
+
+        // Kontrollera om det finns några befintliga alternativ på den nuvarande nivån
+        if (!currentLevelAlts.isEmpty()) {
+            // Välj det första befintliga alternativet som mall för föräldrar och barn
+            Alt templateAlt = currentLevelAlts.get(1);
+
+            // Kopiera föräldrar från mallalternativet till det nya alternativet
+            for (Alt parent : templateAlt.getAllParents()) {
+                newAlt.addParent(parent);
+            }
+
+            // Kopiera barn från mallalternativet till det nya alternativet
+            for (Alt child : templateAlt.getAllChildren()) {
+                newAlt.addChild(child);
+            }
+        }
+
+        // Lägg till det nya alternativet i AltTree
         altTree.addAlt(currentLevel, newAlt);
+
+        // Uppdatera gränssnittet
         refreshListToDisplay();
+
+
+        // Spara det uppdaterade trädet till filen
+        altTree.saveAltTreeToFile(filePath);
+
+        // Visa meddelande om att det nya alternativet har lagts till
         JOptionPane.showMessageDialog(null, "Alternative added successfully");
 
     }
 
     /**
      * Copies the output text to the clipboard.
-     *
-     * @author Andre, Robert
      */
     private void copyToClipboard() {
-        String output = outputPanel.getText(); // TODO: remove last space
-        if (!(output.isEmpty())) { // If output is not empty output is copied to clipboard
+        String output = outputPanel.getText(); //TODO: remove last space
+        if (!(output.isEmpty())) { //If output is not empty output is copied to clipboard
             StringSelection selection = new StringSelection(output);
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
             clipboard.setContents(selection, null);
@@ -179,31 +212,25 @@ public class Controller {
 
     /**
      * Undoes the last choice made by the user.
-     *
-     * @author Andre, Mohamad
      */
     private void undoLastChoice() {
         if (currentLevel > 0) {  // cus it is not possible to undo when current level is 0.
-            if (--currentLevel == 0) { // Bug fix, not pretty
+            if (--currentLevel == 0) { //Bug fix, not pretty
                 initialState();
             } else {
-                chosenAlts.removeLast().setChosen(false); // Undo chosen state for last chosen alt then remove it from history of chosen alts.
+                chosenAlts.removeLast().setChosen(false); //Undo chosen state for last chosen alt then remove it from history of chosen alts.
                 refreshListToDisplay();
             }
         } else {
-            JOptionPane.showMessageDialog(mainFrame, "No alternative has been chosen yet!",
-                    "Wtf?", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(mainFrame, "No alternative has been chosen yet!", "Wtf?", JOptionPane.WARNING_MESSAGE);
         }
     }
 
     /**
      * Resets the decision tree.
-     *
-     * @author Andre
      */
     private void resetTree() {
-        int choice = JOptionPane.showConfirmDialog(mainFrame, "Are you sure?",
-                "Reset", JOptionPane.YES_NO_OPTION);
+        int choice = JOptionPane.showConfirmDialog(mainFrame, "Are you sure?", "Reset", JOptionPane.YES_NO_OPTION);
         if (choice == JOptionPane.YES_OPTION) {
             initialState();
         }
@@ -212,22 +239,18 @@ public class Controller {
     /**
      * Adds instances of the main panels to the controller.
      *
-     * @param dPanel The DecisionPanel instance.
-     * @param oPanel The OutputPanel instance.
-     * @param bPanel The ButtonPanel instance.
-     * @author Andre
+     * @param dp The DecisionPanel instance.
+     * @param op The OutputPanel instance.
+     * @param bp The ButtonPanel instance.
      */
-    public void addPanelInstances(DecisionPanel dPanel, OutputPanel oPanel, ButtonPanel bPanel) {
-        decisionPanel = dPanel;
-        outputPanel = oPanel;
-        buttonPanel = bPanel;
+    public void addPanelInstances(DecisionPanel dp, OutputPanel op, ButtonPanel bp) {
+        decisionPanel = dp;
+        outputPanel = op;
+        buttonPanel = bp;
     }
-
 
     public static class Main {
         public static void main(String[] args) {
-
-
             SwingUtilities.invokeLater(() -> {
                 UserModel userModel = new UserModel();
                 LoginV loginView = new LoginV();
@@ -236,6 +259,11 @@ public class Controller {
 
 
             });
+
+
         }
     }
 }
+
+
+

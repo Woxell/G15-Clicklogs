@@ -9,10 +9,14 @@ import java.util.*;
  * Each level can contain a list of alternative objects.
  *
  * @author Andre
+ * Den klass representerar en alternativ trädstruktur för att lagra alternative på olika nivåer.
+ * varje nivå kan innehålla en lista med alternativa objekt.
+ * @ author Andre
  */
 public class AltTree implements Serializable {
-    private int maxLevels;
-    private Map<Integer, List<Alt>> altTree;
+    private int maxLevels; //MAximal anatal nivåer tillåtna i trädet.
+    private Map<Integer, List<Alt>> altTree; // kartläggning av nivåer till listor med alternativ
+
 
     /**
      * Constructs an AltTree with the specified maximum levels.
@@ -20,6 +24,14 @@ public class AltTree implements Serializable {
      * @param maxLevels The maximum levels allowed in the AltTree.
      * @author Andre
      */
+
+/**
+ * Konstruktur för klassen  AltTree med det angivna maximala antalet nivåer.
+ *
+ * @param maxLevels Det maximala antalet nivåer tillåtna i AltTree.
+ * @author Andre
+ */
+
     public AltTree(int maxLevels) {
         this.maxLevels = maxLevels;
         altTree = new HashMap<>();
@@ -33,6 +45,10 @@ public class AltTree implements Serializable {
      *
      * @param level The level from which to retrieve the alternatives.
      * @return The list of alternatives at the specified level.
+     * Hämtar listan med alternativ på den angivna nivån.
+     *
+     * @param level Nivån från vilken alternativen ska hämtas.
+     * @return Listan med alternativ på den angivna nivån.
      * @author Andre
      */
     public List<Alt> getAltsAtLevel(Integer level) {
@@ -43,6 +59,10 @@ public class AltTree implements Serializable {
      * Retrieves the maximum levels allowed in this AltTree.
      *
      * @return The maximum levels allowed.
+     * Hämtar det maximala antalet nivåer tillåtna i detta AltTree.
+     *
+     * @return Det maximala antalet tillåtna nivåer.
+     * @author Andre
      */
     public int getMaxLevels() {
         return this.maxLevels;
@@ -53,6 +73,10 @@ public class AltTree implements Serializable {
      *
      * @param filePath The path of the file from which to read the AltTree object.
      * @return The AltTree object read from the file.
+     * Läser in ett AltTree-objekt från den angivna filvägen.
+     *
+     * @param filePath Sökvägen till filen från vilken AltTree-objektet ska läsas in.
+     * @return AltTree-objektet som läses in från filen.
      * @author Andre
      */
     public static AltTree readAltTree(String filePath) {
@@ -77,6 +101,10 @@ public class AltTree implements Serializable {
      * Saves this AltTree object to the specified file path.
      *
      * @param filePath The path of the file to which to save the AltTree object.
+     * Sparar detta AltTree-objekt till den angivna filvägen.
+     *
+     * @param filePath Sökvägen till filen där AltTree-objektet ska sparas.
+
      * @author Andre
      */
     public void saveAltTreeToFile(String filePath) {
@@ -96,12 +124,20 @@ public class AltTree implements Serializable {
         System.out.println("File saved successfully to " + filePath);
     }
 
+
     //Admin tools
     /**
      * Adds an alternative object to the specified level in the AltTree.
      *
      * @param level The level at which to add the alternative.
      * @param alt   The alternative object to add.
+
+    //Admin tools................
+
+    /**
+     * Lägger till ett alternativobjekt på den angivna nivån i AltTree.
+     * @param level Nivån där alternativet ska läggas till.
+     * @param alt   Alternativobjektet som ska läggas till.
      * @author Andre
      */
     public void addAlt(int level, Alt alt) {
