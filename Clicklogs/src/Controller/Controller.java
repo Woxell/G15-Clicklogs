@@ -10,6 +10,8 @@ import java.util.List;
 import Model.Alt;
 import Model.AltTree;
 
+import Model.UserModel;
+
 import View.*;
 
 public class Controller {
@@ -22,14 +24,41 @@ public class Controller {
     private final String filePath = "./src/Data/AltTree.dat"; //Make sure WORKING DIRECTORY is set to "...\G15-Clicklogs\Clicklogs\"
     private int currentLevel = 0;
     private List<Alt> chosenAlts;
+    private UserModel userModel;
+
+    private LoginV loginV;
 
     /**
      * Constructor for the Controller class.
      * Initializes the main frame and sets up the initial state.
      */
-    public Controller() {
-        mainFrame = new MainFrame(this, 700, 500);
-        initialState();
+
+    public Controller(UserModel userModel, LoginV loginV) {
+        this.userModel = userModel;
+        this.loginV = loginV;
+
+
+
+        //Visa inloggningsskärmen först
+        loginV.show();
+
+        // Lyssna på händelser för inloggning och visa MainFrame vid framgångsrik inloggning
+        loginV.setLoginButtonListener(e -> {
+            String username = loginV.getUsername();
+            String password = loginV.getPassword();
+            if (userModel.authenticate(username, password)) {
+               // loginV.showSuccess("Login successful!");
+                loginV.hide();
+
+                //Skapa en instans av MainFrame och visa den
+                MainFrame mainFrame = new MainFrame(this,400,700);
+                initialState();
+            } else {
+                loginV.showError("Invalid username or password.");
+            }
+        });
+
+
     }
 
     /**
@@ -222,9 +251,19 @@ public class Controller {
 
     public static class Main {
         public static void main(String[] args) {
+            SwingUtilities.invokeLater(() -> {
+                UserModel userModel = new UserModel();
+                LoginV loginView = new LoginV();
+                Controller controller = new Controller(userModel, loginView);
 
 
-            new Controller();
+
+            });
+
+
         }
     }
 }
+
+
+
