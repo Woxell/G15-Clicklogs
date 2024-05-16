@@ -112,60 +112,66 @@ public class Controller {
     /**
      * Adds a new alternative.
      */
-    private void addNewAlt() {
-        System.out.println("Add button pressed");
+        private void addNewAlt() {
+            System.out.println("Add button pressed");
 
-
-        // Använda JOptionPane för att få indata för det nya alternativet
-
-        //TODO: implement functionality for adding custom Alt
-
-
-        String labelText = JOptionPane.showInputDialog(mainFrame, "Enter label text for the new alternative");
-        if (labelText == null || labelText == null) {
-            System.out.println("Operation cancelled by user");
-            return; // Avbryt operationen om användaren tryckte på "Avbryt" för någon av inmatningarna
-        }
-
-        String outputText = JOptionPane.showInputDialog(mainFrame, "Enter output text for the new alternative");
-
-        // Kontrollera om användaren har tryckt på "Avbryt" för etiketttexten eller utmatningstexten
-
-
-        // Skapa det nya alternativet
-        Alt newAlt = new Alt(labelText, outputText);
-
-        // Hämta alla alternativ från den nuvarande nivån i trädet
-        List<Alt> currentLevelAlts = altTree.getAltsAtLevel(currentLevel);
-
-        // Kontrollera om det finns några befintliga alternativ på den nuvarande nivån
-        if (!currentLevelAlts.isEmpty()) {
-            // Välj det första befintliga alternativet som mall för föräldrar och barn
-            Alt templateAlt = currentLevelAlts.get(1);
-
-            // Kopiera föräldrar från mallalternativet till det nya alternativet
-            for (Alt parent : templateAlt.getAllParents()) {
-                newAlt.addParent(parent);
+            // Använda JOptionPane för att få indata för det nya alternativet
+            String labelText = JOptionPane.showInputDialog(mainFrame, "Enter label text for the new alternative (max 3 words)");
+            if (labelText == null || labelText.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(mainFrame, "Label text cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);
+                return; // Avbryt om etiketttexten är tom eller användaren tryckte på "Avbryt"
+            }
+            // Kontrollera antalet ord i etiketttexten
+            String[] words = labelText.split("\\s+");
+            if (words.length > 3) {
+                JOptionPane.showMessageDialog(mainFrame, "Label text must be limited to max 3 words", "Error", JOptionPane.ERROR_MESSAGE);
+                return; // Avbryt om etiketttexten innehåller fler än tre ord
             }
 
-            // Kopiera barn från mallalternativet till det nya alternativet
-            for (Alt child : templateAlt.getAllChildren()) {
-                newAlt.addChild(child);
+            String outputText = JOptionPane.showInputDialog(mainFrame, "Enter output text for the new alternative (max 30 characters)");
+            if (outputText == null || outputText.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(mainFrame, "Output text cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);
+                return; // Avbryt om utmatningstexten är tom eller användaren tryckte på "Avbryt"
             }
-        }
+            // Kontrollera antalet tecken i utmatningstexten
+            if (outputText.length() > 30) {
+                JOptionPane.showMessageDialog(mainFrame, "Output text must be limited to max 30 characters", "Error", JOptionPane.ERROR_MESSAGE);
+                return; // Avbryt om utmatningstexten innehåller fler än 30 tecken
+            }
 
-        // Lägg till det nya alternativet i AltTree
-        altTree.addAlt(currentLevel, newAlt);
+            // Skapa det nya alternativet
+            Alt newAlt = new Alt(labelText, outputText);
 
-        // Uppdatera gränssnittet
-        refreshListToDisplay();
+            // Hämta alla alternativ från den nuvarande nivån i trädet
+            List<Alt> currentLevelAlts = altTree.getAltsAtLevel(currentLevel);
 
+            // Kontrollera om det finns några befintliga alternativ på den nuvarande nivån
+            if (!currentLevelAlts.isEmpty()) {
+                // Välj det första befintliga alternativet som mall för föräldrar och barn
+                Alt templateAlt = currentLevelAlts.get(0); // Använda första alternativet eftersom vi inte vet vilket som är det "korrekta" mallalternativet
 
-        // Spara det uppdaterade trädet till filen
-        altTree.saveAltTreeToFile(filePath);
+                // Kopiera föräldrar från mallalternativet till det nya alternativet
+                for (Alt parent : templateAlt.getAllParents()) {
+                    newAlt.addParent(parent);
+                }
 
-        // Visa meddelande om att det nya alternativet har lagts till
-        JOptionPane.showMessageDialog(null, "Alternative added successfully");
+                // Kopiera barn från mallalternativet till det nya alternativet
+                for (Alt child : templateAlt.getAllChildren()) {
+                    newAlt.addChild(child);
+                }
+            }
+
+            // Lägg till det nya alternativet i AltTree
+            altTree.addAlt(currentLevel, newAlt);
+
+            // Uppdatera gränssnittet
+            refreshListToDisplay();
+
+            // Spara det uppdaterade trädet till filen
+            altTree.saveAltTreeToFile(filePath);
+
+            // Visa meddelande om att det nya alternativet har lagts till
+            JOptionPane.showMessageDialog(null, "Alternative added successfully");
 
     }
 
