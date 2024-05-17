@@ -112,69 +112,60 @@ public class Controller {
     /**
      * Adds a new alternative.
      */
-        private void addNewAlt() {
-            System.out.println("Add button pressed");
+    private void addNewAlt() {
+        String labelText = JOptionPane.showInputDialog(mainFrame, "Enter label text for the new alternative");
+        if (labelText == null || labelText.trim().isEmpty()) {
+            System.out.println("Operation cancelled by user");
+            return;
+        }
 
-            // Använda JOptionPane för att få indata för det nya alternativet
-            String labelText = JOptionPane.showInputDialog(mainFrame, "Enter label text for the new alternative (max 3 words)");
-            if (labelText == null || labelText.trim().isEmpty()) {
-                JOptionPane.showMessageDialog(mainFrame, "Label text cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);
-                return; // Avbryt om etiketttexten är tom eller användaren tryckte på "Avbryt"
-            }
-            // Kontrollera antalet ord i etiketttexten
-            String[] words = labelText.split("\\s+");
-            if (words.length > 3) {
-                JOptionPane.showMessageDialog(mainFrame, "Label text must be limited to max 3 words", "Error", JOptionPane.ERROR_MESSAGE);
-                return; // Avbryt om etiketttexten innehåller fler än tre ord
-            }
+        String outputText = JOptionPane.showInputDialog(mainFrame, "Enter output text for the new alternative");
+        if (outputText == null || outputText.trim().isEmpty()) {
+            System.out.println("Operation cancelled by user");
+            return;
+        }
 
-            String outputText = JOptionPane.showInputDialog(mainFrame, "Enter output text for the new alternative (max 30 characters)");
-            if (outputText == null || outputText.trim().isEmpty()) {
-                JOptionPane.showMessageDialog(mainFrame, "Output text cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);
-                return; // Avbryt om utmatningstexten är tom eller användaren tryckte på "Avbryt"
-            }
-            // Kontrollera antalet tecken i utmatningstexten
-            if (outputText.length() > 30) {
-                JOptionPane.showMessageDialog(mainFrame, "Output text must be limited to max 30 characters", "Error", JOptionPane.ERROR_MESSAGE);
-                return; // Avbryt om utmatningstexten innehåller fler än 30 tecken
-            }
+        // Hämta alternativ på föregående nivå (föräldrar) och på nästa nivå (barn)
+        List<Alt> parentCandidates = currentLevel > 0 ? altTree.getAltsAtLevel(currentLevel - 1) : new ArrayList<>();
+        List<Alt> childCandidates = currentLevel < altTree.getMaxLevels() - 1 ? altTree.getAltsAtLevel(currentLevel + 1) : new ArrayList<>();
 
-            // Skapa det nya alternativet
-            Alt newAlt = new Alt(labelText, outputText);
+        List<Alt> chosenParents = chooseAlts("Choose parents for the new alternative", parentCandidates);
+        List<Alt> chosenChildren = chooseAlts("Choose children for the new alternative", childCandidates);
 
-            // Hämta alla alternativ från den nuvarande nivån i trädet
-            List<Alt> currentLevelAlts = altTree.getAltsAtLevel(currentLevel);
+        Alt newAlt = new Alt(chosenParents, labelText, outputText);
 
-            // Kontrollera om det finns några befintliga alternativ på den nuvarande nivån
-            if (!currentLevelAlts.isEmpty()) {
-                // Välj det första befintliga alternativet som mall för föräldrar och barn
-                Alt templateAlt = currentLevelAlts.get(0); // Använda första alternativet eftersom vi inte vet vilket som är det "korrekta" mallalternativet
+        for (Alt parent : chosenParents) {
+            parent.addChild(newAlt);
+        }
 
-                // Kopiera föräldrar från mallalternativet till det nya alternativet
-                for (Alt parent : templateAlt.getAllParents()) {
-                    newAlt.addParent(parent);
-                }
+        for (Alt child : chosenChildren) {
+            newAlt.addChild(child);
+            child.addParent(newAlt);
+        }
 
-                // Kopiera barn från mallalternativet till det nya alternativet
-                for (Alt child : templateAlt.getAllChildren()) {
-                    newAlt.addChild(child);
-                }
-            }
-
-            // Lägg till det nya alternativet i AltTree
-            altTree.addAlt(currentLevel, newAlt);
-
-            // Uppdatera gränssnittet
-            refreshListToDisplay();
-
-            // Spara det uppdaterade trädet till filen
-            altTree.saveAltTreeToFile(filePath);
-
-            // Visa meddelande om att det nya alternativet har lagts till
-            JOptionPane.showMessageDialog(null, "Alternative added successfully");
-
+        altTree.addAlt(currentLevel, newAlt);
+        refreshListToDisplay();
+        altTree.saveAltTreeToFile(filePath);
+        JOptionPane.showMessageDialog(mainFrame, "Alternative added successfully");
     }
 
+    private List<Alt> chooseAlts(String message, List<Alt> candidates) {
+        if (candidates.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        String[] altLabels = candidates.stream().map(Alt::getAltLabelText).toArray(String[]::new);
+
+        JList<String> list = new JList<>(altLabels);
+        list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        JOptionPane.showMessageDialog(mainFrame, new JScrollPane(list), message, JOptionPane.PLAIN_MESSAGE);
+
+        List<Alt> chosenAlts = new ArrayList<>();
+        for (int index : list.getSelectedIndices()) {
+            chosenAlts.add(candidates.get(index));
+        }
+        return chosenAlts;
+    }
     /**
      * Copies the output text to the clipboard.
      */
