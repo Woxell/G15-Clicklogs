@@ -133,16 +133,13 @@ public class Controller {
         List<Alt> chosenChildren = chooseAlts("Choose children for the new alternative", childCandidates);
 
         Alt newAlt = new Alt(chosenParents, labelText, outputText);
-
         for (Alt parent : chosenParents) {
             parent.addChild(newAlt);
         }
-
         for (Alt child : chosenChildren) {
             newAlt.addChild(child);
             child.addParent(newAlt);
         }
-
         altTree.addAlt(currentLevel, newAlt);
         refreshListToDisplay();
         altTree.saveAltTreeToFile(filePath);

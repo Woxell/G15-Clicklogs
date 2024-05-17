@@ -50,7 +50,7 @@ public class ButtonPanel extends JPanel {
         reset.setLocation((width / 3) * 2, height - 50);
         reset.addActionListener(listener -> buttonPressed(ButtonType.RESET));
 
-        JButton addAlt = new JButton("ADD");
+        JButton addAlt = new JButton("ADD New Alternative");
         setUpButtonStyle(addAlt);
         addAlt.setLocation(width - 50, (height / 3) * 3);
         addAlt.addActionListener(listener -> buttonPressed(ButtonType.ADD));
