@@ -142,62 +142,56 @@ public class Controller {
      * Adds a new alternative.
      */
     private void addNewAlt() {
-        System.out.println("Add button pressed");
-
-
-        // Använda JOptionPane för att få indata för det nya alternativet
-
-        //TODO: implement functionality for adding custom Alt
-
-
         String labelText = JOptionPane.showInputDialog(mainFrame, "Enter label text for the new alternative");
-        if (labelText == null || labelText == null) {
+        if (labelText == null || labelText.trim().isEmpty()) {
             System.out.println("Operation cancelled by user");
-            return; // Avbryt operationen om användaren tryckte på "Avbryt" för någon av inmatningarna
+            return;
         }
 
         String outputText = JOptionPane.showInputDialog(mainFrame, "Enter output text for the new alternative");
-
-        // Kontrollera om användaren har tryckt på "Avbryt" för etiketttexten eller utmatningstexten
-
-
-        // Skapa det nya alternativet
-        Alt newAlt = new Alt(labelText, outputText);
-
-        // Hämta alla alternativ från den nuvarande nivån i trädet
-        List<Alt> currentLevelAlts = altTree.getAltsAtLevel(currentLevel);
-
-        // Kontrollera om det finns några befintliga alternativ på den nuvarande nivån
-        if (!currentLevelAlts.isEmpty()) {
-            // Välj det första befintliga alternativet som mall för föräldrar och barn
-            Alt templateAlt = currentLevelAlts.get(1);
-
-            // Kopiera föräldrar från mallalternativet till det nya alternativet
-            for (Alt parent : templateAlt.getAllParents()) {
-                newAlt.addParent(parent);
-            }
-
-            // Kopiera barn från mallalternativet till det nya alternativet
-            for (Alt child : templateAlt.getAllChildren()) {
-                newAlt.addChild(child);
-            }
+        if (outputText == null || outputText.trim().isEmpty()) {
+            System.out.println("Operation cancelled by user");
+            return;
         }
 
-        // Lägg till det nya alternativet i AltTree
+        // Hämta alternativ på föregående nivå (föräldrar) och på nästa nivå (barn)
+        List<Alt> parentCandidates = currentLevel > 0 ? altTree.getAltsAtLevel(currentLevel - 1) : new ArrayList<>();
+        List<Alt> childCandidates = currentLevel < altTree.getMaxLevels() - 1 ? altTree.getAltsAtLevel(currentLevel + 1) : new ArrayList<>();
+
+        List<Alt> chosenParents = chooseAlts("Choose parents for the new alternative", parentCandidates);
+        List<Alt> chosenChildren = chooseAlts("Choose children for the new alternative", childCandidates);
+
+        Alt newAlt = new Alt(chosenParents, labelText, outputText);
+        for (Alt parent : chosenParents) {
+            parent.addChild(newAlt);
+        }
+        for (Alt child : chosenChildren) {
+            newAlt.addChild(child);
+            child.addParent(newAlt);
+        }
         altTree.addAlt(currentLevel, newAlt);
-
-        // Uppdatera gränssnittet
         refreshListToDisplay();
-
-
-        // Spara det uppdaterade trädet till filen
         altTree.saveAltTreeToFile(filePath);
-
-        // Visa meddelande om att det nya alternativet har lagts till
-        JOptionPane.showMessageDialog(null, "Alternative added successfully");
-
+        JOptionPane.showMessageDialog(mainFrame, "Alternative added successfully");
     }
 
+    private List<Alt> chooseAlts(String message, List<Alt> candidates) {
+        if (candidates.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        String[] altLabels = candidates.stream().map(Alt::getAltLabelText).toArray(String[]::new);
+
+        JList<String> list = new JList<>(altLabels);
+        list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        JOptionPane.showMessageDialog(mainFrame, new JScrollPane(list), message, JOptionPane.PLAIN_MESSAGE);
+
+        List<Alt> chosenAlts = new ArrayList<>();
+        for (int index : list.getSelectedIndices()) {
+            chosenAlts.add(candidates.get(index));
+        }
+        return chosenAlts;
+    }
     /**
      * Copies the output text to the clipboard.
      */
