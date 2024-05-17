@@ -337,7 +337,7 @@ public class Controller {
         outputPanel = oPanel;
         buttonPanel = bPanel;
     }
-    
+
     public static class Main {
         public static void main(String[] args) {
             new Controller();
