@@ -32,7 +32,10 @@ public class Controller {
         mainFrame = new MainFrame(this, 700, 500);
         initialState();
     }
-
+    /**
+     * a method that describe the program to the user before it start
+     * @author zahraa Alqassab
+     */
     private void showWelcomeMessage(){
         String welcomeMessage = "Welcome to the Desision Support System!\n\n"
                 + "This application helps you make decision by presenting alternatives and chose the option that suits the customer's case.\n"
