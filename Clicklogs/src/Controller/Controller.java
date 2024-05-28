@@ -261,7 +261,7 @@ public class Controller {
      * Adds a new alternative.
      * @author Zahraa
      */
-    // /*
+     /*
     private void addNewAlt() {
         String labelText = JOptionPane.showInputDialog(mainFrame, "Enter label text for the new alternative");
         if (labelText == null || labelText.trim().isEmpty()) {
@@ -295,10 +295,36 @@ public class Controller {
         altTree.saveAltTreeToFile(filePath);
         JOptionPane.showMessageDialog(mainFrame, "Alternative added successfully");
     }
-    // */
+     */
 
+    /**
+     * Presents a dialog to the user with a list of alternatives and allows to choose a parent and child to the new alternative .
+     * Returns the selected alternatives as a list.
+     *
+     * @param message The message to display in the dialog.
+     * @param candidates The list of Alt objects to choose from.
+     * @return A list of Alt objects that were selected by the user. If no selection is made or the candidates list is empty, an empty list is returned.
+     * @author Zahraa
+     */
+/*
+    private List<Alt> chooseAlts(String message, List<Alt> candidates) {
+        if (candidates.isEmpty()) {
+            return new ArrayList<>();
+        }
 
+        String[] altLabels = candidates.stream().map(Alt::getAltLabelText).toArray(String[]::new);
 
+        JList<String> list = new JList<>(altLabels);
+        list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        JOptionPane.showMessageDialog(mainFrame, new JScrollPane(list), message, JOptionPane.PLAIN_MESSAGE);
+
+        List<Alt> chosenAlts = new ArrayList<>();
+        for (int index : list.getSelectedIndices()) {
+            chosenAlts.add(candidates.get(index));
+        }
+        return chosenAlts;
+    }
+    */
     
 
 
