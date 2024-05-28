@@ -238,14 +238,11 @@ public class Controller {
         settingsFrame = new SettingsFrame(this, smartBoolean, previewBoolean, themeBoolean);
     }
 
-    /**
-     * Adds a new alternative.
-     *
-     * @author Zahra
-     */
+
     private void addNewAlt() {
         System.out.println("Add button pressed");
         //TODO: implement functionality for adding custom Alt
+        /*
         String labelText = JOptionPane.showInputDialog(mainFrame,
                 "Enter label text for the new alternative");
         String outputText = JOptionPane.showInputDialog(mainFrame,
@@ -256,7 +253,12 @@ public class Controller {
         refreshListToDisplay();
         JOptionPane.showMessageDialog(null, "Alternative added successfully");
 
+         */
+
     }
+
+    
+
 
     /**
      * Copies the output text to the clipboard.
