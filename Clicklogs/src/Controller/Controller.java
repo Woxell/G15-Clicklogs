@@ -28,20 +28,21 @@ public class Controller {
      * Initializes the main frame and sets up the initial state.
      */
     public Controller() {
-        showWelcomeMessage();
+       showWelcomeMessage();
         mainFrame = new MainFrame(this, 700, 500);
         initialState();
     }
+
     private void showWelcomeMessage(){
-        String welcomeMessage = "Welcome to the Decision Support System!\n\n"
-                + "This application helps you make decisions by presenting alternatives and choose the option that suits the customer's case .\n"
+        String welcomeMessage = "Welcome to the Desision Support System!\n\n"
+                + "This application helps you make decision by presenting alternatives and chose the option that suits the customer's case.\n"
                 + "You can:\n"
-                + ". Copy your choices to the clipboard\n"
-                + ". Add new alternatives\n"
-                + ". Undo your last choice\n"
-                + ". Reset the decision tree\n\n"
+                + ".Copy your choices to the clipboard\n"
+                + ".Undo your last choice\n"
+                + ".Reset all the alternative you have chosen\n"
+                + ".Add new alternative to the tree\n\n"
                 + "Please log in to continue.";
-        JOptionPane.showMessageDialog(null, welcomeMessage, "Welcome", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, welcomeMessage, "Welcome",JOptionPane.INFORMATION_MESSAGE);
     }
 
     /**
