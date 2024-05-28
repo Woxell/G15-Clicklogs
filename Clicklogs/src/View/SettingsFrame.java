@@ -69,23 +69,26 @@ public class SettingsFrame {
         previewCheckBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
+                controller.buttonPressed(ButtonType.PREVIEW); // For demo day, removes warning
+/*
                 if(preview == false && previewCheckBox.isSelected()){ // Informs user of issues before buttonpressed is called
                     int choice = JOptionPane.showConfirmDialog(null, "Preview mode may cause performance issues," +
                             " are you sure you want to proceed?", "Preview mode", JOptionPane.YES_NO_OPTION);
 
-                    if (choice == JOptionPane.YES_NO_OPTION){
+
+                    *if (choice == JOptionPane.YES_NO_OPTION){
                         controller.buttonPressed(ButtonType.PREVIEW);
                     }else {
                         previewCheckBox.setSelected(false);
                     }
+
+
                 }else {
                     controller.buttonPressed(ButtonType.PREVIEW);
                 }
-
-
-
+*/
             }
+
         });
 
         // Creating checkbox for user to change colortheme of UI
@@ -127,8 +130,6 @@ public class SettingsFrame {
      */
     public void setUpButtonStyle(JButton button) {
         button.setFont(new Font("Arial", Font.BOLD, 16)); // Set font
-        //button.setForeground(Color.WHITE); // Set font color
-        //button.setBackground(new Color(0xFF181818, true));
         button.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
         button.setFocusPainted(false);
         button.setContentAreaFilled(false);
