@@ -257,6 +257,48 @@ public class Controller {
 
     }
 
+    /**
+     * Adds a new alternative.
+     * @author Zahraa
+     */
+    // /*
+    private void addNewAlt() {
+        String labelText = JOptionPane.showInputDialog(mainFrame, "Enter label text for the new alternative");
+        if (labelText == null || labelText.trim().isEmpty()) {
+            System.out.println("Operation cancelled by user");
+            return;
+        }
+
+        String outputText = JOptionPane.showInputDialog(mainFrame, "Enter output text for the new alternative");
+        if (outputText == null || outputText.trim().isEmpty()) {
+            System.out.println("Operation cancelled by user");
+            return;
+        }
+
+        // Hämta alternativ på föregående nivå (föräldrar) och på nästa nivå (barn)
+        List<Alt> parentCandidates = currentLevel > 0 ? altTree.getAltsAtLevel(currentLevel - 1) : new ArrayList<>();
+        List<Alt> childCandidates = currentLevel < altTree.getMaxLevels() - 1 ? altTree.getAltsAtLevel(currentLevel + 1) : new ArrayList<>();
+
+        List<Alt> chosenParents = chooseAlts("Choose parents for the new alternative", parentCandidates);
+        List<Alt> chosenChildren = chooseAlts("Choose children for the new alternative", childCandidates);
+
+        Alt newAlt = new Alt(chosenParents, labelText, outputText);
+        for (Alt parent : chosenParents) {
+            parent.addChild(newAlt);
+        }
+        for (Alt child : chosenChildren) {
+            newAlt.addChild(child);
+            child.addParent(newAlt);
+        }
+        altTree.addAlt(currentLevel, newAlt);
+        refreshListToDisplay();
+        altTree.saveAltTreeToFile(filePath);
+        JOptionPane.showMessageDialog(mainFrame, "Alternative added successfully");
+    }
+    // */
+
+
+
     
 
 
