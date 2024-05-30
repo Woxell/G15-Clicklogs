@@ -5,6 +5,8 @@ import java.awt.*;
 import Controller.Controller;
 
 /**
+ * MainFrame is the main window of the application.
+ * It initializes the main GUI window with specified dimensions,
  * @author André Woxell
  */
 public class MainFrame extends JFrame {
