@@ -5,10 +5,6 @@ import java.util.List;
 import Model.Alt;
 import Model.AltTree;
 import View.AdminUI;
-import View.DecisionPanel;
-import View.MainFrame;
-import View.OutputPanel;
-
 
 /**
  * This class handles the admin-tasks for creating and editing decision tree files.
@@ -16,12 +12,6 @@ import View.OutputPanel;
  * @author André Woxell
  */
 
-import javax.swing.*;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class AdminController {

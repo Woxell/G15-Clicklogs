@@ -56,12 +56,12 @@ public class Controller {
         loginV.setLoginButtonListener(e -> {
             String username = loginV.getUsername();
             String password = loginV.getPassword();
-            if (userModel.authenticate(username, password)) {
+            if (true/*userModel.authenticate(username, password)*/) {
                // loginV.showSuccess("Login successful!");
                 loginV.hide();
 
                 //Skapa en instans av MainFrame och visa den
-                MainFrame mainFrame = new MainFrame(this,700,400);
+                MainFrame mainFrame = new MainFrame(this,700,500);
                 initialState();
             } else {
                 loginV.showError("Invalid username or password.");

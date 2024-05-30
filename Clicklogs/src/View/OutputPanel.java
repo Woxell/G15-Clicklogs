@@ -1,7 +1,6 @@
 package View;
 
 import javax.swing.*;
-import javax.swing.border.MatteBorder;
 import java.awt.*;
 import java.util.List;
 
@@ -10,7 +9,10 @@ import Model.Alt; //VIOLATES MVC
 /**
  * Adds a panel for displaying output text.
  *
- * @author Andre ,Mohamad and Isra
+ * @author Andre
+ * @author Robert
+ * @author Mohamad
+ * @author Isra
  */
 public class OutputPanel extends JPanel {
 
@@ -24,21 +26,7 @@ public class OutputPanel extends JPanel {
      * @author Andre
      */
     public OutputPanel() {
-
         setUp();
-
-        setLayout(new BorderLayout());
-        setBackground(Color.PINK);
-        add(new JLabel("Texten nedan genereras baserat på dina klickade alternativ ovan"), BorderLayout.NORTH);
-
-        textArea = new JTextArea();
-        textArea.setBorder(new MatteBorder(2, 2, 2, 2, Color.PINK)); // Stroke around text area
-        textArea.setBackground(Color.WHITE);
-        textArea.setLineWrap(true); // Make sure text area uses line breaks
-        textArea.setWrapStyleWord(true); // Make the line breaks at spaces to not break up words
-        textArea.setFont(new Font("TAHOMA", Font.PLAIN,20));
-        add(textArea, BorderLayout.CENTER);
-
     }
 
     /**
@@ -57,7 +45,7 @@ public class OutputPanel extends JPanel {
         add(separator, BorderLayout.NORTH);
 
         //panelTitel = new JLabel("Texten nedan genereras baserat på dina klickade alternativ ovan");
-        panelTitel = new JLabel("Your log text:");
+        panelTitel = new JLabel("Din logg:");
         //panelTitel.setForeground(Color.decode("#c5c5c5")); // Set font color
         panelTitel.setOpaque(true);
         panelTitel.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
@@ -105,9 +93,10 @@ public class OutputPanel extends JPanel {
 
     /**
      * Sets darkmode
+     *
      * @author Robert
      */
-    public void setDarkMode(){
+    public void setDarkMode() {
         separator.setBackground(new Color(0xCF31121E, true));
         panelTitel.setBackground(Color.decode("#191919"));
         panelTitel.setForeground(Color.decode("#c5c5c5"));
@@ -117,9 +106,10 @@ public class OutputPanel extends JPanel {
 
     /**
      * Sets lightmode
+     *
      * @author Robert
      */
-    public void setLightMode(){
+    public void setLightMode() {
         separator.setBackground(Color.LIGHT_GRAY);
         panelTitel.setBackground(Color.WHITE);
         panelTitel.setForeground(Color.BLACK);
