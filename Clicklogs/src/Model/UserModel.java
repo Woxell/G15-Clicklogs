@@ -28,6 +28,7 @@ public class UserModel {
      */
     private void createFileIfNotExists() {
         Path path = Paths.get(FILE_PATH);
+
         if (!Files.exists(path)) {
             try {
                 Files.createFile(path);

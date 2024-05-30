@@ -31,7 +31,6 @@ public class ButtonPanel extends JPanel {
      * @author Robert
      */
     public ButtonPanel(MainPanel mainPanel) {
-
         this.mainPanel = mainPanel;
         setLayout(new FlowLayout());
         setPreferredSize(new Dimension(width, height));
@@ -47,7 +46,6 @@ public class ButtonPanel extends JPanel {
      * @author Zahraa
      */
     private void setUp() {
-
         copy = new JButton("COPY");
         setUpButtonStyle(copy);
         copy.setLocation(0, height - 50);
@@ -89,7 +87,6 @@ public class ButtonPanel extends JPanel {
      * @author Robert
      */
     public void setUpButtonStyle(JButton button) {
-
         button.setSize(width / 3, 30);
         button.setFont(new Font("Arial", Font.BOLD, 12)); // Set font
         button.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
@@ -135,7 +132,6 @@ public class ButtonPanel extends JPanel {
      * @author Robert
      */
     public void setDarkMode(){
-
         lightMode = false;
         setBackground(Color.decode("#191919"));
         copy.setBackground(Color.decode("#191919"));
@@ -156,7 +152,6 @@ public class ButtonPanel extends JPanel {
      * @author Robert
      */
     public void setLightMode(){
-
         lightMode = true;
         setBackground(Color.WHITE);
         copy.setBackground(Color.WHITE);

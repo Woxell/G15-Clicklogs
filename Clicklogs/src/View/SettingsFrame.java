@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 
 /**
  * Creates a Popup menu for system settings
+ *
  * @author Robert
  */
 public class SettingsFrame {
@@ -22,22 +23,23 @@ public class SettingsFrame {
 
     /**
      * Constructor
+     *
      * @author Robert
      */
-    public SettingsFrame(Controller controller, Boolean isSmart, Boolean preview, Boolean lightMode){
+    public SettingsFrame(Controller controller, Boolean isSmart, Boolean preview, Boolean lightMode) {
         setUp(controller, isSmart, preview, lightMode);
     }
 
     /**
      * Sets up Settings frame
+     *
      * @param controller
-     * @param isSmart vital for smartCheckBox
-     * @param preview vital for previewCheckBox
-     * @param lightMode vital for themeCheckBox
+     * @param isSmart    vital for smartCheckBox
+     * @param preview    vital for previewCheckBox
+     * @param lightMode  vital for themeCheckBox
      * @author Robert
      */
-    private void setUp(Controller controller, Boolean isSmart, Boolean preview, Boolean lightMode){
-
+    private void setUp(Controller controller, Boolean isSmart, Boolean preview, Boolean lightMode) {
         // Creating the Settings Frame
         JFrame settingsFrame = new JFrame("System Settings");
         settingsFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -49,7 +51,7 @@ public class SettingsFrame {
 
         // Creating panel for Frame
         settingsPanel = new JPanel();
-        settingsPanel.setLayout(new GridLayout (3, 1));
+        settingsPanel.setLayout(new GridLayout(3, 1));
 
         // Creating checkbox for User to choose "smart" sorting of alts
         smartCheckBox = new JCheckBox("Enable Smart Sorting");
@@ -70,9 +72,8 @@ public class SettingsFrame {
 
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
                 controller.buttonPressed(ButtonType.PREVIEW); // For demo day, removes warning
-/*
+                /*
                 if(preview == false && previewCheckBox.isSelected()){ // Informs user of issues before buttonpressed is called
                     int choice = JOptionPane.showConfirmDialog(null, "Preview mode may cause performance issues," +
                             " are you sure you want to proceed?", "Preview mode", JOptionPane.YES_NO_OPTION);
@@ -84,13 +85,11 @@ public class SettingsFrame {
                         previewCheckBox.setSelected(false);
                     }
 
-
                 }else {
                     controller.buttonPressed(ButtonType.PREVIEW);
                 }
-*/
+                */
             }
-
         });
 
         // Creating checkbox for user to change colortheme of UI
@@ -98,7 +97,6 @@ public class SettingsFrame {
         themeCheckBox.setSelected(lightMode); // If a user has already enabled smart sorting this will be shown in menu
         themeCheckBox.setFont(new Font("Arial", Font.BOLD, 16)); // Set font
         themeCheckBox.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 controller.buttonPressed(ButtonType.THEME);
@@ -121,12 +119,12 @@ public class SettingsFrame {
 
     /**
      * Sets up the style for buttons.
+     *
      * @param button The button to set up the style for
      * @author Mohamad
      * @author Robert
      */
     public void setUpButtonStyle(JButton button) {
-
         button.setFont(new Font("Arial", Font.BOLD, 16)); // Set font
         button.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
         button.setFocusPainted(false);
@@ -137,18 +135,18 @@ public class SettingsFrame {
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
 
-                if (lightMode){
+                if (lightMode) {
                     button.setBackground(Color.LIGHT_GRAY);
-                }else {
+                } else {
                     button.setBackground(Color.decode("#4d4d4d"));
                 }
             }
 
             public void mouseExited(java.awt.event.MouseEvent evt) {
 
-                if (lightMode){
+                if (lightMode) {
                     button.setBackground(Color.WHITE);
-                }else {
+                } else {
                     button.setBackground(Color.decode("#191919"));
                 }
             }
@@ -157,16 +155,15 @@ public class SettingsFrame {
 
     /**
      * Sets darkmode
+     *
      * @author Robert
      */
-    public void setDarkMode(){
-
+    public void setDarkMode() {
         lightMode = false;
 
         // Sets backgroundcolor
         settingsPanel.setBackground(Color.DARK_GRAY);
-        closeButton.setBackground(new Color(0xFF181818, true));
-
+        closeButton.setBackground(new Color(0xFF181818, true))
         // Sets font color
         closeButton.setForeground(Color.WHITE);
         smartCheckBox.setForeground(Color.WHITE);
@@ -176,16 +173,15 @@ public class SettingsFrame {
 
     /**
      * Sets light
+     *
      * @author Robert
      */
-    public void setLightMode(){
-
+    public void setLightMode() {
         lightMode = true;
 
         // Sets backgroundcolor
         settingsPanel.setBackground(Color.LIGHT_GRAY);
         closeButton.setBackground(Color.WHITE);
-
         // Sets font color
         closeButton.setForeground(Color.BLACK);
         smartCheckBox.setForeground(Color.BLACK);

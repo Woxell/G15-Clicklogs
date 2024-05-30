@@ -7,8 +7,9 @@ import java.awt.event.ActionListener;
 /**
  * Klassen represents the login view for applikation.
  * It provides a simple GUI with fields for username and password,and a login button.
+ *
  * @author Isra Pdier
- * **/
+ **/
 public class LoginV {
     private JFrame frame;
     private JTextField userField;
@@ -17,7 +18,7 @@ public class LoginV {
 
     /**
      * Constructs a new LoginV and initializes the GUI components
-     * */
+     */
     public LoginV() {
         frame = new JFrame("Login");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -40,16 +41,19 @@ public class LoginV {
         frame.add(panel);
     }
 
-    /**sets the action listener for login button
+    /**
+     * sets the action listener for login button
      *
      * @param listener the ActionListener to be added to the login button
-     * */
+     */
     public void setLoginButtonListener(ActionListener listener) {
         loginButton.addActionListener(listener);
     }
 
-    /**Gets the username entered by the user
-    * @return the username as a String
+    /**
+     * Gets the username entered by the user
+     *
+     * @return the username as a String
      */
     public String getUsername() {
         return userField.getText();
@@ -77,6 +81,7 @@ public class LoginV {
     public void hide() {
         frame.setVisible(false);
     }
+
     /**
      * Displays an error message in a dialog.
      *
