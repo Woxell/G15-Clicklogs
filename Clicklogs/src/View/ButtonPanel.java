@@ -13,9 +13,10 @@ import java.awt.*;
  * @author Mohamad
  */
 public class ButtonPanel extends JPanel {
+
     private MainPanel mainPanel;
-    private int width = 500; // minimum width?
-    private int height = 50; // always same height
+    private int width = 500; // Minimum width?
+    private int height = 50; // Always same height
     private JButton copy;
     private JButton undo;
     private JButton addAlt;
@@ -25,44 +26,44 @@ public class ButtonPanel extends JPanel {
 
     /**
      * Constructor for ButtonPanel class
-     *
      * @param mainPanel MainPanel
      * @author Zahraa
+     * @author Robert
      */
     public ButtonPanel(MainPanel mainPanel) {
+
         this.mainPanel = mainPanel;
         setLayout(new FlowLayout());
         setPreferredSize(new Dimension(width, height));
-        //setBackground(Color.decode("#191919"));
         setUp();
         setVisible(true);
     }
 
     /**
      * Initialises Add, Undo, Reset and Copy buttons and adds them to ButtonPanel
-     *
      * @author Andre
      * @author Robert
      * @author Mohamad
      * @author Zahraa
      */
     private void setUp() {
-        copy = new JButton("KOPIERA");
+
+        copy = new JButton("COPY");
         setUpButtonStyle(copy);
         copy.setLocation(0, height - 50);
         copy.addActionListener(listener -> buttonPressed(ButtonType.COPY));
 
-        undo = new JButton("ÅNGRA");
+        undo = new JButton("UNDO");
         setUpButtonStyle(undo);
         undo.setLocation(width / 3, height - 50);
         undo.addActionListener(listener -> buttonPressed(ButtonType.UNDO));
 
-        reset = new JButton("NOLLSTÄLL");
+        reset = new JButton("RESET");
         setUpButtonStyle(reset);
         reset.setLocation((width / 3) * 2, height - 50);
         reset.addActionListener(listener -> buttonPressed(ButtonType.RESET));
 
-        addAlt = new JButton("LÄGG TILL ALTERNATIV");
+        addAlt = new JButton("ADD");
         setUpButtonStyle(addAlt);
         addAlt.setLocation(width - 50, (height / 3) * 3);
         addAlt.addActionListener(listener -> buttonPressed(ButtonType.ADD));
@@ -83,15 +84,14 @@ public class ButtonPanel extends JPanel {
 
     /**
      * Sets up the style for buttons.
-     *
      * @param button The button to set up the style for
      * @author Mohamad
+     * @author Robert
      */
     public void setUpButtonStyle(JButton button) {
+
         button.setSize(width / 3, 30);
         button.setFont(new Font("Arial", Font.BOLD, 12)); // Set font
-        //button.setForeground(Color.decode("#c5c5c5")); // Set font color
-        //button.setBackground(Color.decode("#191919"));
         button.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
         button.setFocusPainted(false);
         button.setContentAreaFilled(false);
@@ -100,6 +100,7 @@ public class ButtonPanel extends JPanel {
         // Set Hover-highlighting
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
+
                 // Switches to lightmode if true
                 if (lightMode){
                     button.setBackground(Color.LIGHT_GRAY);
@@ -109,6 +110,7 @@ public class ButtonPanel extends JPanel {
             }
 
             public void mouseExited(java.awt.event.MouseEvent evt) {
+
                 // Switches to lightmode if true
                 if (lightMode){
                     button.setBackground(Color.WHITE);
@@ -121,7 +123,6 @@ public class ButtonPanel extends JPanel {
 
     /**
      * Function is called when actionListeners for Add, Undo, Reset, Settings or Copy are triggered
-     *
      * @param button Which button was pressed
      * @author Zahraa
      */
@@ -134,6 +135,7 @@ public class ButtonPanel extends JPanel {
      * @author Robert
      */
     public void setDarkMode(){
+
         lightMode = false;
         setBackground(Color.decode("#191919"));
         copy.setBackground(Color.decode("#191919"));
@@ -154,6 +156,7 @@ public class ButtonPanel extends JPanel {
      * @author Robert
      */
     public void setLightMode(){
+
         lightMode = true;
         setBackground(Color.WHITE);
         copy.setBackground(Color.WHITE);

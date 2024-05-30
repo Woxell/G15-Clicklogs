@@ -6,12 +6,9 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.util.ArrayList;
 import java.util.List;
-
 import Model.Alt;
 import Model.AltTree;
-
 import Model.UserModel;
-
 import View.*;
 
 /**
@@ -19,7 +16,6 @@ import View.*;
  * @author Andre, Mohamad, Robert, Zahra, Isra
  */
 public class Controller {
-
     private DecisionPanel decisionPanel;
     private OutputPanel outputPanel;
     private ButtonPanel buttonPanel;
@@ -33,7 +29,6 @@ public class Controller {
     private boolean smartBoolean = false;
     private boolean previewBoolean = false;
     private boolean themeBoolean = false; // False = Dark theme, True = Light Theme
-
     private LoginV loginV;
 
     /**
@@ -42,33 +37,21 @@ public class Controller {
      *
      * @author Andre
      */
-
     public Controller(UserModel userModel, LoginV loginV) {
         this.userModel = userModel;
         this.loginV = loginV;
-
-
-
-        //Visa inloggningsskärmen först
-        loginV.show();
-
-        // Lyssna på händelser för inloggning och visa MainFrame vid framgångsrik inloggning
-        loginV.setLoginButtonListener(e -> {
+        loginV.show(); //open log in view first
+        loginV.setLoginButtonListener(e -> { //Listen for login events and display the MainFrame upon successful login.
             String username = loginV.getUsername();
             String password = loginV.getPassword();
-            if (true/*userModel.authenticate(username, password)*/) {
-               // loginV.showSuccess("Login successful!");
+            if (true) {
                 loginV.hide();
-
-                //Skapa en instans av MainFrame och visa den
                 MainFrame mainFrame = new MainFrame(this,700,500);
                 initialState();
             } else {
                 loginV.showError("Invalid username or password.");
             }
         });
-
-
     }
 
     /**
@@ -82,17 +65,13 @@ public class Controller {
         chosenAlts = new ArrayList<>();
         altTree = AltTree.readAltTree(filePath);
         List<Alt> levelZeroAlts = altTree.getAltsAtLevel(0);
-
-        //test
         for (Alt alt : levelZeroAlts){
             System.out.println("Alt: " + alt.getAltLabelText());
         }
-
         // If user has enabled smart sorting level 0 Alts will be sorted
         if (smartBoolean){
             smartSort(levelZeroAlts);
         }
-
         decisionPanel.refreshDisplayedAlts(levelZeroAlts);
         outputPanel.refreshOutputText(chosenAlts); // TODO INSPECT WHY PARAMETER IS NECESSARY FOR refreshOutputText
     }
@@ -101,7 +80,6 @@ public class Controller {
      * Refreshes the list of alternatives to display in the GUI.
      * Builds the list based on chosen alternatives and the next level alternatives.
      * Also updates the output text based on the chosen alternatives.
-     *
      * @author Andre
      * @author Robert
      */
@@ -126,7 +104,6 @@ public class Controller {
             altChildren = smartSort(altChildren);
         }
         altsToDisplay.addAll(altChildren);// Adds relevant children Alts at the end of altsToDisplay arraylist
-
         // Refresh GUI with new lists
         decisionPanel.refreshDisplayedAlts(altsToDisplay);
         outputPanel.refreshOutputText(chosenAlts);
@@ -137,13 +114,11 @@ public class Controller {
      * Higher values places at lower indexes in childrenAlts list
      * @param childrenAlts List of all children alts relevant for DecisionPanel
      * @return Sorted list
-     *
      * @author Robert
      */
     private List<Alt> smartSort(List<Alt> childrenAlts) {
         int n = childrenAlts.size();
         boolean swapped;
-
         do{
             swapped = false;
             for (int i = 0; i < n -1; i++){
@@ -156,7 +131,6 @@ public class Controller {
             }
             n--;
         }while(swapped);
-
         return childrenAlts;
     }
 
@@ -212,12 +186,11 @@ public class Controller {
     }
 
     /**
-     * Toggles smartsorting on/off and refreshes DecisionPanel
+     * Toggles smart sorting on/off and refreshes DecisionPanel
      * @author Robert
      */
     private void setSmartSorting() {
         smartBoolean = !smartBoolean; // Flips boolean
-
         if (currentLevel > 0){ // Refreshes buttons to display if alts have already been chosen
             refreshListToDisplay();
         }else { // Reads level 0 alts if no alts have been chosen
@@ -231,23 +204,19 @@ public class Controller {
      */
     private void setTheme() {
         themeBoolean = !themeBoolean; // Flips boolean
-
         if (themeBoolean){
             outputPanel.setLightMode();
             buttonPanel.setLightMode();
             decisionPanel.setLightMode();
             settingsFrame.setLightMode();
-
         }else {
             outputPanel.setDarkMode();
             buttonPanel.setDarkMode();
             decisionPanel.setDarkMode();
             settingsFrame.setDarkMode();
         }
-
         if (currentLevel > 0){ // Refreshes buttons to display if alts have already been chosen
             refreshListToDisplay();
-
         }else { // Reads level 0 alts if no alts have been chosen
             initialState();
         }
@@ -262,34 +231,21 @@ public class Controller {
         decisionPanel.setPreview(previewBoolean);
     }
 
+    /**
+     * Opens the settings menu by initializing and displaying a SettingsFrame.
+     * The settings menu allows the user to configure various options such as
+     * smartBoolean, previewBoolean, and themeBoolean.
+     * @author Robbert
+     */
     private void settingsMenu() {
         settingsFrame = new SettingsFrame(this, smartBoolean, previewBoolean, themeBoolean);
-    }
-
-
-    private void addNewAlt() {
-        System.out.println("Add button pressed");
-        //TODO: implement functionality for adding custom Alt
-        /*
-        String labelText = JOptionPane.showInputDialog(mainFrame,
-                "Enter label text for the new alternative");
-        String outputText = JOptionPane.showInputDialog(mainFrame,
-                "Enter output text for the new alternative");
-
-        Alt newAlt = new Alt(labelText, outputText);
-        altTree.addAlt(currentLevel, newAlt);
-        refreshListToDisplay();
-        JOptionPane.showMessageDialog(null, "Alternative added successfully");
-
-         */
-
     }
 
     /**
      * Adds a new alternative.
      * @author Zahraa
      */
-     /*
+
     private void addNewAlt() {
         String labelText = JOptionPane.showInputDialog(mainFrame, "Enter label text for the new alternative");
         if (labelText == null || labelText.trim().isEmpty()) {
@@ -323,38 +279,32 @@ public class Controller {
         altTree.saveAltTreeToFile(filePath);
         JOptionPane.showMessageDialog(mainFrame, "Alternative added successfully");
     }
-     */
 
     /**
-     * Presents a dialog to the user with a list of alternatives and allows to choose a parent and child to the new alternative .
+     * Presents a dialog to the user with a list of alternatives
+     * and allows to choose a parent and child to the new alternative .
      * Returns the selected alternatives as a list.
      *
      * @param message The message to display in the dialog.
      * @param candidates The list of Alt objects to choose from.
-     * @return A list of Alt objects that were selected by the user. If no selection is made or the candidates list is empty, an empty list is returned.
+     * @return A list of Alt objects that were selected by the user.
+     * If no selection is made or the candidates list is empty, an empty list is returned.
      * @author Zahraa
      */
-/*
     private List<Alt> chooseAlts(String message, List<Alt> candidates) {
         if (candidates.isEmpty()) {
             return new ArrayList<>();
         }
-
         String[] altLabels = candidates.stream().map(Alt::getAltLabelText).toArray(String[]::new);
-
         JList<String> list = new JList<>(altLabels);
         list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         JOptionPane.showMessageDialog(mainFrame, new JScrollPane(list), message, JOptionPane.PLAIN_MESSAGE);
-
         List<Alt> chosenAlts = new ArrayList<>();
         for (int index : list.getSelectedIndices()) {
             chosenAlts.add(candidates.get(index));
         }
         return chosenAlts;
     }
-    */
-
-
 
     /**
      * Copies the output text to the clipboard.
@@ -363,7 +313,7 @@ public class Controller {
      * @author Robert
      */
     private void copyToClipboard() {
-        String output = outputPanel.getText(); //TODO: remove last space
+        String output = outputPanel.getText();
         if (!(output.isEmpty())) { //If output is not empty output is copied to clipboard
             StringSelection selection = new StringSelection(output);
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -381,7 +331,8 @@ public class Controller {
             if (--currentLevel == 0) { //Bug fix, not pretty
                 initialState();
             } else {
-                chosenAlts.removeLast().setChosen(false); //Undo chosen state for last chosen alt then remove it from history of chosen alts.
+                //Undo chosen state for last chosen alt then remove it from history of chosen alts.
+                chosenAlts.removeLast().setChosen(false);
                 refreshListToDisplay();
             }
         } else {
@@ -417,7 +368,6 @@ public class Controller {
                 alt.setChosen(false);
                 alt.increaseCounter(); // Increases alt counter by +1
             }
-
             altTree.saveAltTreeToFile(filePath); // Saves updated Alt-counters in AltTree to filepath
         }
     }
@@ -436,19 +386,13 @@ public class Controller {
         buttonPanel = bPanel;
     }
 
-
     public static class Main {
         public static void main(String[] args) {
             SwingUtilities.invokeLater(() -> {
                 UserModel userModel = new UserModel();
                 LoginV loginView = new LoginV();
                 Controller controller = new Controller(userModel, loginView);
-
-
-
             });
-
-
         }
     }
 }

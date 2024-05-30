@@ -37,12 +37,13 @@ public class SettingsFrame {
      * @author Robert
      */
     private void setUp(Controller controller, Boolean isSmart, Boolean preview, Boolean lightMode){
+
         // Creating the Settings Frame
-        // TODO: Change colors to a darker mode
         JFrame settingsFrame = new JFrame("System Settings");
         settingsFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         settingsFrame.setSize(250, 300);
         settingsFrame.setLayout(new BorderLayout());
+
         //settingsFrame.setUndecorated(true); // Removes close, min and max buttons in top right corner of frame
         settingsFrame.setLocationRelativeTo(null);
 
@@ -54,8 +55,8 @@ public class SettingsFrame {
         smartCheckBox = new JCheckBox("Enable Smart Sorting");
         smartCheckBox.setSelected(isSmart); // If a user has already enabled smart sorting this will be shown in menu
         smartCheckBox.setFont(new Font("Arial", Font.BOLD, 16)); // Set font
-        //smartCheckBox.setForeground(Color.WHITE); // Set font color
         smartCheckBox.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 controller.buttonPressed(ButtonType.SMART);
@@ -65,10 +66,11 @@ public class SettingsFrame {
         previewCheckBox = new JCheckBox("Enable Preview Mode");
         previewCheckBox.setSelected(preview); // If a user has already enabled smart sorting this will be shown in menu
         previewCheckBox.setFont(new Font("Arial", Font.BOLD, 16)); // Set font
-        //previewCheckBox.setForeground(Color.WHITE); // Set font color
         previewCheckBox.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+
                 controller.buttonPressed(ButtonType.PREVIEW); // For demo day, removes warning
 /*
                 if(preview == false && previewCheckBox.isSelected()){ // Informs user of issues before buttonpressed is called
@@ -95,8 +97,8 @@ public class SettingsFrame {
         themeCheckBox = new JCheckBox("Enable Light mode");
         themeCheckBox.setSelected(lightMode); // If a user has already enabled smart sorting this will be shown in menu
         themeCheckBox.setFont(new Font("Arial", Font.BOLD, 16)); // Set font
-        //themeCheckBox.setForeground(Color.WHITE); // Set font color
         themeCheckBox.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 controller.buttonPressed(ButtonType.THEME);
@@ -107,30 +109,24 @@ public class SettingsFrame {
         closeButton = new JButton("Close Settings");
         setUpButtonStyle(closeButton);
         closeButton.addActionListener(e -> settingsFrame.dispose());
-
         settingsPanel.add(smartCheckBox);
         settingsPanel.add(previewCheckBox);
         settingsPanel.add(themeCheckBox);
-        //settingsPanel.setBackground(Color.DARK_GRAY);
-
         settingsFrame.add(settingsPanel, BorderLayout.CENTER);
         settingsFrame.add(closeButton, BorderLayout.SOUTH);
-
         setDarkMode();
-
         settingsFrame.setVisible(true);
-
     }
 
 
     /**
      * Sets up the style for buttons.
-     *
      * @param button The button to set up the style for
      * @author Mohamad
      * @author Robert
      */
     public void setUpButtonStyle(JButton button) {
+
         button.setFont(new Font("Arial", Font.BOLD, 16)); // Set font
         button.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
         button.setFocusPainted(false);
@@ -140,6 +136,7 @@ public class SettingsFrame {
         // Set Hover-highlighting
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
+
                 if (lightMode){
                     button.setBackground(Color.LIGHT_GRAY);
                 }else {
@@ -148,9 +145,9 @@ public class SettingsFrame {
             }
 
             public void mouseExited(java.awt.event.MouseEvent evt) {
+
                 if (lightMode){
                     button.setBackground(Color.WHITE);
-
                 }else {
                     button.setBackground(Color.decode("#191919"));
                 }
@@ -163,7 +160,9 @@ public class SettingsFrame {
      * @author Robert
      */
     public void setDarkMode(){
+
         lightMode = false;
+
         // Sets backgroundcolor
         settingsPanel.setBackground(Color.DARK_GRAY);
         closeButton.setBackground(new Color(0xFF181818, true));
@@ -180,6 +179,7 @@ public class SettingsFrame {
      * @author Robert
      */
     public void setLightMode(){
+
         lightMode = true;
 
         // Sets backgroundcolor
