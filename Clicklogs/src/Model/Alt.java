@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * This class represents an alternative option in a decision tree.
  * It holds information about its label, output text, and relationships with other alternative.
  *
- * @author <Author/s Name>
+ * @author Andre, Robert and Mohamad
  */
 public class Alt implements Serializable {
 
@@ -20,18 +20,12 @@ public class Alt implements Serializable {
     private boolean chosen = false;
     private AtomicInteger counter = new AtomicInteger(0);
 
-
-    // Default constructor, might be needed in later implementation!
-    public Alt() {
-        this(new ArrayList<>(), "Placeholder", "Placeholder text.");
-    }
-
     /**
      * Constructor to create an Alt object with the provided label text and output text.
      *
-     * @author <Author/s Name>
      * @param altLabelText The label text for the alternative.
      * @param outputText   The output text for the alternative.
+     * @author Andre
      */
     public Alt(String altLabelText, String outputText) {
         this.parents = new ArrayList<>();
@@ -40,67 +34,30 @@ public class Alt implements Serializable {
     }
 
     /**
-     * Constructor to create an Alt object with the provided parent alternatives, label text,
-     * and output text.
-     *
-     * @author <Author/s Name>
-     * @param parents      The parent alternatives of this alternative.
-     * @param altLabelText The label text for the alternative.
-     * @param outputText   The output text for the alternative.
-     */
-    public Alt(List<Alt> parents, String altLabelText, String outputText) {
-        this.parents = parents;
-        this.altLabelText = altLabelText;
-        this.outputText = outputText;
-    }
-
-    /**
      * Gets the label text of this alternative.
      *
-     * @author <Author/s Name>
      * @return Label text.
+     * @author Andre
      */
     public String getAltLabelText() {
         return altLabelText;
     }
 
-    //might be needed in later implementation!
-    /**
-     * Sets the label text of this alternative.
-     *
-     * @author <Author/s Name>
-     * @param text Label text of alternative.
-     */
-    public void setAltLabelText(String text) {
-        altLabelText = text;
-    }
-
     /**
      * Gets the output text of this alternative.
      *
-     * @author <Author/s Name>
      * @return Output text.
+     * @author Andre
      */
     public String getOutputText() {
         return outputText;
     }
 
-    //might be needed in later implementation!
-    /**
-     * Sets the output text of this alternative.
-     *
-     * @author <Author/s Name>
-     * @return Output text.
-     */
-    public void setOutputText(String text) {
-        outputText = text;
-    }
-
     /**
      * Gets the value of "chosen" (if the alternative has been chosen).
      *
-     * @author <Author/s Name>
      * @return True if chosen, false if not.
+     * @author Andre
      */
     public boolean isChosen() {
         return chosen;
@@ -109,67 +66,29 @@ public class Alt implements Serializable {
     /**
      * Sets whether this alternative has been chosen.
      *
-     * @author <Author/s Name>
      * @param b True if chosen, false otherwise.
+     * @author Andre
      */
     public void setChosen(boolean b) {
         chosen = b;
     }
 
-
-    // Child methods, might be needed in later implementation!
-    public void addChild(Alt child){
-        children.add(child);
-    }
-
-    public List<Alt> getAllChildren(){
-        return children;
-    }
-
-    public Alt getChildAt(int childIndex) {
-        return children.get(childIndex);
-    }
-
-    public int getChildCount() {
-        return children.size();
-    }
-
-
     //Parent methods
     /**
      * Adds a parent alternative to this alternative.
      *
-     * @author <Author/s Name>
      * @param parent The parent alternative to add.
+     * @author Andre
      */
-
-
-    //Parent methods.............
-    public void addParent(Alt parent) { parents.add(parent);
-
-    }
-
-    //might be needed in later implementation!
-    /**
-     * Gets the chosen parent alternative of this alternative if it's not a root alternative.
-     *
-     * @author <Author/s Name>
-     * @return The chosen parent alternative, or null if root Alt.
-     */
-    public Alt getParent() {
-        for (Alt parent : parents) {
-            if (parent.isChosen()) {
-                return parent;
-            }
-        }
-        return null; // probably root Alt. Make sure it cannot be undone.
+    public void addParent(Alt parent) {
+        parents.add(parent);
     }
 
     /**
      * Gets all parent alternatives of this alternative.
      *
-     * @author <Author/s Name>
      * @return A list of parent alternatives.
+     * @author Andre
      */
     public List<Alt> getAllParents() {
         return parents;
@@ -177,18 +96,20 @@ public class Alt implements Serializable {
 
     /**
      * Safely increases counter by 1 in case of Multithreading
+     *
      * @author Robert
      */
-    public void increaseCounter(){
+    public void increaseCounter() {
         counter.incrementAndGet();
     }
 
     /**
      * Get the current value of counter
+     *
      * @return Counter, amount of times this alt has been chosen
      * @author Robert
      */
-    public int getCounter(){
+    public int getCounter() {
         return counter.get();
     }
 }
