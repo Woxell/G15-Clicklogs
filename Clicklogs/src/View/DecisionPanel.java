@@ -7,7 +7,7 @@ import java.awt.event.ComponentEvent;
 import java.util.List;
 
 import Controller.Controller;
-import Model.Alt; //VIOLATES MVC
+import Model.Alt;
 
 /**
  * This class represents a panel for displaying decision alternatives.
@@ -17,6 +17,7 @@ import Model.Alt; //VIOLATES MVC
  * @author Mohamad
  */
 public class DecisionPanel extends JPanel {
+
     private Controller controller;
     private double ratio = 0.5;
     private boolean previewBoolean;
@@ -30,10 +31,10 @@ public class DecisionPanel extends JPanel {
      * @author Andre
      */
     public DecisionPanel(MainPanel mainPanel, Controller controller) {
+
         int height = (int) (mainPanel.getHeight() * ratio);
         this.controller = controller;
         setLayout(new FlowLayout());
-        //setBackground(Color.BLACK);
         setPreferredSize(new Dimension(1, height));
         setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
@@ -59,15 +60,16 @@ public class DecisionPanel extends JPanel {
      * @author Robert
      */
     public void refreshDisplayedAlts(List<Alt> altsToDisplay) {
+
         removeAll();
         for (Alt alt : altsToDisplay) {
             JButton altButton = new JButton(alt.getAltLabelText());
             setUpButtonStyle(altButton, alt);
             altButton.setToolTipText(alt.getOutputText());
             if (alt.isChosen()) {
-                if (lightMode){
+                if (lightMode) {
                     altButton.setBackground(Color.WHITE);
-                }else {
+                } else {
                     altButton.setBackground(Color.BLACK);
                 }
                 altButton.removeMouseListener(altButton.getMouseListeners()[1]);
@@ -88,34 +90,36 @@ public class DecisionPanel extends JPanel {
      * @author Robert
      */
     public void setUpButtonStyle(JButton button, Alt alt) {
+
         button.setFont(new Font("Arial", Font.BOLD, 16)); // Set font
         button.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
         button.setFocusPainted(false);
         button.setContentAreaFilled(false);
         button.setOpaque(true);
-        if (lightMode){
+        if (lightMode) {
             button.setForeground(Color.BLACK); // Set font color to Light mode
             button.setBackground(Color.WHITE);
-        }else {
+        } else {
             button.setForeground(Color.WHITE); // Set font color to Dark mode
             button.setBackground(new Color(0xFF181818, true));
         }
 
         // Set Hover-highlighting
         button.addMouseListener(new java.awt.event.MouseAdapter() {
+
             private JWindow previewWindow;
 
             public void mouseEntered(java.awt.event.MouseEvent evt) {
 
                 // Switches highlight to lightmode if true
-                if (lightMode){
+                if (lightMode) {
                     button.setBackground(Color.LIGHT_GRAY);
-                }else {
+                } else {
                     button.setBackground(Color.decode("#553C45"));
                 }
 
                 // Set preview window for alt output text if preview mode is enabled
-                if (previewBoolean){
+                if (previewBoolean) {
                     previewWindow = new JWindow();
                     previewWindow.setLayout(new FlowLayout());
                     previewWindow.add(new JLabel(alt.getOutputText()));
@@ -130,15 +134,16 @@ public class DecisionPanel extends JPanel {
             }
 
             public void mouseExited(java.awt.event.MouseEvent evt) {
+                
                 // Switches to lightmode if true
-                if (lightMode){
+                if (lightMode) {
                     button.setBackground(Color.WHITE);
-                }else {
+                } else {
                     button.setBackground(Color.decode("#191919"));
                 }
 
                 // Disposes previewWindow
-                if (previewWindow != null){
+                if (previewWindow != null) {
                     previewWindow.setVisible(false);
                     previewWindow.dispose();
                 }
@@ -148,26 +153,32 @@ public class DecisionPanel extends JPanel {
 
     /**
      * Sets previewboolean
+     *
      * @author Robert
      */
     public void setPreview(boolean previewBoolean) {
+
         this.previewBoolean = previewBoolean;
     }
 
     /**
      * Sets darkmode
+     *
      * @author Robert
      */
-    public void setDarkMode(){
+    public void setDarkMode() {
+
         lightMode = false;
         setBackground(new Color(0xFF181818, true));
     }
 
     /**
      * Sets lightmode
+     *
      * @author Robert
      */
-    public void setLightMode(){
+    public void setLightMode() {
+
         lightMode = true;
         setBackground(Color.WHITE);
     }
