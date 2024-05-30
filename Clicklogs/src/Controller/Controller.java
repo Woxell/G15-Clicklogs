@@ -61,7 +61,7 @@ public class Controller {
                 loginV.hide();
 
                 //Skapa en instans av MainFrame och visa den
-                MainFrame mainFrame = new MainFrame(this,400,700);
+                MainFrame mainFrame = new MainFrame(this,700,400);
                 initialState();
             } else {
                 loginV.showError("Invalid username or password.");

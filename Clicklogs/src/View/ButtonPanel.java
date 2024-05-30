@@ -47,22 +47,22 @@ public class ButtonPanel extends JPanel {
      * @author Zahraa
      */
     private void setUp() {
-        copy = new JButton("COPY");
+        copy = new JButton("KOPIERA");
         setUpButtonStyle(copy);
         copy.setLocation(0, height - 50);
         copy.addActionListener(listener -> buttonPressed(ButtonType.COPY));
 
-        undo = new JButton("UNDO");
+        undo = new JButton("ÅNGRA");
         setUpButtonStyle(undo);
         undo.setLocation(width / 3, height - 50);
         undo.addActionListener(listener -> buttonPressed(ButtonType.UNDO));
 
-        reset = new JButton("RESET");
+        reset = new JButton("NOLLSTÄLL");
         setUpButtonStyle(reset);
         reset.setLocation((width / 3) * 2, height - 50);
         reset.addActionListener(listener -> buttonPressed(ButtonType.RESET));
 
-        addAlt = new JButton("ADD");
+        addAlt = new JButton("LÄGG TILL ALTERNATIV");
         setUpButtonStyle(addAlt);
         addAlt.setLocation(width - 50, (height / 3) * 3);
         addAlt.addActionListener(listener -> buttonPressed(ButtonType.ADD));
@@ -78,6 +78,7 @@ public class ButtonPanel extends JPanel {
         add(undo);
         add(reset);
         add(addAlt);
+        add(settings);
     }
 
     /**
