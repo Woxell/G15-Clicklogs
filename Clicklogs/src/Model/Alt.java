@@ -34,6 +34,21 @@ public class Alt implements Serializable {
     }
 
     /**
+     * Constructor to create an Alt object with the provided parent alternatives, label text,
+     * and output text.
+     *
+     * @param parents      The parent alternatives of this alternative.
+     * @param altLabelText The label text for the alternative.
+     * @param outputText   The output text for the alternative.
+     * @author Andre
+     */
+    public Alt(List<Alt> parents, String altLabelText, String outputText) {
+        this.parents = parents;
+        this.altLabelText = altLabelText;
+        this.outputText = outputText;
+    }
+
+    /**
      * Gets the label text of this alternative.
      *
      * @return Label text.
@@ -71,6 +86,16 @@ public class Alt implements Serializable {
      */
     public void setChosen(boolean b) {
         chosen = b;
+    }
+
+    /**
+     * Adds a child alternative to this alternative.
+     *
+     * @param child The child alternative to add.
+     * @author Andre
+     */
+    public void addChild(Alt child){
+        children.add(child);
     }
 
     //Parent methods
