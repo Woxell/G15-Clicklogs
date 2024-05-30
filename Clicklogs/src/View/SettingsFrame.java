@@ -40,7 +40,7 @@ public class SettingsFrame {
         // Creating the Settings Frame
         // TODO: Change colors to a darker mode
         JFrame settingsFrame = new JFrame("System Settings");
-        settingsFrame.setDefaultCloseOperation(settingsFrame.EXIT_ON_CLOSE);
+        settingsFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         settingsFrame.setSize(250, 300);
         settingsFrame.setLayout(new BorderLayout());
         //settingsFrame.setUndecorated(true); // Removes close, min and max buttons in top right corner of frame
@@ -115,9 +115,11 @@ public class SettingsFrame {
 
         settingsFrame.add(settingsPanel, BorderLayout.CENTER);
         settingsFrame.add(closeButton, BorderLayout.SOUTH);
-        settingsFrame.setVisible(true);
 
         setDarkMode();
+
+        settingsFrame.setVisible(true);
+
     }
 
 
@@ -162,7 +164,6 @@ public class SettingsFrame {
      */
     public void setDarkMode(){
         lightMode = false;
-
         // Sets backgroundcolor
         settingsPanel.setBackground(Color.DARK_GRAY);
         closeButton.setBackground(new Color(0xFF181818, true));
