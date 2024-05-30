@@ -6,8 +6,12 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.util.ArrayList;
 import java.util.List;
+
 import Model.Alt;
 import Model.AltTree;
+
+import Model.UserModel;
+
 import View.*;
 
 /**
@@ -20,15 +24,17 @@ public class Controller {
     private OutputPanel outputPanel;
     private ButtonPanel buttonPanel;
     private SettingsFrame settingsFrame;
-    private final MainFrame mainFrame; // parent component for JOptionPanes
+    private MainFrame mainFrame; //parent component for JOptionPanes
     private AltTree altTree;
     private final String filePath = "./src/Data/AltTree.dat";// Make sure WORKING DIRECTORY is set to "...\G15-Clicklogs\Clicklogs\"
     private int currentLevel = 0;
     private List<Alt> chosenAlts;
+    private UserModel userModel;
     private boolean smartBoolean = false;
     private boolean previewBoolean = false;
     private boolean themeBoolean = false; // False = Dark theme, True = Light Theme
 
+    private LoginV loginV;
 
     /**
      * Constructor for the Controller class.
@@ -36,12 +42,34 @@ public class Controller {
      *
      * @author Andre
      */
-    public Controller() {
 
-        mainFrame = new MainFrame(this, 700, 500);
-        initialState();
+    public Controller(UserModel userModel, LoginV loginV) {
+        this.userModel = userModel;
+        this.loginV = loginV;
+
+
+
+        //Visa inloggningsskärmen först
+        loginV.show();
+
+        // Lyssna på händelser för inloggning och visa MainFrame vid framgångsrik inloggning
+        loginV.setLoginButtonListener(e -> {
+            String username = loginV.getUsername();
+            String password = loginV.getPassword();
+            if (userModel.authenticate(username, password)) {
+               // loginV.showSuccess("Login successful!");
+                loginV.hide();
+
+                //Skapa en instans av MainFrame och visa den
+                MainFrame mainFrame = new MainFrame(this,400,700);
+                initialState();
+            } else {
+                loginV.showError("Invalid username or password.");
+            }
+        });
+
+
     }
-
 
     /**
      * (Re)sets variables. Also updates gui to a clear output field and level 0 alts
@@ -325,7 +353,7 @@ public class Controller {
         return chosenAlts;
     }
     */
-    
+
 
 
     /**
@@ -335,8 +363,8 @@ public class Controller {
      * @author Robert
      */
     private void copyToClipboard() {
-        String output = outputPanel.getText(); // TODO: remove last space
-        if (!(output.isEmpty())) { // If output is not empty output is copied to clipboard
+        String output = outputPanel.getText(); //TODO: remove last space
+        if (!(output.isEmpty())) { //If output is not empty output is copied to clipboard
             StringSelection selection = new StringSelection(output);
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
             clipboard.setContents(selection, null);
@@ -350,15 +378,15 @@ public class Controller {
      */
     private void undoLastChoice() {
         if (currentLevel > 0) {  // cus it is not possible to undo when current level is 0.
-            if (--currentLevel == 0) { // Bug fix, not pretty
+            if (--currentLevel == 0) { //Bug fix, not pretty
                 initialState();
             } else {
-                chosenAlts.removeLast().setChosen(false); // Undo chosen state for last chosen alt then remove it from history of chosen alts.
+                chosenAlts.removeLast().setChosen(false); //Undo chosen state for last chosen alt then remove it from history of chosen alts.
                 refreshListToDisplay();
             }
         } else {
             JOptionPane.showMessageDialog(mainFrame, "No alternative has been chosen yet!",
-                    "Wtf?", JOptionPane.WARNING_MESSAGE);
+                    "Error", JOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -408,9 +436,19 @@ public class Controller {
         buttonPanel = bPanel;
     }
 
+
     public static class Main {
         public static void main(String[] args) {
-            new Controller();
+            SwingUtilities.invokeLater(() -> {
+                UserModel userModel = new UserModel();
+                LoginV loginView = new LoginV();
+                Controller controller = new Controller(userModel, loginView);
+
+
+
+            });
+
+
         }
     }
 }

@@ -4,10 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Adds panel with buttons to MainPanel
- * Button functionalities include: Add, Copy, Reset and Undo
-
- *
+ * The ButtonPanel class represents a panel containing buttons for various actions.
+ * It is used within the main user interface to provide functionality such as copying, undoing,
+ * resetting, and adding new alternatives
+ * @author Zahraa alqassab
  * @author Andre
  * @author Robert
  * @author Mohamad
@@ -27,7 +27,7 @@ public class ButtonPanel extends JPanel {
      * Constructor for ButtonPanel class
      *
      * @param mainPanel MainPanel
-     * @author Andre
+     * @author Zahraa
      */
     public ButtonPanel(MainPanel mainPanel) {
         this.mainPanel = mainPanel;
@@ -44,6 +44,7 @@ public class ButtonPanel extends JPanel {
      * @author Andre
      * @author Robert
      * @author Mohamad
+     * @author Zahraa
      */
     private void setUp() {
         copy = new JButton("COPY");
@@ -77,7 +78,6 @@ public class ButtonPanel extends JPanel {
         add(undo);
         add(reset);
         add(addAlt);
-        add(settings);
     }
 
     /**
@@ -85,7 +85,6 @@ public class ButtonPanel extends JPanel {
      *
      * @param button The button to set up the style for
      * @author Mohamad
-     * @author Robert
      */
     public void setUpButtonStyle(JButton button) {
         button.setSize(width / 3, 30);
@@ -123,7 +122,7 @@ public class ButtonPanel extends JPanel {
      * Function is called when actionListeners for Add, Undo, Reset, Settings or Copy are triggered
      *
      * @param button Which button was pressed
-     * @author Robert
+     * @author Zahraa
      */
     private void buttonPressed(ButtonType button){
         mainPanel.buttonPressed(button);

@@ -5,16 +5,30 @@ import java.util.List;
 import Model.Alt;
 import Model.AltTree;
 import View.AdminUI;
+import View.DecisionPanel;
+import View.MainFrame;
+import View.OutputPanel;
+
 
 /**
  * This class handles the admin-tasks for creating and editing decision tree files.
  *
  * @author André Woxell
  */
+
+import javax.swing.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class AdminController {
 
     private AltTree altTree;
     private AdminUI ui;
+
     private String filePath = "./src/Data/AltTree.dat";
 
     /**
@@ -100,11 +114,13 @@ public class AdminController {
         altTree.saveAltTreeToFile(filePath);
     }
 
+
     /**
      * Main method for running AdminController class.
      *
      * @author André Woxell
      */
+
     public static class AdminMain {
         public static void main(String[] args) {
             new AdminController();
