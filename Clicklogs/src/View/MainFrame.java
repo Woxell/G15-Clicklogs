@@ -20,7 +20,7 @@ public class MainFrame extends JFrame {
         setMinimumSize(new Dimension(width, height));
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setTitle("Clicklogs V.DEMODA!Y");
+        setTitle("Clicklogs V.RS4!");
         setResizable(true);
         MainPanel mainPanel = new MainPanel(this, controller);
         add(mainPanel);
