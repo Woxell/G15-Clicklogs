@@ -65,7 +65,7 @@ public class DecisionPanel extends JPanel {
         for (Alt alt : altsToDisplay) {
             JButton altButton = new JButton(alt.getAltLabelText());
             setUpButtonStyle(altButton, alt);
-            altButton.setToolTipText(alt.getOutputText());
+            //altButton.setToolTipText(alt.getOutputText());
             if (alt.isChosen()) {
                 if (lightMode) {
                     altButton.setBackground(Color.WHITE);
@@ -129,7 +129,7 @@ public class DecisionPanel extends JPanel {
                     Point location = button.getLocationOnScreen();
                     previewWindow.setLocation(location.x + 35, location.y + 35);
                     previewWindow.setVisible(true);
-                    button.setToolTipText(null);// Fixes bug where two previewWindows appear
+                    //button.setToolTipText(null);// Fixes bug where two previewWindows appear
                 }
             }
 
