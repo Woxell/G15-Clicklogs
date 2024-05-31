@@ -163,7 +163,7 @@ public class SettingsFrame {
 
         // Sets backgroundcolor
         settingsPanel.setBackground(Color.DARK_GRAY);
-        closeButton.setBackground(new Color(0xFF181818, true))
+        closeButton.setBackground(new Color(0xFF181818, true));
         // Sets font color
         closeButton.setForeground(Color.WHITE);
         smartCheckBox.setForeground(Color.WHITE);
